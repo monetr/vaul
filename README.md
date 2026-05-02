@@ -1,3 +1,6 @@
-> **Note**  
-> This repo is unmaintained. I might come back to it at some point, but not in the near future. This was and always will be a hobby project and I simply don't have the time or will to work on it right now.
+# vaul
+
+**NOTE:** This repository is a fork of https://github.com/emilkowalski/vaul if you are using this repository as a
+dependency please open issues here and not in the original repository. If you want to support this repository please
+direct all donations to emilkowalski for the original work here!
 

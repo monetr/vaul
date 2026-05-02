@@ -1,0 +1,55 @@
+{
+  "extends": [
+    "config:recommended",
+    ":semanticCommitTypeAll(deps)"
+  ],
+  "semanticCommits": "enabled",
+  "semanticCommitType": "deps",
+  "semanticCommitScope": "Renovate",
+  "branchConcurrentLimit": 20,
+  "prConcurrentLimit": 20,
+  "packageRules": [
+    {
+      "matchPackageNames": [
+        "@types/.+",
+        "renovate"
+      ],
+      "extends": [
+        "schedule:monthly"
+      ]
+    },
+    {
+      "groupName": "rsbuild",
+      "groupSlug": "rsbuild",
+      "matchPackageNames": [
+        "/rspack/",
+        "/rsbuild/"
+      ]
+    },
+    {
+      "groupName": "rstest",
+      "groupSlug": "rstest",
+      "matchPackageNames": [
+        "/rstest/"
+      ]
+    },
+    {
+      "groupName": "sass",
+      "groupSlug": "sass",
+      "matchPackageNames": [
+        "/sass/"
+      ]
+    }
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Update biome schema version",
+      "fileMatch": ["biome.jsonc"],
+      "matchStrings": ["https:\/\/biomejs.dev\/schemas\/(?<currentValue>.*?)\/schema.json"],
+      "depNameTemplate": "@biomejs/biome",
+      "packageNameTemplate": "@biomejs/biome",
+      "datasourceTemplate": "npm"
+    }
+  ]
+}

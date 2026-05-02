@@ -1,8 +1,9 @@
 import React from 'react';
-import { set, isVertical } from './helpers';
+
 import { TRANSITIONS, VELOCITY_THRESHOLD } from './constants';
+import { isVertical, set } from './helpers';
+import type { DrawerDirection } from './types';
 import { useControllableState } from './use-controllable-state';
-import { DrawerDirection } from './types';
 
 export function useSnapPoints({
   activeSnapPointProp,
@@ -60,7 +61,7 @@ export function useSnapPoints({
   );
 
   const activeSnapPointIndex = React.useMemo(
-    () => snapPoints?.findIndex((snapPoint) => snapPoint === activeSnapPoint) ?? null,
+    () => snapPoints?.findIndex(snapPoint => snapPoint === activeSnapPoint) ?? null,
     [snapPoints, activeSnapPoint],
   );
 
@@ -76,11 +77,11 @@ export function useSnapPoints({
     const containerSize = container
       ? { width: container.getBoundingClientRect().width, height: container.getBoundingClientRect().height }
       : typeof window !== 'undefined'
-      ? { width: window.innerWidth, height: window.innerHeight }
-      : { width: 0, height: 0 };
+        ? { width: window.innerWidth, height: window.innerHeight }
+        : { width: 0, height: 0 };
 
     return (
-      snapPoints?.map((snapPoint) => {
+      snapPoints?.map(snapPoint => {
         const isPx = typeof snapPoint === 'string';
         let snapPointAsNumber = 0;
 
@@ -106,7 +107,7 @@ export function useSnapPoints({
         return width;
       }) ?? []
     );
-  }, [snapPoints, windowDimensions, container]);
+  }, [snapPoints, windowDimensions, container, direction]);
 
   const activeSnapPointOffset = React.useMemo(
     () => (activeSnapPointIndex !== null ? snapPointsOffset?.[activeSnapPointIndex] : null),
@@ -115,7 +116,7 @@ export function useSnapPoints({
 
   const snapToPoint = React.useCallback(
     (dimension: number) => {
-      const newSnapPointIndex = snapPointsOffset?.findIndex((snapPointDim) => snapPointDim === dimension) ?? null;
+      const newSnapPointIndex = snapPointsOffset?.indexOf(dimension) ?? null;
       onSnapPointChange(newSnapPointIndex);
 
       set(drawerRef.current, {
@@ -143,13 +144,22 @@ export function useSnapPoints({
 
       setActiveSnapPoint(snapPoints?.[Math.max(newSnapPointIndex, 0)]);
     },
-    [drawerRef.current, snapPoints, snapPointsOffset, fadeFromIndex, overlayRef, setActiveSnapPoint],
+    [
+      drawerRef.current,
+      snapPoints,
+      snapPointsOffset,
+      fadeFromIndex,
+      overlayRef,
+      setActiveSnapPoint,
+      onSnapPointChange,
+      direction,
+    ],
   );
 
   React.useEffect(() => {
     if (activeSnapPoint || activeSnapPointProp) {
       const newIndex =
-        snapPoints?.findIndex((snapPoint) => snapPoint === activeSnapPointProp || snapPoint === activeSnapPoint) ?? -1;
+        snapPoints?.findIndex(snapPoint => snapPoint === activeSnapPointProp || snapPoint === activeSnapPoint) ?? -1;
       if (snapPointsOffset && newIndex !== -1 && typeof snapPointsOffset[newIndex] === 'number') {
         snapToPoint(snapPointsOffset[newIndex] as number);
       }
@@ -167,7 +177,9 @@ export function useSnapPoints({
     velocity: number;
     dismissible: boolean;
   }) {
-    if (fadeFromIndex === undefined) return;
+    if (fadeFromIndex === undefined) {
+      return;
+    }
 
     const currentPosition =
       direction === 'bottom' || direction === 'right'
@@ -184,8 +196,11 @@ export function useSnapPoints({
     }
 
     if (!snapToSequentialPoint && velocity > 2 && !hasDraggedUp) {
-      if (dismissible) closeDrawer();
-      else snapToPoint(snapPointsOffset[0]); // snap to initial point
+      if (dismissible) {
+        closeDrawer();
+      } else {
+        snapToPoint(snapPointsOffset[0]); // snap to initial point
+      }
       return;
     }
 
@@ -196,7 +211,9 @@ export function useSnapPoints({
 
     // Find the closest snap point to the current position
     const closestSnapPoint = snapPointsOffset?.reduce((prev, curr) => {
-      if (typeof prev !== 'number' || typeof curr !== 'number') return prev;
+      if (typeof prev !== 'number' || typeof curr !== 'number') {
+        return prev;
+      }
 
       return Math.abs(curr - currentPosition) < Math.abs(prev - currentPosition) ? curr : prev;
     });
@@ -215,7 +232,9 @@ export function useSnapPoints({
         closeDrawer();
       }
 
-      if (activeSnapPointIndex === null) return;
+      if (activeSnapPointIndex === null) {
+        return;
+      }
 
       snapToPoint(snapPointsOffset[activeSnapPointIndex + dragDirection]);
       return;
@@ -225,7 +244,9 @@ export function useSnapPoints({
   }
 
   function onDrag({ draggedDistance }: { draggedDistance: number }) {
-    if (activeSnapPointOffset === null) return;
+    if (activeSnapPointOffset === null) {
+      return;
+    }
     const newValue =
       direction === 'bottom' || direction === 'right'
         ? activeSnapPointOffset - draggedDistance
@@ -245,8 +266,9 @@ export function useSnapPoints({
   }
 
   function getPercentageDragged(absDraggedDistance: number, isDraggingDown: boolean) {
-    if (!snapPoints || typeof activeSnapPointIndex !== 'number' || !snapPointsOffset || fadeFromIndex === undefined)
+    if (!snapPoints || typeof activeSnapPointIndex !== 'number' || !snapPointsOffset || fadeFromIndex === undefined) {
       return null;
+    }
 
     // If this is true we are dragging to a snap point that is supposed to have an overlay
     const isOverlaySnapPoint = activeSnapPointIndex === fadeFromIndex - 1;
@@ -257,8 +279,12 @@ export function useSnapPoints({
     }
 
     // Don't animate, but still use this one if we are dragging away from the overlaySnapPoint
-    if (isOverlaySnapPoint && !isDraggingDown) return 1;
-    if (!shouldFade && !isOverlaySnapPoint) return null;
+    if (isOverlaySnapPoint && !isDraggingDown) {
+      return 1;
+    }
+    if (!shouldFade && !isOverlaySnapPoint) {
+      return null;
+    }
 
     // Either fadeFrom index or the one before
     const targetSnapPointIndex = isOverlaySnapPoint ? activeSnapPointIndex + 1 : activeSnapPointIndex - 1;
