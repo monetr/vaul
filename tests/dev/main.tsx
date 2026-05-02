@@ -1,5 +1,5 @@
 import { StrictMode, useEffect, useState } from 'react';
-import { createRoot } from 'react-dom/client';
+
 import { BaseDrawer } from '../fixtures/BaseDrawer';
 import { ControlledDrawer } from '../fixtures/ControlledDrawer';
 import { HandleDrawer } from '../fixtures/HandleDrawer';
@@ -8,6 +8,8 @@ import { NestedDrawers } from '../fixtures/NestedDrawers';
 import { NonDismissibleDrawer } from '../fixtures/NonDismissibleDrawer';
 import { RedirectDrawer } from '../fixtures/RedirectDrawer';
 import { ScaledBackground } from '../fixtures/ScaledBackground';
+
+import { createRoot } from 'react-dom/client';
 
 type Fixture = { label: string; Component: () => JSX.Element };
 
@@ -37,11 +39,13 @@ function Index() {
       }}
     >
       <h1 style={{ marginBottom: 8 }}>Vaul fixtures</h1>
-      <p style={{ color: '#666', marginTop: 0 }}>Click a fixture to render it. Edit any file under tests/ for hot reload.</p>
+      <p style={{ color: '#666', marginTop: 0 }}>
+        Click a fixture to render it. Edit any file under tests/ for hot reload.
+      </p>
       {Object.entries(fixtures).map(([key, { label }]) => (
         <a
-          key={key}
           href={`#${key}`}
+          key={key}
           style={{
             padding: '12px 16px',
             border: '1px solid #ddd',
@@ -59,8 +63,10 @@ function Index() {
 
 function BackLink() {
   return (
-    <a
-      href='#'
+    <button
+      onClick={() => {
+        window.location.hash = '';
+      }}
       style={{
         position: 'fixed',
         top: 8,
@@ -69,14 +75,16 @@ function BackLink() {
         background: '#000',
         color: '#fff',
         padding: '4px 10px',
+        border: 0,
         borderRadius: 4,
         fontSize: 12,
         fontFamily: 'system-ui, sans-serif',
-        textDecoration: 'none',
+        cursor: 'pointer',
       }}
+      type='button'
     >
-      ← back
-    </a>
+      &lt;- back
+    </button>
   );
 }
 

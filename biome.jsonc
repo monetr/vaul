@@ -28,9 +28,12 @@
           "options": {
             "groups": [
               ["react", "react-dom"],
-              ["@radix-ui/**", "@monetr/vaul"],
               ":BLANK_LINE:",
-              ["@rstest/core", "@rstest/browser", "@rstest/browser-react"],
+              ["@rstest/**"],
+              ":BLANK_LINE:",
+              ["@radix-ui/**"],
+              ":BLANK_LINE:",
+              ["@monetr/vaul"],
               ":BLANK_LINE:",
               ["./**"],
               ":PATH:",

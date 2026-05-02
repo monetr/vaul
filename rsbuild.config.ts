@@ -2,7 +2,7 @@ import { defineConfig } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react';
 
 // Dev server for the test fixtures. Run with `pnpm dev:demo` (or
-// `pnpm exec rsbuild dev`). This is purely for interactive development —
+// `pnpm exec rsbuild dev`). This is purely for interactive development --
 // the test runner is rstest, configured separately in rstest.config.ts.
 export default defineConfig({
   source: {

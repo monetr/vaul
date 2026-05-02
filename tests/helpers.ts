@@ -5,9 +5,8 @@ export async function openDrawer() {
   await expect.element(page.getByTestId('content')).not.toBeVisible();
   await page.getByTestId('trigger').click();
   await expect.element(page.getByTestId('content')).toBeVisible();
-  // Vaul's shouldDrag() suppresses dragging for 500ms after open
-  // (src/index.tsx:315 — `Allow scrolling when animating`). Wait it out so
-  // subsequent dragVertically() calls aren't no-ops.
+  // Vaul's shouldDrag() suppresses dragging for 500ms after open (src/index.tsx:315 `Allow scrolling when animating`).
+  // Wait it out so subsequent dragVertically() calls aren't no-ops.
   await wait(500);
 }
 
@@ -18,11 +17,9 @@ function getDrawer(): HTMLElement {
   if (!target) {
     throw new Error('No [data-vaul-drawer] in the DOM');
   }
-  // src/index.tsx:290 calls setPointerCapture(event.pointerId) inside onPress.
-  // Synthetic PointerEvents have a pointerId the browser never observed, so
-  // Chromium throws InvalidPointerId. Stub the capture APIs to no-ops on the
-  // drawer element and its descendants — local to tests, doesn't change library
-  // behavior.
+  // src/index.tsx:290 calls setPointerCapture(event.pointerId) inside onPress. Synthetic PointerEvents have a pointerId
+  // the browser never observed, so Chromium throws InvalidPointerId. Stub the capture APIs to no-ops on the drawer
+  // element and its descendants; local to tests, doesn't change library behavior.
   for (const el of [target, ...Array.from(target.querySelectorAll<HTMLElement>('*'))]) {
     el.setPointerCapture = () => {};
     el.releasePointerCapture = () => {};
@@ -48,9 +45,8 @@ function fire(target: HTMLElement, type: string, x: number, y: number, pointerTy
   );
 }
 
-// Yield to the event loop so React can commit the setIsDragging(true) state
-// update from onPointerDown before our subsequent pointermove events arrive.
-// Without this yield, onDrag short-circuits on the stale isDragging=false state.
+// Yield to the event loop so React can commit the setIsDragging(true) state update from onPointerDown before our
+// subsequent pointermove events arrive. Without this yield, onDrag short-circuits on the stale isDragging=false state.
 const tick = () => new Promise(r => setTimeout(r, 16));
 
 export async function dragVertically(deltaY: number, opts: DragOpts = {}) {
@@ -99,9 +95,8 @@ export async function releaseDrag(deltaY: number, opts: DragOpts = {}) {
 }
 
 /**
- * Click the overlay near its top-left corner. The overlay is full-screen but
- * the drawer content covers most of it; clicking the overlay's center hits
- * the drawer instead. This mirrors the original Playwright `mouse.click(0, 0)`.
+ * Click the overlay near its top-left corner. The overlay is full-screen but the drawer content covers most of it;
+ * clicking the overlay's center hits the drawer instead. This mirrors the original Playwright `mouse.click(0, 0)`.
  */
 export async function clickOverlay(testId = 'overlay') {
   await page.getByTestId(testId).click({ position: { x: 5, y: 5 } });

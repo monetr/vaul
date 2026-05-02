@@ -61,6 +61,7 @@ export function useSnapPoints({
   );
 
   const activeSnapPointIndex = React.useMemo(
+    // biome-ignore lint/complexity/useIndexOf: findIndex with === handles `null | undefined` activeSnapPoint; indexOf rejects them at the type level.
     () => snapPoints?.findIndex(snapPoint => snapPoint === activeSnapPoint) ?? null,
     [snapPoints, activeSnapPoint],
   );
