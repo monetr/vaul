@@ -82,6 +82,23 @@ export async function dragVerticallyHold(deltaY: number, opts: DragOpts = {}) {
   }
 }
 
+export async function dragHorizontally(deltaX: number, opts: DragOpts = {}) {
+  const steps = opts.steps ?? 8;
+  const pointerType = opts.pointerType ?? 'touch';
+  const target = getDrawer();
+  const rect = target.getBoundingClientRect();
+  const startX = rect.left + rect.width / 2;
+  const startY = rect.top + rect.height / 2;
+
+  fire(target, 'pointerdown', startX, startY, pointerType);
+  await tick();
+  for (let i = 1; i <= steps; i++) {
+    fire(target, 'pointermove', startX + (deltaX * i) / steps, startY, pointerType);
+    await tick();
+  }
+  fire(target, 'pointerup', startX + deltaX, startY, pointerType);
+}
+
 export async function releaseDrag(deltaY: number, opts: DragOpts = {}) {
   const pointerType = opts.pointerType ?? 'touch';
   const target = document.querySelector<HTMLElement>('[data-vaul-drawer]');
