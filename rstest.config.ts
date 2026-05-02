@@ -1,5 +1,6 @@
-import { withRslibConfig } from '@rstest/adapter-rslib';
 import { defineConfig } from '@rstest/core';
+
+import { withRslibConfig } from '@rstest/adapter-rslib';
 import type { BrowserContextOptions, LaunchOptions } from 'playwright';
 
 type PlaywrightProviderOptions = {
@@ -7,8 +8,8 @@ type PlaywrightProviderOptions = {
   context?: BrowserContextOptions;
 };
 
-// providerOptions must be identical across browser-mode projects in one rstest
-// invocation, so per-project differences live in `browser.viewport` only.
+// providerOptions must be identical across browser-mode projects in one rstest invocation, so per-project differences
+// live in `browser.viewport` only.
 const sharedProviderOptions = {
   context: {
     hasTouch: true,

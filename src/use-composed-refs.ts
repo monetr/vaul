@@ -21,7 +21,7 @@ function setRef<T>(ref: PossibleRef<T>, value: T) {
  * Accepts callback refs and RefObject(s)
  */
 function composeRefs<T>(...refs: PossibleRef<T>[]) {
-  return (node: T) => refs.forEach(ref => setRef(ref, node));
+  return (node: T) => refs.forEach(ref => void setRef(ref, node));
 }
 
 /**
@@ -29,7 +29,7 @@ function composeRefs<T>(...refs: PossibleRef<T>[]) {
  * Accepts callback refs and RefObject(s)
  */
 function useComposedRefs<T>(...refs: PossibleRef<T>[]) {
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Matching previous behavior?
   return React.useCallback(composeRefs(...refs), refs);
 }
 
