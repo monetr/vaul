@@ -18,7 +18,7 @@
     "lineEnding": "lf",
     "lineWidth": 120,
     "attributePosition": "auto",
-    "includes": ["src/**", "test/**", "!**/*.html", "!**/*.svg", "!**/*.mdx"]
+    "includes": ["src/**", "tests/**", "!**/*.html", "!**/*.svg", "!**/*.mdx"]
   },
   "assist": {
     "actions": {
@@ -27,10 +27,13 @@
           "level": "on",
           "options": {
             "groups": [
-              ["react", "react-dom"],
-              ["@radix-ui/**", "@monetr/vaul", "clsx", "next", "next/**", "tailwindcss"],
+              ["react", "react-dom", "react-dom/**"],
               ":BLANK_LINE:",
-              ["@playwright/test"],
+              ["@rstest/**"],
+              ":BLANK_LINE:",
+              ["@radix-ui/**"],
+              ":BLANK_LINE:",
+              ["@monetr/vaul"],
               ":BLANK_LINE:",
               ["./**"],
               ":PATH:",
@@ -109,7 +112,7 @@
       },
       "nursery": {}
     },
-    "includes": ["src/**", "test/**", "!**/*.html", "!**/*.svg", "!**/*.mdx", "!**/*.css"]
+    "includes": ["src/**", "tests/**", "!**/*.html", "!**/*.svg", "!**/*.mdx", "!**/*.css"]
   },
   "javascript": {
     "formatter": {

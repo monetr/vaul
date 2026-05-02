@@ -178,7 +178,7 @@ function preventScrollMobileSafari() {
       // Transform also needs to be applied in the focus event in cases where focus moves
       // other than tapping on an input directly, e.g. the next/previous buttons in the
       // software keyboard. In these cases, it seems applying the transform in the focus event
-      // is good enough, whereas when tapping an input, it must be done before the focus event. 🤷‍♂️
+      // is good enough, whereas when tapping an input, it must be done before the focus event.
       target.style.transform = 'translateY(-2000px)';
       requestAnimationFrame(() => {
         target.style.transform = '';

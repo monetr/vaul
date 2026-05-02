@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 
 import { DrawerContext, useDrawerContext } from './context';
@@ -218,6 +219,7 @@ export function Root({
   const drawerWidthRef = React.useRef(drawerRef.current?.getBoundingClientRect().width || 0);
   const initialDrawerHeight = React.useRef(0);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: snapPointsOffset is declared after this callback (TDZ); accessing it lazily inside the closure is intentional.
   const onSnapPointChange = React.useCallback(
     (activeSnapPointIndex: number) => {
       // Change openTime ref when we reach the last snap point to prevent dragging for 500ms incase it's scrollable.
@@ -225,7 +227,6 @@ export function Root({
         openTime.current = new Date();
       }
     },
-    // biome-ignore lint/correctness/useExhaustiveDependencies: snapPointsOffset is declared after this callback (TDZ); accessing it lazily inside the closure is intentional.
     [snapPoints],
   );
 
@@ -1087,6 +1088,7 @@ export const Handle = React.forwardRef<HTMLDivElement, HandleProps>(
         return;
       }
 
+      // biome-ignore lint/complexity/useIndexOf: findIndex with === handles `null | undefined` activeSnapPoint; indexOf rejects them at the type level.
       const currentSnapIndex = snapPoints.findIndex(snapPoint => snapPoint === activeSnapPoint);
       if (currentSnapIndex === -1) {
         return; // activeSnapPoint not found in snapPoints

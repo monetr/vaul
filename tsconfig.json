@@ -1,11 +1,16 @@
 {
   "compilerOptions": {
-    "jsx": "react",
+    "jsx": "react-jsx",
     "target": "es2018",
-    "moduleResolution": "node",
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "esModuleInterop": true,
-    "lib": ["es2015", "dom"],
-    "strict": true
+    "lib": ["es2018", "dom", "dom.iterable"],
+    "strict": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "resolveJsonModule": true,
+    "types": ["@rstest/core/globals"]
   },
-  "include": ["src"],
+  "include": ["src", "tests", "rstest.config.ts"]
 }
