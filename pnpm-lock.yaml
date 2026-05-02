@@ -23,10 +23,10 @@ importers:
         version: 2.0.0(@rsbuild/core@2.0.3)
       '@rslib/core':
         specifier: 0.21.3
-        version: 0.21.3(typescript@5.2.2)
+        version: 0.21.3(typescript@5.9.3)
       '@rstest/adapter-rslib':
         specifier: 0.2.2
-        version: 0.2.2(@rslib/core@0.21.3)(@rstest/core@0.9.10)(typescript@5.2.2)
+        version: 0.2.2(@rslib/core@0.21.3)(@rstest/core@0.9.10)(typescript@5.9.3)
       '@rstest/browser':
         specifier: 0.9.10
         version: 0.9.10(@rstest/core@0.9.10)(playwright@1.59.1)
@@ -55,8 +55,8 @@ importers:
         specifier: 18.3.1
         version: 18.3.1(react@18.3.1)
       typescript:
-        specifier: 5.2.2
-        version: 5.2.2
+        specifier: 5.9.3
+        version: 5.9.3
 
   test:
     dependencies:
@@ -865,7 +865,7 @@ packages:
       - '@rspack/core'
     dev: true
 
-  /@rslib/core@0.21.3(typescript@5.2.2):
+  /@rslib/core@0.21.3(typescript@5.9.3):
     resolution: {integrity: sha512-3kyF273GQWIky4rAGD+Nkewlc7OraRwM2rG6wMJ19cYeomN0OKokVbk0vvfLAcQu43mtEO+dnZk6BchUoRmQOg==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
@@ -879,8 +879,8 @@ packages:
         optional: true
     dependencies:
       '@rsbuild/core': 2.0.3
-      rsbuild-plugin-dts: 0.21.3(@rsbuild/core@2.0.3)(typescript@5.2.2)
-      typescript: 5.2.2
+      rsbuild-plugin-dts: 0.21.3(@rsbuild/core@2.0.3)(typescript@5.9.3)
+      typescript: 5.9.3
     transitivePeerDependencies:
       - '@module-federation/runtime-tools'
       - '@typescript/native-preview'
@@ -1013,7 +1013,7 @@ packages:
       react-refresh: 0.18.0
     dev: true
 
-  /@rstest/adapter-rslib@0.2.2(@rslib/core@0.21.3)(@rstest/core@0.9.10)(typescript@5.2.2):
+  /@rstest/adapter-rslib@0.2.2(@rslib/core@0.21.3)(@rstest/core@0.9.10)(typescript@5.9.3):
     resolution: {integrity: sha512-pDfROoS8EY5mzxEmy9KVcd+Xila3QYeovlygCVmoc5p95qJ+3h+adr+elHFy/OZWUn/GMDHwYfhAR7BHQyQUKA==}
     peerDependencies:
       '@rslib/core': '>=0.18.6'
@@ -1023,9 +1023,9 @@ packages:
       typescript:
         optional: true
     dependencies:
-      '@rslib/core': 0.21.3(typescript@5.2.2)
+      '@rslib/core': 0.21.3(typescript@5.9.3)
       '@rstest/core': 0.9.10
-      typescript: 5.2.2
+      typescript: 5.9.3
     dev: true
 
   /@rstest/browser-react@0.9.10(@rstest/core@0.9.10)(react-dom@18.3.1)(react@18.3.1):
@@ -3436,7 +3436,7 @@ packages:
       glob: 7.2.3
     dev: true
 
-  /rsbuild-plugin-dts@0.21.3(@rsbuild/core@2.0.3)(typescript@5.2.2):
+  /rsbuild-plugin-dts@0.21.3(@rsbuild/core@2.0.3)(typescript@5.9.3):
     resolution: {integrity: sha512-8E3/npwRp99gc/Bl5bE1KKN5eIS2TQ3fuA7fBEk67R1RF7V4OtFKVI7mhk3X8zoH/9cclV9v909dguegZDgncw==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
@@ -3454,7 +3454,7 @@ packages:
     dependencies:
       '@ast-grep/napi': 0.37.0
       '@rsbuild/core': 2.0.3
-      typescript: 5.2.2
+      typescript: 5.9.3
     dev: true
 
   /run-applescript@7.1.0:
@@ -3853,6 +3853,12 @@ packages:
 
   /typescript@5.2.2:
     resolution: {integrity: sha512-mI4WrpHsbCIcwT9cF4FZvr80QUeKvsUsUvKDoR+X/7XHQH98xYD8YHZg7ANtz2GtZt/CBq2QJ0thkGJMHfqc1w==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+    dev: true
+
+  /typescript@5.9.3:
+    resolution: {integrity: sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==}
     engines: {node: '>=14.17'}
     hasBin: true
     dev: true
