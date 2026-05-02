@@ -27,7 +27,7 @@
           "level": "on",
           "options": {
             "groups": [
-              ["react", "react-dom"],
+              ["react", "react-dom", "react-dom/**"],
               ":BLANK_LINE:",
               ["@rstest/**"],
               ":BLANK_LINE:",

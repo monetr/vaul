@@ -1,4 +1,5 @@
 import { StrictMode, useEffect, useState } from 'react';
+import { createRoot } from 'react-dom/client';
 
 import { BaseDrawer } from '../fixtures/BaseDrawer';
 import { ControlledDrawer } from '../fixtures/ControlledDrawer';
@@ -8,8 +9,6 @@ import { NestedDrawers } from '../fixtures/NestedDrawers';
 import { NonDismissibleDrawer } from '../fixtures/NonDismissibleDrawer';
 import { RedirectDrawer } from '../fixtures/RedirectDrawer';
 import { ScaledBackground } from '../fixtures/ScaledBackground';
-
-import { createRoot } from 'react-dom/client';
 
 type Fixture = { label: string; Component: () => JSX.Element };
 
