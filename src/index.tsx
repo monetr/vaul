@@ -114,7 +114,8 @@ export type DialogProps = {
    */
   defaultOpen?: boolean;
   /**
-   * When set to `true` prevents scrolling on the document body on mount, and restores it on unmount.
+   * When set to `true` disables vaul's scroll-prevention so the document body can scroll while
+   * the drawer is open. Default behavior locks body scroll while the drawer is open.
    * @default false
    */
   disablePreventScroll?: boolean;
@@ -164,7 +165,7 @@ export function Root({
   noBodyStyles = false,
   direction = 'bottom',
   defaultOpen = false,
-  disablePreventScroll = true,
+  disablePreventScroll = false,
   snapToSequentialPoint = false,
   preventScrollRestoration = false,
   repositionInputs = true,
@@ -210,6 +211,7 @@ export function Root({
   const lastTimeDragPrevented = React.useRef<Date | null>(null);
   const isAllowedToDrag = React.useRef<boolean>(false);
   const nestedOpenChangeTimer = React.useRef<NodeJS.Timeout | null>(null);
+  const closeDrawerSnapTimer = React.useRef<NodeJS.Timeout | null>(null);
   const pointerStart = React.useRef(0);
   const keyboardIsOpen = React.useRef(false);
   const shouldAnimate = React.useRef(!defaultOpen);
@@ -254,7 +256,7 @@ export function Root({
 
   usePreventScroll({
     isDisabled:
-      !isOpen || isDragging || !modal || justReleased || !hasBeenOpened || !repositionInputs || !disablePreventScroll,
+      !isOpen || isDragging || !modal || justReleased || !hasBeenOpened || !repositionInputs || disablePreventScroll,
   });
 
   const { restorePositionSetting } = usePositionFixed({
@@ -294,7 +296,7 @@ export function Root({
   }
 
   function shouldDrag(el: EventTarget, isDraggingInDirection: boolean) {
-    let element = el as HTMLElement;
+    const element = el as HTMLElement;
     const highlightedText = window.getSelection()?.toString();
     const swipeAmount = drawerRef.current ? getTranslate(drawerRef.current, direction) : null;
     const date = new Date();
@@ -345,24 +347,25 @@ export function Root({
       return false;
     }
 
-    // Keep climbing up the DOM tree as long as there's a parent
-    while (element) {
-      // Check if the element is scrollable
-      if (element.scrollHeight > element.clientHeight) {
-        if (element.scrollTop !== 0) {
+    // Climb up the DOM. parentElement (not parentNode) keeps the type as HTMLElement and stops
+    // cleanly at Document or a ShadowRoot boundary so we don't dereference scrollHeight on a
+    // non-element node.
+    let cursor: HTMLElement | null = element;
+    while (cursor) {
+      if (cursor.scrollHeight > cursor.clientHeight) {
+        if (cursor.scrollTop !== 0) {
           lastTimeDragPrevented.current = new Date();
 
           // The element is scrollable and not scrolled to the top, so don't drag
           return false;
         }
 
-        if (element.getAttribute('role') === 'dialog') {
+        if (cursor.getAttribute('role') === 'dialog') {
           return true;
         }
       }
 
-      // Move up to the parent element
-      element = element.parentNode as HTMLElement;
+      cursor = cursor.parentElement;
     }
 
     // No scrollable parents not scrolled to the top found, so drag
@@ -518,7 +521,7 @@ export function Root({
           keyboardIsOpen.current = !keyboardIsOpen.current;
         }
 
-        if (snapPoints && snapPoints.length > 0 && snapPointsOffset && activeSnapPointIndex) {
+        if (snapPoints && snapPoints.length > 0 && snapPointsOffset && activeSnapPointIndex != null) {
           const activeSnapPointHeight = snapPointsOffset[activeSnapPointIndex] || 0;
           diffFromInitial += activeSnapPointHeight;
         }
@@ -562,7 +565,11 @@ export function Root({
       setIsOpen(false);
     }
 
-    setTimeout(() => {
+    if (closeDrawerSnapTimer.current) {
+      clearTimeout(closeDrawerSnapTimer.current);
+    }
+    closeDrawerSnapTimer.current = setTimeout(() => {
+      closeDrawerSnapTimer.current = null;
       if (snapPoints) {
         setActiveSnapPoint(snapPoints[0]);
       }
@@ -620,6 +627,11 @@ export function Root({
     isAllowedToDrag.current = false;
     setIsDragging(false);
     dragEndTime.current = new Date();
+    // onDrag writes a fractional opacity on the overlay during the drag. We don't go through
+    // resetDrawer here, so clear that inline opacity ourselves or it sticks until the next drag.
+    if (overlayRef.current) {
+      overlayRef.current.style.opacity = '';
+    }
   }
 
   function onRelease(event: React.PointerEvent<HTMLDivElement> | null) {
@@ -707,6 +719,30 @@ export function Root({
       reset(document.documentElement, 'scrollBehavior');
     };
   }, [isOpen]);
+
+  // If the consumer changes the active snap point while a close-drawer reset is pending, drop
+  // the timer. Otherwise the stale reset would fire 500ms later and silently clobber the new
+  // value the user just picked.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: only react to prop changes
+  React.useEffect(() => {
+    if (closeDrawerSnapTimer.current) {
+      clearTimeout(closeDrawerSnapTimer.current);
+      closeDrawerSnapTimer.current = null;
+    }
+  }, [activeSnapPointProp]);
+
+  React.useEffect(() => {
+    return () => {
+      if (closeDrawerSnapTimer.current) {
+        clearTimeout(closeDrawerSnapTimer.current);
+        closeDrawerSnapTimer.current = null;
+      }
+      if (nestedOpenChangeTimer.current) {
+        clearTimeout(nestedOpenChangeTimer.current);
+        nestedOpenChangeTimer.current = null;
+      }
+    };
+  }, []);
 
   function onNestedOpenChange(o: boolean) {
     const scale = o ? (window.innerWidth - NESTED_DISPLACEMENT) / window.innerWidth : 1;
@@ -1083,8 +1119,10 @@ export const Handle = React.forwardRef<HTMLDivElement, HandleProps>(
 
       const isLastSnapPoint = activeSnapPoint === snapPoints[snapPoints.length - 1];
 
-      if (isLastSnapPoint && dismissible) {
-        closeDrawer();
+      // At the top snap point there's nowhere left to cycle. If we can dismiss, close. Otherwise
+      // bail out, since the previous behavior fell through and called setActiveSnapPoint(undefined).
+      if (isLastSnapPoint) {
+        if (dismissible) closeDrawer();
         return;
       }
 
@@ -1105,11 +1143,23 @@ export const Handle = React.forwardRef<HTMLDivElement, HandleProps>(
     }
 
     function handleCancelInteraction() {
-      if (closeTimeoutIdRef.current) {
+      if (closeTimeoutIdRef.current !== null) {
         window.clearTimeout(closeTimeoutIdRef.current);
+        closeTimeoutIdRef.current = null;
       }
       shouldCancelInteractionRef.current = false;
     }
+
+    // Make sure the long-press timer can't outlive the component. Without this the timer would
+    // happily fire after unmount and flip a stale ref.
+    React.useEffect(() => {
+      return () => {
+        if (closeTimeoutIdRef.current !== null) {
+          window.clearTimeout(closeTimeoutIdRef.current);
+          closeTimeoutIdRef.current = null;
+        }
+      };
+    }, []);
 
     return (
       <div

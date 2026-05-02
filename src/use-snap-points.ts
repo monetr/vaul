@@ -118,6 +118,12 @@ export function useSnapPoints({
   const snapToPoint = React.useCallback(
     (dimension: number) => {
       const newSnapPointIndex = snapPointsOffset?.indexOf(dimension) ?? null;
+      // If the dimension isn't one of our offsets (indexOf returned -1), bail before mutating
+      // any styles. We used to silently coerce this to index 0, which masked out-of-bounds
+      // call sites like activeSnapPointIndex + dragDirection going negative.
+      if (newSnapPointIndex == null || newSnapPointIndex < 0) {
+        return;
+      }
       onSnapPointChange(newSnapPointIndex);
 
       set(drawerRef.current, {
@@ -143,7 +149,7 @@ export function useSnapPoints({
         });
       }
 
-      setActiveSnapPoint(snapPoints?.[Math.max(newSnapPointIndex, 0)]);
+      setActiveSnapPoint(snapPoints?.[newSnapPointIndex]);
     },
     [
       drawerRef.current,
@@ -266,7 +272,9 @@ export function useSnapPoints({
     });
   }
 
-  function getPercentageDragged(absDraggedDistance: number, isDraggingDown: boolean) {
+  // The caller passes `isDraggingInDirection` (true when dragging in the open direction). For a
+  // bottom drawer that's "up", which is why the original parameter name was misleading.
+  function getPercentageDragged(absDraggedDistance: number, isDraggingInDirection: boolean) {
     if (!snapPoints || typeof activeSnapPointIndex !== 'number' || !snapPointsOffset || fadeFromIndex === undefined) {
       return null;
     }
@@ -275,12 +283,12 @@ export function useSnapPoints({
     const isOverlaySnapPoint = activeSnapPointIndex === fadeFromIndex - 1;
     const isOverlaySnapPointOrHigher = activeSnapPointIndex >= fadeFromIndex;
 
-    if (isOverlaySnapPointOrHigher && isDraggingDown) {
+    if (isOverlaySnapPointOrHigher && isDraggingInDirection) {
       return 0;
     }
 
     // Don't animate, but still use this one if we are dragging away from the overlaySnapPoint
-    if (isOverlaySnapPoint && !isDraggingDown) {
+    if (isOverlaySnapPoint && !isDraggingInDirection) {
       return 1;
     }
     if (!shouldFade && !isOverlaySnapPoint) {

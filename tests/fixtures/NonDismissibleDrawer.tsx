@@ -15,7 +15,7 @@ export function NonDismissibleDrawer() {
         </Drawer.Trigger>
         <Drawer.Portal>
           <Drawer.Overlay className='vaul-test-overlay' data-testid='overlay' />
-          <Drawer.Content className='vaul-test-content-bottom' data-testid='content'>
+          <Drawer.Content aria-describedby={undefined} className='vaul-test-content-bottom' data-testid='content'>
             <Drawer.Title>Non-dismissible</Drawer.Title>
             <button data-testid='dismiss-button' onClick={() => setOpen(false)} type='button'>
               Click to close

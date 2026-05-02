@@ -3,16 +3,14 @@ import { useState } from 'react';
 import { Drawer } from '../../src';
 import './styles.css';
 
-const snapPoints: (number | string)[] = ['148px', '355px'];
+const snapPoints: (number | string)[] = ['200px', '500px'];
 
-export function HandleDrawer() {
+export function KeyboardSnapDrawer() {
   const [snap, setSnap] = useState<number | string | null>(snapPoints[0]);
-  const activeSnapPointIndex = snapPoints.indexOf(snap as string);
 
   return (
-    <div className='vaul-test-wrapper'>
-      <div data-testid='active-snap-index'>{activeSnapPointIndex}</div>
-      <Drawer.Root activeSnapPoint={snap} open setActiveSnapPoint={setSnap} snapPoints={snapPoints}>
+    <div className='vaul-test-wrapper' data-vaul-drawer-wrapper=''>
+      <Drawer.Root activeSnapPoint={snap} open repositionInputs setActiveSnapPoint={setSnap} snapPoints={snapPoints}>
         <Drawer.Trigger asChild>
           <button className='vaul-test-trigger' data-testid='trigger' type='button'>
             Open Drawer
@@ -21,11 +19,8 @@ export function HandleDrawer() {
         <Drawer.Overlay className='vaul-test-overlay' data-testid='overlay' />
         <Drawer.Portal>
           <Drawer.Content aria-describedby={undefined} className='vaul-test-content-snap' data-testid='content'>
-            <Drawer.Handle className='vaul-test-handle' data-testid='handle' />
-            <div className='vaul-test-snap-content'>
-              <Drawer.Title>With handle</Drawer.Title>
-              <p>handle test content</p>
-            </div>
+            <Drawer.Title>Keyboard snap fixture</Drawer.Title>
+            <input data-testid='kb-input' type='text' />
           </Drawer.Content>
         </Drawer.Portal>
       </Drawer.Root>

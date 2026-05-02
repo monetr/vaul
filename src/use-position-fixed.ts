@@ -39,12 +39,14 @@ export function usePositionFixed({
 
     // If previousBodyPosition is already set, don't set it again.
     if (previousBodyPosition === null && isOpen && !noBodyStyles) {
+      // Capture the actual original right value. Hardcoding 'unset' here meant that on restore
+      // we'd write `right: unset` back to the body and leak that style across drawer instances.
       previousBodyPosition = {
         position: document.body.style.position,
         top: document.body.style.top,
         left: document.body.style.left,
         height: document.body.style.height,
-        right: 'unset',
+        right: document.body.style.right,
       };
 
       // Update the dom inside an animation frame

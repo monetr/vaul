@@ -31,7 +31,7 @@ export function RedirectDrawer() {
         </Drawer.Trigger>
         <Drawer.Portal>
           <Drawer.Overlay className='vaul-test-overlay' data-testid='overlay' />
-          <Drawer.Content className='vaul-test-content-bottom' data-testid='content'>
+          <Drawer.Content aria-describedby={undefined} className='vaul-test-content-bottom' data-testid='content'>
             <Drawer.Title>Redirect</Drawer.Title>
             <Drawer.Close data-testid='drawer-close'>Close</Drawer.Close>
             <button

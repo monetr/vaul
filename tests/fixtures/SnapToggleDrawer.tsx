@@ -5,7 +5,9 @@ import './styles.css';
 
 const snapPoints: (number | string)[] = [0, '148px', '355px', 1];
 
-export function InitialSnapDrawer() {
+// Mirror of InitialSnapDrawer with an extra `set-snap-2` button placed inside content. The
+// drawer is hardcoded `open` (not controlled) to match the working InitialSnapDrawer baseline.
+export function SnapToggleDrawer() {
   const [snap, setSnap] = useState<number | string | null>(snapPoints[1]);
   const activeSnapPointIndex = snapPoints.indexOf(snap as string);
 
@@ -22,8 +24,11 @@ export function InitialSnapDrawer() {
         <Drawer.Portal>
           <Drawer.Content aria-describedby={undefined} className='vaul-test-content-snap' data-testid='content'>
             <div className='vaul-test-snap-content'>
-              <Drawer.Title>Initial snap</Drawer.Title>
+              <Drawer.Title>Snap toggle</Drawer.Title>
               <p>scrollable content for snap-point sizing</p>
+              <button data-testid='set-snap-2' onClick={() => setSnap(snapPoints[2])} type='button'>
+                Snap to 2
+              </button>
             </div>
           </Drawer.Content>
         </Drawer.Portal>

@@ -26,7 +26,9 @@ export function set(el: Element | HTMLElement | null | undefined, styles: Style,
   if (!el || !(el instanceof HTMLElement)) {
     return;
   }
-  const originalStyles: Style = {};
+  // Merge into whatever's already cached. Without this, sequential set() calls clobbered the
+  // cache, so reset() would only undo the most recent call's keys.
+  const originalStyles: Style = { ...(cache.get(el) ?? {}) };
 
   Object.entries(styles).forEach(([key, value]: [string, string]) => {
     if (key.startsWith('--')) {
@@ -34,7 +36,9 @@ export function set(el: Element | HTMLElement | null | undefined, styles: Style,
       return;
     }
 
-    originalStyles[key] = (el.style as any)[key];
+    if (!(key in originalStyles)) {
+      originalStyles[key] = (el.style as any)[key];
+    }
     (el.style as any)[key] = value;
   });
 
@@ -104,11 +108,18 @@ export function assignStyle(element: HTMLElement | null | undefined, style: Part
     return () => {};
   }
 
-  const prevStyle = element.style.cssText;
+  // Snapshot only the keys we're about to change. Restoring the full cssText would also wipe
+  // any inline styles other helpers (like set()) wrote in the meantime.
+  const previousValues: Partial<CSSStyleDeclaration> = {};
+  for (const key of Object.keys(style) as (keyof CSSStyleDeclaration)[]) {
+    (previousValues as any)[key] = (element.style as any)[key];
+  }
   Object.assign(element.style, style);
 
   return () => {
-    element.style.cssText = prevStyle;
+    for (const key of Object.keys(previousValues) as (keyof CSSStyleDeclaration)[]) {
+      (element.style as any)[key] = (previousValues as any)[key];
+    }
   };
 }
 
