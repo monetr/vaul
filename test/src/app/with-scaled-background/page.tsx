@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import clsx from 'clsx';
-import { Drawer, type DrawerDirection } from 'vaul';
+import { Drawer, type DrawerDirection } from '@monetr/vaul';
 
 const CenteredContent = () => {
   return (

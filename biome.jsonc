@@ -28,7 +28,7 @@
           "options": {
             "groups": [
               ["react", "react-dom"],
-              ["@radix-ui/**", "clsx", "next", "next/**", "tailwindcss", "vaul"],
+              ["@radix-ui/**", "@monetr/vaul", "clsx", "next", "next/**", "tailwindcss"],
               ":BLANK_LINE:",
               ["@playwright/test"],
               ":BLANK_LINE:",
