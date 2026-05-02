@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
     "jsx": "react-jsx",
-    "target": "es2018",
+    "target": "es2020",
     "module": "esnext",
     "moduleResolution": "bundler",
     "esModuleInterop": true,
-    "lib": ["es2018", "dom", "dom.iterable"],
+    "lib": ["es2020", "dom", "dom.iterable"],
     "strict": true,
     "skipLibCheck": true,
     "isolatedModules": true,
