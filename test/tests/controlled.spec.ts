@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+
 import { ANIMATION_DURATION } from './constants';
 
 test.beforeEach(async ({ page }) => {

@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { isSafari } from './browser';
 
 let previousBodyPosition: Record<string, string> | null = null;
@@ -32,7 +33,9 @@ export function usePositionFixed({
 
   const setPositionFixed = React.useCallback(() => {
     // All browsers on iOS will return true here.
-    if (!isSafari()) return;
+    if (!isSafari()) {
+      return;
+    }
 
     // If previousBodyPosition is already set, don't set it again.
     if (previousBodyPosition === null && isOpen && !noBodyStyles) {
@@ -68,11 +71,13 @@ export function usePositionFixed({
         300,
       );
     }
-  }, [isOpen]);
+  }, [isOpen, noBodyStyles]);
 
   const restorePositionSetting = React.useCallback(() => {
     // All browsers on iOS will return true here.
-    if (!isSafari()) return;
+    if (!isSafari()) {
+      return;
+    }
 
     if (previousBodyPosition !== null && !noBodyStyles) {
       // Convert the position from "px" to Int
@@ -93,7 +98,7 @@ export function usePositionFixed({
 
       previousBodyPosition = null;
     }
-  }, [activeUrl]);
+  }, [activeUrl, preventScrollRestoration, noBodyStyles]);
 
   React.useEffect(() => {
     function onScroll() {
@@ -110,21 +115,29 @@ export function usePositionFixed({
   }, []);
 
   React.useEffect(() => {
-    if (!modal) return;
+    if (!modal) {
+      return;
+    }
 
     return () => {
-      if (typeof document === 'undefined') return;
+      if (typeof document === 'undefined') {
+        return;
+      }
 
       // Another drawer is opened, safe to ignore the execution
       const hasDrawerOpened = !!document.querySelector('[data-vaul-drawer]');
-      if (hasDrawerOpened) return;
+      if (hasDrawerOpened) {
+        return;
+      }
 
       restorePositionSetting();
     };
   }, [modal, restorePositionSetting]);
 
   React.useEffect(() => {
-    if (nested || !hasBeenOpened) return;
+    if (nested || !hasBeenOpened) {
+      return;
+    }
     // This is needed to force Safari toolbar to show **before** the drawer starts animating to prevent a gnarly shift from happening
     if (isOpen) {
       // avoid for standalone mode (PWA)
@@ -139,7 +152,7 @@ export function usePositionFixed({
     } else {
       restorePositionSetting();
     }
-  }, [isOpen, hasBeenOpened, activeUrl, modal, nested, setPositionFixed, restorePositionSetting]);
+  }, [isOpen, hasBeenOpened, modal, nested, setPositionFixed, restorePositionSetting]);
 
   return { restorePositionSetting };
 }

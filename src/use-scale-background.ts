@@ -1,7 +1,8 @@
 import React, { useMemo } from 'react';
-import { useDrawerContext } from './context';
-import { assignStyle, chain, isVertical, reset } from './helpers';
+
 import { BORDER_RADIUS, TRANSITIONS, WINDOW_TOP_OFFSET } from './constants';
+import { useDrawerContext } from './context';
+import { assignStyle, chain, isVertical } from './helpers';
 
 const noop = () => () => {};
 
@@ -16,12 +17,16 @@ export function useScaleBackground() {
 
   React.useEffect(() => {
     if (isOpen && shouldScaleBackground) {
-      if (timeoutIdRef.current) clearTimeout(timeoutIdRef.current);
+      if (timeoutIdRef.current) {
+        clearTimeout(timeoutIdRef.current);
+      }
       const wrapper =
         (document.querySelector('[data-vaul-drawer-wrapper]') as HTMLElement) ||
         (document.querySelector('[vaul-drawer-wrapper]') as HTMLElement);
 
-      if (!wrapper) return;
+      if (!wrapper) {
+        return;
+      }
 
       chain(
         setBackgroundColorOnScale && !noBodyStyles ? assignStyle(document.body, { background: 'black' }) : noop,
@@ -56,5 +61,13 @@ export function useScaleBackground() {
         }, TRANSITIONS.DURATION * 1000);
       };
     }
-  }, [isOpen, shouldScaleBackground, initialBackgroundColor]);
+  }, [
+    isOpen,
+    shouldScaleBackground,
+    initialBackgroundColor,
+    setBackgroundColorOnScale,
+    noBodyStyles,
+    getScale,
+    direction,
+  ]);
 }

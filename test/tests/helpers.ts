@@ -1,4 +1,5 @@
-import { expect, Page } from '@playwright/test';
+import { expect, type Page } from '@playwright/test';
+
 import { ANIMATION_DURATION } from './constants';
 
 export async function openDrawer(page: Page) {
@@ -15,11 +16,11 @@ export async function dragWithSpeed(
   endY: number,
   speed: number = 10,
 ): Promise<void> {
-  const startX = 0;
+  const _startX = 0;
   const distance = Math.abs(endY - startY);
   const steps = distance / speed;
-  const delayPerStep = 10; // in milliseconds
-  const yOffset = (endY - startY) / steps;
+  const _delayPerStep = 10; // in milliseconds
+  const _yOffset = (endY - startY) / steps;
 
   await page.hover(selector);
   await page.mouse.down();

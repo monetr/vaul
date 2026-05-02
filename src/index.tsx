@@ -1,28 +1,32 @@
 'use client';
 
-import * as DialogPrimitive from '@radix-ui/react-dialog';
 import React from 'react';
+import * as DialogPrimitive from '@radix-ui/react-dialog';
+
 import { DrawerContext, useDrawerContext } from './context';
 import './style.css';
-import { usePreventScroll, isInput } from './use-prevent-scroll';
-import { useComposedRefs } from './use-composed-refs';
-import { useSnapPoints } from './use-snap-points';
-import { set, getTranslate, dampenValue, isVertical, reset } from './helpers';
+
+import { isIOS, isMobileFirefox } from './browser';
 import {
+  BORDER_RADIUS,
+  CLOSE_THRESHOLD,
+  DRAG_CLASS,
+  NESTED_DISPLACEMENT,
+  SCROLL_LOCK_TIMEOUT,
   TRANSITIONS,
   VELOCITY_THRESHOLD,
-  CLOSE_THRESHOLD,
-  SCROLL_LOCK_TIMEOUT,
-  BORDER_RADIUS,
-  NESTED_DISPLACEMENT,
   WINDOW_TOP_OFFSET,
-  DRAG_CLASS,
 } from './constants';
-import { DrawerDirection } from './types';
+import { dampenValue, getTranslate, isVertical, reset, set } from './helpers';
+import type { DrawerDirection } from './types';
+import { useComposedRefs } from './use-composed-refs';
 import { useControllableState } from './use-controllable-state';
-import { useScaleBackground } from './use-scale-background';
 import { usePositionFixed } from './use-position-fixed';
-import { isIOS, isMobileFirefox } from './browser';
+import { isInput, usePreventScroll } from './use-prevent-scroll';
+import { useScaleBackground } from './use-scale-background';
+import { useSnapPoints } from './use-snap-points';
+
+export type { DrawerDirection };
 
 export interface WithFadeFromProps {
   /**
@@ -214,10 +218,16 @@ export function Root({
   const drawerWidthRef = React.useRef(drawerRef.current?.getBoundingClientRect().width || 0);
   const initialDrawerHeight = React.useRef(0);
 
-  const onSnapPointChange = React.useCallback((activeSnapPointIndex: number) => {
-    // Change openTime ref when we reach the last snap point to prevent dragging for 500ms incase it's scrollable.
-    if (snapPoints && activeSnapPointIndex === snapPointsOffset.length - 1) openTime.current = new Date();
-  }, []);
+  const onSnapPointChange = React.useCallback(
+    (activeSnapPointIndex: number) => {
+      // Change openTime ref when we reach the last snap point to prevent dragging for 500ms incase it's scrollable.
+      if (snapPoints && activeSnapPointIndex === snapPointsOffset.length - 1) {
+        openTime.current = new Date();
+      }
+    },
+    // biome-ignore lint/correctness/useExhaustiveDependencies: snapPointsOffset is declared after this callback (TDZ); accessing it lazily inside the closure is intentional.
+    [snapPoints],
+  );
 
   const {
     activeSnapPoint,
@@ -260,8 +270,12 @@ export function Root({
   }
 
   function onPress(event: React.PointerEvent<HTMLDivElement>) {
-    if (!dismissible && !snapPoints) return;
-    if (drawerRef.current && !drawerRef.current.contains(event.target as Node)) return;
+    if (!dismissible && !snapPoints) {
+      return;
+    }
+    if (drawerRef.current && !drawerRef.current.contains(event.target as Node)) {
+      return;
+    }
 
     drawerHeightRef.current = drawerRef.current?.getBoundingClientRect().height || 0;
     drawerWidthRef.current = drawerRef.current?.getBoundingClientRect().width || 0;
@@ -370,7 +384,9 @@ export function Root({
       const noCloseSnapPointsPreCondition = snapPoints && !dismissible && !isDraggingInDirection;
 
       // Disallow dragging down to close when first snap point is the active one and dismissible prop is set to false.
-      if (noCloseSnapPointsPreCondition && activeSnapPointIndex === 0) return;
+      if (noCloseSnapPointsPreCondition && activeSnapPointIndex === 0) {
+        return;
+      }
 
       // We need to capture last time when drag with scroll was triggered and have a timeout between
       const absDraggedDistance = Math.abs(draggedDistance);
@@ -391,7 +407,9 @@ export function Root({
         return;
       }
 
-      if (!isAllowedToDrag.current && !shouldDrag(event.target, isDraggingInDirection)) return;
+      if (!isAllowedToDrag.current && !shouldDrag(event.target, isDraggingInDirection)) {
+        return;
+      }
       drawerRef.current.classList.add(DRAG_CLASS);
       // If shouldDrag gave true once after pressing down on the drawer, we set isAllowedToDrag to true and it will remain true until we let go, there's no reason to disable dragging mid way, ever, and that's the solution to it
       isAllowedToDrag.current = true;
@@ -475,7 +493,9 @@ export function Root({
 
   React.useEffect(() => {
     function onVisualViewportChange() {
-      if (!drawerRef.current || !repositionInputs) return;
+      if (!drawerRef.current || !repositionInputs) {
+        return;
+      }
 
       const focusedElement = document.activeElement as HTMLElement;
       if (isInput(focusedElement) || keyboardIsOpen.current) {
@@ -531,7 +551,7 @@ export function Root({
 
     window.visualViewport?.addEventListener('resize', onVisualViewportChange);
     return () => window.visualViewport?.removeEventListener('resize', onVisualViewportChange);
-  }, [activeSnapPointIndex, snapPoints, snapPointsOffset]);
+  }, [activeSnapPointIndex, snapPoints, snapPointsOffset, repositionInputs, fixed]);
 
   function closeDrawer(fromWithin?: boolean) {
     cancelDrag();
@@ -549,7 +569,9 @@ export function Root({
   }
 
   function resetDrawer() {
-    if (!drawerRef.current) return;
+    if (!drawerRef.current) {
+      return;
+    }
     const wrapper = document.querySelector('[data-vaul-drawer-wrapper]');
     const currentSwipeAmount = getTranslate(drawerRef.current, direction);
 
@@ -589,7 +611,9 @@ export function Root({
   }
 
   function cancelDrag() {
-    if (!isDragging || !drawerRef.current) return;
+    if (!isDragging || !drawerRef.current) {
+      return;
+    }
 
     drawerRef.current.classList.remove(DRAG_CLASS);
     isAllowedToDrag.current = false;
@@ -598,7 +622,9 @@ export function Root({
   }
 
   function onRelease(event: React.PointerEvent<HTMLDivElement> | null) {
-    if (!isDragging || !drawerRef.current) return;
+    if (!isDragging || !drawerRef.current) {
+      return;
+    }
 
     drawerRef.current.classList.remove(DRAG_CLASS);
     isAllowedToDrag.current = false;
@@ -606,9 +632,13 @@ export function Root({
     dragEndTime.current = new Date();
     const swipeAmount = getTranslate(drawerRef.current, direction);
 
-    if (!event || !shouldDrag(event.target, false) || !swipeAmount || Number.isNaN(swipeAmount)) return;
+    if (!event || !shouldDrag(event.target, false) || !swipeAmount || Number.isNaN(swipeAmount)) {
+      return;
+    }
 
-    if (dragStartTime.current === null) return;
+    if (dragStartTime.current === null) {
+      return;
+    }
 
     const timeTaken = dragEndTime.current.getTime() - dragStartTime.current.getTime();
     const distMoved = pointerStart.current - (isVertical(direction) ? event.pageY : event.pageX);
@@ -707,7 +737,9 @@ export function Root({
   }
 
   function onNestedDrag(_event: React.PointerEvent<HTMLDivElement>, percentageDragged: number) {
-    if (percentageDragged < 0) return;
+    if (percentageDragged < 0) {
+      return;
+    }
 
     const initialScale = (window.innerWidth - NESTED_DISPLACEMENT) / window.innerWidth;
     const newScale = initialScale + percentageDragged * (1 - initialScale);
@@ -748,8 +780,11 @@ export function Root({
   return (
     <DialogPrimitive.Root
       defaultOpen={defaultOpen}
-      onOpenChange={(open) => {
-        if (!dismissible && !open) return;
+      modal={modal}
+      onOpenChange={open => {
+        if (!dismissible && !open) {
+          return;
+        }
         if (open) {
           setHasBeenOpened(true);
         } else {
@@ -759,7 +794,6 @@ export function Root({
         setIsOpen(open);
       }}
       open={isOpen}
-      modal={modal}
     >
       <DrawerContext.Provider
         value={{
@@ -801,7 +835,7 @@ export function Root({
 }
 
 export const Overlay = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>>(
-  function ({ ...rest }, ref) {
+  ({ ...rest }, ref) => {
     const { overlayRef, snapPoints, onRelease, shouldFade, isOpen, modal, shouldAnimate } = useDrawerContext();
     const composedRef = useComposedRefs(ref, overlayRef);
     const hasSnapPoints = snapPoints && snapPoints.length > 0;
@@ -814,12 +848,12 @@ export const Overlay = React.forwardRef<HTMLDivElement, React.ComponentPropsWith
 
     return (
       <DialogPrimitive.Overlay
-        onMouseUp={onMouseUp}
-        ref={composedRef}
-        data-vaul-overlay=""
+        data-vaul-animate={shouldAnimate?.current ? 'true' : 'false'}
+        data-vaul-overlay=''
         data-vaul-snap-points={isOpen && hasSnapPoints ? 'true' : 'false'}
         data-vaul-snap-points-overlay={isOpen && shouldFade ? 'true' : 'false'}
-        data-vaul-animate={shouldAnimate?.current ? 'true' : 'false'}
+        onMouseUp={onMouseUp}
+        ref={composedRef}
         {...rest}
       />
     );
@@ -830,159 +864,167 @@ Overlay.displayName = 'Drawer.Overlay';
 
 export type ContentProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>;
 
-export const Content = React.forwardRef<HTMLDivElement, ContentProps>(function (
-  { onPointerDownOutside, style, onOpenAutoFocus, ...rest },
-  ref,
-) {
-  const {
-    drawerRef,
-    onPress,
-    onRelease,
-    onDrag,
-    keyboardIsOpen,
-    snapPointsOffset,
-    activeSnapPointIndex,
-    modal,
-    isOpen,
-    direction,
-    snapPoints,
-    container,
-    handleOnly,
-    shouldAnimate,
-    autoFocus,
-  } = useDrawerContext();
-  // Needed to use transition instead of animations
-  const [delayedSnapPoints, setDelayedSnapPoints] = React.useState(false);
-  const composedRef = useComposedRefs(ref, drawerRef);
-  const pointerStartRef = React.useRef<{ x: number; y: number } | null>(null);
-  const lastKnownPointerEventRef = React.useRef<React.PointerEvent<HTMLDivElement> | null>(null);
-  const wasBeyondThePointRef = React.useRef(false);
-  const hasSnapPoints = snapPoints && snapPoints.length > 0;
-  useScaleBackground();
+export const Content = React.forwardRef<HTMLDivElement, ContentProps>(
+  ({ onPointerDownOutside, style, onOpenAutoFocus, ...rest }, ref) => {
+    const {
+      drawerRef,
+      onPress,
+      onRelease,
+      onDrag,
+      keyboardIsOpen,
+      snapPointsOffset,
+      activeSnapPointIndex,
+      modal,
+      isOpen,
+      direction,
+      snapPoints,
+      container,
+      handleOnly,
+      shouldAnimate,
+      autoFocus,
+    } = useDrawerContext();
+    // Needed to use transition instead of animations
+    const [delayedSnapPoints, setDelayedSnapPoints] = React.useState(false);
+    const composedRef = useComposedRefs(ref, drawerRef);
+    const pointerStartRef = React.useRef<{ x: number; y: number } | null>(null);
+    const lastKnownPointerEventRef = React.useRef<React.PointerEvent<HTMLDivElement> | null>(null);
+    const wasBeyondThePointRef = React.useRef(false);
+    const hasSnapPoints = snapPoints && snapPoints.length > 0;
+    useScaleBackground();
 
-  const isDeltaInDirection = (delta: { x: number; y: number }, direction: DrawerDirection, threshold = 0) => {
-    if (wasBeyondThePointRef.current) return true;
-
-    const deltaY = Math.abs(delta.y);
-    const deltaX = Math.abs(delta.x);
-    const isDeltaX = deltaX > deltaY;
-    const dFactor = ['bottom', 'right'].includes(direction) ? 1 : -1;
-
-    if (direction === 'left' || direction === 'right') {
-      const isReverseDirection = delta.x * dFactor < 0;
-      if (!isReverseDirection && deltaX >= 0 && deltaX <= threshold) {
-        return isDeltaX;
+    const isDeltaInDirection = (delta: { x: number; y: number }, direction: DrawerDirection, threshold = 0) => {
+      if (wasBeyondThePointRef.current) {
+        return true;
       }
-    } else {
-      const isReverseDirection = delta.y * dFactor < 0;
-      if (!isReverseDirection && deltaY >= 0 && deltaY <= threshold) {
-        return !isDeltaX;
+
+      const deltaY = Math.abs(delta.y);
+      const deltaX = Math.abs(delta.x);
+      const isDeltaX = deltaX > deltaY;
+      const dFactor = ['bottom', 'right'].includes(direction) ? 1 : -1;
+
+      if (direction === 'left' || direction === 'right') {
+        const isReverseDirection = delta.x * dFactor < 0;
+        if (!isReverseDirection && deltaX >= 0 && deltaX <= threshold) {
+          return isDeltaX;
+        }
+      } else {
+        const isReverseDirection = delta.y * dFactor < 0;
+        if (!isReverseDirection && deltaY >= 0 && deltaY <= threshold) {
+          return !isDeltaX;
+        }
       }
+
+      wasBeyondThePointRef.current = true;
+      return true;
+    };
+
+    React.useEffect(() => {
+      if (hasSnapPoints) {
+        window.requestAnimationFrame(() => {
+          setDelayedSnapPoints(true);
+        });
+      }
+    }, [hasSnapPoints]);
+
+    function handleOnPointerUp(event: React.PointerEvent<HTMLDivElement> | null) {
+      pointerStartRef.current = null;
+      wasBeyondThePointRef.current = false;
+      onRelease(event);
     }
 
-    wasBeyondThePointRef.current = true;
-    return true;
-  };
+    return (
+      <DialogPrimitive.Content
+        data-vaul-animate={shouldAnimate?.current ? 'true' : 'false'}
+        data-vaul-custom-container={container ? 'true' : 'false'}
+        data-vaul-delayed-snap-points={delayedSnapPoints ? 'true' : 'false'}
+        data-vaul-drawer=''
+        data-vaul-drawer-direction={direction}
+        data-vaul-snap-points={isOpen && hasSnapPoints ? 'true' : 'false'}
+        {...rest}
+        onContextMenu={event => {
+          rest.onContextMenu?.(event);
+          if (lastKnownPointerEventRef.current) {
+            handleOnPointerUp(lastKnownPointerEventRef.current);
+          }
+        }}
+        onFocusOutside={e => {
+          if (!modal) {
+            e.preventDefault();
+            return;
+          }
+        }}
+        onOpenAutoFocus={e => {
+          onOpenAutoFocus?.(e);
 
-  React.useEffect(() => {
-    if (hasSnapPoints) {
-      window.requestAnimationFrame(() => {
-        setDelayedSnapPoints(true);
-      });
-    }
-  }, []);
+          if (!autoFocus) {
+            e.preventDefault();
+          }
+        }}
+        onPointerDown={event => {
+          if (handleOnly) {
+            return;
+          }
+          rest.onPointerDown?.(event);
+          pointerStartRef.current = { x: event.pageX, y: event.pageY };
+          onPress(event);
+        }}
+        onPointerDownOutside={e => {
+          onPointerDownOutside?.(e);
 
-  function handleOnPointerUp(event: React.PointerEvent<HTMLDivElement> | null) {
-    pointerStartRef.current = null;
-    wasBeyondThePointRef.current = false;
-    onRelease(event);
-  }
+          if (!modal || e.defaultPrevented) {
+            e.preventDefault();
+            return;
+          }
 
-  return (
-    <DialogPrimitive.Content
-      data-vaul-drawer-direction={direction}
-      data-vaul-drawer=""
-      data-vaul-delayed-snap-points={delayedSnapPoints ? 'true' : 'false'}
-      data-vaul-snap-points={isOpen && hasSnapPoints ? 'true' : 'false'}
-      data-vaul-custom-container={container ? 'true' : 'false'}
-      data-vaul-animate={shouldAnimate?.current ? 'true' : 'false'}
-      {...rest}
-      ref={composedRef}
-      style={
-        snapPointsOffset && snapPointsOffset.length > 0
-          ? ({
-              '--snap-point-height': `${snapPointsOffset[activeSnapPointIndex ?? 0]!}px`,
-              ...style,
-            } as React.CSSProperties)
-          : style
-      }
-      onPointerDown={(event) => {
-        if (handleOnly) return;
-        rest.onPointerDown?.(event);
-        pointerStartRef.current = { x: event.pageX, y: event.pageY };
-        onPress(event);
-      }}
-      onOpenAutoFocus={(e) => {
-        onOpenAutoFocus?.(e);
+          if (keyboardIsOpen.current) {
+            keyboardIsOpen.current = false;
+          }
+        }}
+        onPointerMove={event => {
+          lastKnownPointerEventRef.current = event;
+          if (handleOnly) {
+            return;
+          }
+          rest.onPointerMove?.(event);
+          if (!pointerStartRef.current) {
+            return;
+          }
+          const yPosition = event.pageY - pointerStartRef.current.y;
+          const xPosition = event.pageX - pointerStartRef.current.x;
 
-        if (!autoFocus) {
-          e.preventDefault();
-        }
-      }}
-      onPointerDownOutside={(e) => {
-        onPointerDownOutside?.(e);
+          const swipeStartThreshold = event.pointerType === 'touch' ? 10 : 2;
+          const delta = { x: xPosition, y: yPosition };
 
-        if (!modal || e.defaultPrevented) {
-          e.preventDefault();
-          return;
-        }
-
-        if (keyboardIsOpen.current) {
-          keyboardIsOpen.current = false;
-        }
-      }}
-      onFocusOutside={(e) => {
-        if (!modal) {
-          e.preventDefault();
-          return;
-        }
-      }}
-      onPointerMove={(event) => {
-        lastKnownPointerEventRef.current = event;
-        if (handleOnly) return;
-        rest.onPointerMove?.(event);
-        if (!pointerStartRef.current) return;
-        const yPosition = event.pageY - pointerStartRef.current.y;
-        const xPosition = event.pageX - pointerStartRef.current.x;
-
-        const swipeStartThreshold = event.pointerType === 'touch' ? 10 : 2;
-        const delta = { x: xPosition, y: yPosition };
-
-        const isAllowedToSwipe = isDeltaInDirection(delta, direction, swipeStartThreshold);
-        if (isAllowedToSwipe) onDrag(event);
-        else if (Math.abs(xPosition) > swipeStartThreshold || Math.abs(yPosition) > swipeStartThreshold) {
-          pointerStartRef.current = null;
-        }
-      }}
-      onPointerUp={(event) => {
-        rest.onPointerUp?.(event);
-        pointerStartRef.current = null;
-        wasBeyondThePointRef.current = false;
-        onRelease(event);
-      }}
-      onPointerOut={(event) => {
-        rest.onPointerOut?.(event);
-        handleOnPointerUp(lastKnownPointerEventRef.current);
-      }}
-      onContextMenu={(event) => {
-        rest.onContextMenu?.(event);
-        if (lastKnownPointerEventRef.current) {
+          const isAllowedToSwipe = isDeltaInDirection(delta, direction, swipeStartThreshold);
+          if (isAllowedToSwipe) {
+            onDrag(event);
+          } else if (Math.abs(xPosition) > swipeStartThreshold || Math.abs(yPosition) > swipeStartThreshold) {
+            pointerStartRef.current = null;
+          }
+        }}
+        onPointerOut={event => {
+          rest.onPointerOut?.(event);
           handleOnPointerUp(lastKnownPointerEventRef.current);
+        }}
+        onPointerUp={event => {
+          rest.onPointerUp?.(event);
+          pointerStartRef.current = null;
+          wasBeyondThePointRef.current = false;
+          onRelease(event);
+        }}
+        ref={composedRef}
+        style={
+          snapPointsOffset && snapPointsOffset.length > 0
+            ? ({
+                '--snap-point-height': `${snapPointsOffset[activeSnapPointIndex ?? 0]!}px`,
+                ...style,
+              } as React.CSSProperties)
+            : style
         }
-      }}
-    />
-  );
-});
+      />
+    );
+  },
+);
 
 Content.displayName = 'Drawer.Content';
 
@@ -993,105 +1035,110 @@ export type HandleProps = React.ComponentPropsWithoutRef<'div'> & {
 const LONG_HANDLE_PRESS_TIMEOUT = 250;
 const DOUBLE_TAP_TIMEOUT = 120;
 
-export const Handle = React.forwardRef<HTMLDivElement, HandleProps>(function (
-  { preventCycle = false, children, ...rest },
-  ref,
-) {
-  const {
-    closeDrawer,
-    isDragging,
-    snapPoints,
-    activeSnapPoint,
-    setActiveSnapPoint,
-    dismissible,
-    handleOnly,
-    isOpen,
-    onPress,
-    onDrag,
-  } = useDrawerContext();
+export const Handle = React.forwardRef<HTMLDivElement, HandleProps>(
+  ({ preventCycle = false, children, ...rest }, ref) => {
+    const {
+      closeDrawer,
+      isDragging,
+      snapPoints,
+      activeSnapPoint,
+      setActiveSnapPoint,
+      dismissible,
+      handleOnly,
+      isOpen,
+      onPress,
+      onDrag,
+    } = useDrawerContext();
 
-  const closeTimeoutIdRef = React.useRef<number | null>(null);
-  const shouldCancelInteractionRef = React.useRef(false);
+    const closeTimeoutIdRef = React.useRef<number | null>(null);
+    const shouldCancelInteractionRef = React.useRef(false);
 
-  function handleStartCycle() {
-    // Stop if this is the second click of a double click
-    if (shouldCancelInteractionRef.current) {
-      handleCancelInteraction();
-      return;
-    }
-    window.setTimeout(() => {
-      handleCycleSnapPoints();
-    }, DOUBLE_TAP_TIMEOUT);
-  }
-
-  function handleCycleSnapPoints() {
-    // Prevent accidental taps while resizing drawer
-    if (isDragging || preventCycle || shouldCancelInteractionRef.current) {
-      handleCancelInteraction();
-      return;
-    }
-    // Make sure to clear the timeout id if the user releases the handle before the cancel timeout
-    handleCancelInteraction();
-
-    if (!snapPoints || snapPoints.length === 0) {
-      if (!dismissible) {
-        closeDrawer();
+    function handleStartCycle() {
+      // Stop if this is the second click of a double click
+      if (shouldCancelInteractionRef.current) {
+        handleCancelInteraction();
+        return;
       }
-      return;
+      window.setTimeout(() => {
+        handleCycleSnapPoints();
+      }, DOUBLE_TAP_TIMEOUT);
     }
 
-    const isLastSnapPoint = activeSnapPoint === snapPoints[snapPoints.length - 1];
+    function handleCycleSnapPoints() {
+      // Prevent accidental taps while resizing drawer
+      if (isDragging || preventCycle || shouldCancelInteractionRef.current) {
+        handleCancelInteraction();
+        return;
+      }
+      // Make sure to clear the timeout id if the user releases the handle before the cancel timeout
+      handleCancelInteraction();
 
-    if (isLastSnapPoint && dismissible) {
-      closeDrawer();
-      return;
+      if (!snapPoints || snapPoints.length === 0) {
+        if (!dismissible) {
+          closeDrawer();
+        }
+        return;
+      }
+
+      const isLastSnapPoint = activeSnapPoint === snapPoints[snapPoints.length - 1];
+
+      if (isLastSnapPoint && dismissible) {
+        closeDrawer();
+        return;
+      }
+
+      const currentSnapIndex = snapPoints.findIndex(snapPoint => snapPoint === activeSnapPoint);
+      if (currentSnapIndex === -1) {
+        return; // activeSnapPoint not found in snapPoints
+      }
+      const nextSnapPoint = snapPoints[currentSnapIndex + 1];
+      setActiveSnapPoint(nextSnapPoint);
     }
 
-    const currentSnapIndex = snapPoints.findIndex((point) => point === activeSnapPoint);
-    if (currentSnapIndex === -1) return; // activeSnapPoint not found in snapPoints
-    const nextSnapPoint = snapPoints[currentSnapIndex + 1];
-    setActiveSnapPoint(nextSnapPoint);
-  }
-
-  function handleStartInteraction() {
-    closeTimeoutIdRef.current = window.setTimeout(() => {
-      // Cancel click interaction on a long press
-      shouldCancelInteractionRef.current = true;
-    }, LONG_HANDLE_PRESS_TIMEOUT);
-  }
-
-  function handleCancelInteraction() {
-    if (closeTimeoutIdRef.current) {
-      window.clearTimeout(closeTimeoutIdRef.current);
+    function handleStartInteraction() {
+      closeTimeoutIdRef.current = window.setTimeout(() => {
+        // Cancel click interaction on a long press
+        shouldCancelInteractionRef.current = true;
+      }, LONG_HANDLE_PRESS_TIMEOUT);
     }
-    shouldCancelInteractionRef.current = false;
-  }
 
-  return (
-    <div
-      onClick={handleStartCycle}
-      onPointerCancel={handleCancelInteraction}
-      onPointerDown={(e) => {
-        if (handleOnly) onPress(e);
-        handleStartInteraction();
-      }}
-      onPointerMove={(e) => {
-        if (handleOnly) onDrag(e);
-      }}
-      // onPointerUp is already handled by the content component
-      ref={ref}
-      data-vaul-drawer-visible={isOpen ? 'true' : 'false'}
-      data-vaul-handle=""
-      aria-hidden="true"
-      {...rest}
-    >
-      {/* Expand handle's hit area beyond what's visible to ensure a 44x44 tap target for touch devices */}
-      <span data-vaul-handle-hitarea="" aria-hidden="true">
-        {children}
-      </span>
-    </div>
-  );
-});
+    function handleCancelInteraction() {
+      if (closeTimeoutIdRef.current) {
+        window.clearTimeout(closeTimeoutIdRef.current);
+      }
+      shouldCancelInteractionRef.current = false;
+    }
+
+    return (
+      <div
+        aria-hidden='true'
+        data-vaul-drawer-visible={isOpen ? 'true' : 'false'}
+        data-vaul-handle=''
+        onClick={handleStartCycle}
+        onPointerCancel={handleCancelInteraction}
+        onPointerDown={e => {
+          if (handleOnly) {
+            onPress(e);
+          }
+          handleStartInteraction();
+        }}
+        onPointerMove={e => {
+          if (handleOnly) {
+            onDrag(e);
+          }
+        }}
+        // onPointerUp is already handled by the content component
+        ref={ref}
+        {...rest}
+      >
+        {/* Expand handle's hit area beyond what's visible to ensure a 44x44 tap target for touch devices */}
+        <span aria-hidden='true' data-vaul-handle-hitarea=''>
+          {children}
+        </span>
+      </div>
+    );
+  },
+);
 
 Handle.displayName = 'Drawer.Handle';
 
@@ -1105,7 +1152,6 @@ export function NestedRoot({ onDrag, onOpenChange, open: nestedIsOpen, ...rest }
   return (
     <Root
       nested
-      open={nestedIsOpen}
       onClose={() => {
         onNestedOpenChange(false);
       }}
@@ -1113,13 +1159,14 @@ export function NestedRoot({ onDrag, onOpenChange, open: nestedIsOpen, ...rest }
         onNestedDrag(e, p);
         onDrag?.(e, p);
       }}
-      onOpenChange={(o) => {
+      onOpenChange={o => {
         if (o) {
           onNestedOpenChange(o);
         }
         onOpenChange?.(o);
       }}
       onRelease={onNestedRelease}
+      open={nestedIsOpen}
       {...rest}
     />
   );
