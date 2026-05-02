@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { clsx } from 'clsx';
-import { Drawer } from 'vaul';
+import { Drawer } from '@monetr/vaul';
 
 const snapPoints = ['148px', '355px'];
 

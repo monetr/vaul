@@ -31,11 +31,6 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 
-# turbo
-.turbo
 /test-results/
 /playwright-report/
 /playwright/.cache/
-
-# styles
-style.css

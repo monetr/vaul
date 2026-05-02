@@ -1,7 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
-import { type DialogProps, Drawer } from 'vaul';
+import { type DialogProps, Drawer } from '@monetr/vaul';
 
 function DirectionalDrawer({
   direction,
