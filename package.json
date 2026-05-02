@@ -20,12 +20,11 @@
   "scripts": {
     "type-check": "tsc --noEmit",
     "build": "pnpm type-check && rslib build",
-    "clean": "rm -rf node_modules dist test-results playwright-report test/.next test/out test/tsconfig.tsbuildinfo",
+    "clean": "rm -rf node_modules dist",
     "dev": "rslib build --watch",
-    "dev:test": "pnpm -r --parallel run dev",
     "lint": "biome check",
     "lint:fix": "biome check --write",
-    "test": "playwright test"
+    "test": "rstest run"
   },
   "keywords": [
     "react",
@@ -44,13 +43,18 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.14",
-    "@playwright/test": "1.37.1",
     "@radix-ui/react-dialog": "1.0.4",
-    "@rsbuild/plugin-react": "^2.0.0",
-    "@rslib/core": "^0.21.3",
+    "@rsbuild/core": "2.0.3",
+    "@rsbuild/plugin-react": "2.0.0",
+    "@rslib/core": "0.21.3",
+    "@rstest/adapter-rslib": "0.2.2",
+    "@rstest/browser": "0.9.10",
+    "@rstest/browser-react": "0.9.10",
+    "@rstest/core": "0.9.10",
     "@types/node": "20.5.7",
     "@types/react": "18.2.55",
     "@types/react-dom": "18.2.18",
+    "playwright": "1.59.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "typescript": "5.2.2"
