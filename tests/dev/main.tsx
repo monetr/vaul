@@ -7,6 +7,7 @@ import { HandleDrawer } from '../fixtures/HandleDrawer';
 import { InitialSnapDrawer } from '../fixtures/InitialSnapDrawer';
 import { NestedDrawers } from '../fixtures/NestedDrawers';
 import { NonDismissibleDrawer } from '../fixtures/NonDismissibleDrawer';
+import { PersistentDrawer } from '../fixtures/PersistentDrawer';
 import { RedirectDrawer } from '../fixtures/RedirectDrawer';
 import { ScaledBackground } from '../fixtures/ScaledBackground';
 
@@ -20,6 +21,7 @@ const fixtures: Record<string, Fixture> = {
   'with-handle': { label: 'With handle', Component: () => <HandleDrawer /> },
   nested: { label: 'Nested drawers', Component: () => <NestedDrawers /> },
   'non-dismissible': { label: 'Non-dismissible', Component: () => <NonDismissibleDrawer /> },
+  persistent: { label: 'Persistent peek bar', Component: () => <PersistentDrawer /> },
   'with-redirect': { label: 'With redirect', Component: () => <RedirectDrawer /> },
   'with-scaled-background': { label: 'Scaled background', Component: () => <ScaledBackground /> },
 };
