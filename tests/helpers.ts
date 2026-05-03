@@ -10,12 +10,12 @@ export async function openDrawer() {
   await wait(500);
 }
 
-type DragOpts = { steps?: number; pointerType?: 'mouse' | 'touch' };
+type DragOpts = { steps?: number; pointerType?: 'mouse' | 'touch'; targetSelector?: string };
 
-function getDrawer(): HTMLElement {
-  const target = document.querySelector<HTMLElement>('[data-vaul-drawer]');
+function getDrawer(selector = '[data-vaul-drawer]'): HTMLElement {
+  const target = document.querySelector<HTMLElement>(selector);
   if (!target) {
-    throw new Error('No [data-vaul-drawer] in the DOM');
+    throw new Error(`No element matching ${selector} in the DOM`);
   }
   // Root's onPress calls setPointerCapture(event.pointerId). Synthetic PointerEvents have a
   // pointerId the browser never observed, so Chromium throws InvalidPointerId. Stub the capture
@@ -53,7 +53,7 @@ const tick = () => new Promise(r => setTimeout(r, 16));
 export async function dragVertically(deltaY: number, opts: DragOpts = {}) {
   const steps = opts.steps ?? 8;
   const pointerType = opts.pointerType ?? 'touch';
-  const target = getDrawer();
+  const target = getDrawer(opts.targetSelector);
   const rect = target.getBoundingClientRect();
   const startX = rect.left + rect.width / 2;
   const startY = rect.top + 20;

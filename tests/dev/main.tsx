@@ -10,6 +10,7 @@ import { NonDismissibleDrawer } from '../fixtures/NonDismissibleDrawer';
 import { PersistentDrawer } from '../fixtures/PersistentDrawer';
 import { RedirectDrawer } from '../fixtures/RedirectDrawer';
 import { ScaledBackground } from '../fixtures/ScaledBackground';
+import { TwoDrawers } from '../fixtures/TwoDrawers';
 
 type Fixture = { label: string; Component: () => JSX.Element };
 
@@ -24,6 +25,7 @@ const fixtures: Record<string, Fixture> = {
   persistent: { label: 'Persistent peek bar', Component: () => <PersistentDrawer /> },
   'with-redirect': { label: 'With redirect', Component: () => <RedirectDrawer /> },
   'with-scaled-background': { label: 'Scaled background', Component: () => <ScaledBackground /> },
+  'two-drawers': { label: 'Two drawers (top + bottom)', Component: () => <TwoDrawers /> },
 };
 
 function Index() {
