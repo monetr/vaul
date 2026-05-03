@@ -37,7 +37,11 @@ export function ControlledDrawer() {
         </Drawer.Trigger>
         <Drawer.Portal>
           <Drawer.Overlay className='vaul-test-overlay' data-testid='fully-controlled-overlay' />
-          <Drawer.Content aria-describedby={undefined} className='vaul-test-content-bottom' data-testid='fully-controlled-content'>
+          <Drawer.Content
+            aria-describedby={undefined}
+            className='vaul-test-content-bottom'
+            data-testid='fully-controlled-content'
+          >
             <Drawer.Title>Fully controlled</Drawer.Title>
             <Drawer.Close data-testid='fully-controlled-close'>Close</Drawer.Close>
           </Drawer.Content>

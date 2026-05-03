@@ -6,10 +6,10 @@ import { InitialSnapDrawer } from './fixtures/InitialSnapDrawer';
 import { dragVertically, wait } from './helpers';
 
 // Snap points: [0, '148px', '355px', 1]; initial index = 1.
-// Vaul's `shouldDrag()` suppresses dragging for 500ms after open (src/index.tsx:316),
-// so each drag test waits that out before dispatching pointer events.
+// Vaul's `shouldDrag()` suppresses dragging for 500ms after open, so each drag test waits that
+// out before dispatching pointer events.
 //
-// Velocity thresholds (use-snap-points.ts:onRelease):
+// Velocity thresholds in useSnapPoints.onRelease:
 //   velocity > 2  + drag up   -> snap to last  (index 3)
 //   velocity > 2  + drag down -> closeDrawer() (eventually setActiveSnapPoint(0))
 //   velocity > 0.4, distance < 40% viewport -> snap to adjacent index in drag direction

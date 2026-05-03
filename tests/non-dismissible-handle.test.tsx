@@ -5,10 +5,10 @@ import { beforeEach, describe, expect, test } from '@rstest/core';
 import { NonDismissibleHandleDrawer } from './fixtures/NonDismissibleHandleDrawer';
 import { wait } from './helpers';
 
-// Bug E: When the handle is clicked at the last snap point on a non-dismissible drawer, the
-// dismissible early-return at src/index.tsx:1086 is skipped. Code falls through to
-// `nextSnapPoint = snapPoints[currentSnapIndex + 1]` (undefined) and calls
-// setActiveSnapPoint(undefined), which makes snapPoints.indexOf(undefined) return -1.
+// When the handle is clicked at the last snap point on a non-dismissible drawer, the
+// `if (isLastSnapPoint && dismissible)` early-return inside Handle's handleCycleSnapPoints is
+// skipped. Code falls through to `nextSnapPoint = snapPoints[currentSnapIndex + 1]` (undefined)
+// and calls setActiveSnapPoint(undefined), which makes snapPoints.indexOf(undefined) return -1.
 describe('Handle cycle on non-dismissible drawer', () => {
   beforeEach(async () => {
     await render(<NonDismissibleHandleDrawer />);

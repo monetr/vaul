@@ -3,8 +3,8 @@ import { afterEach, beforeEach, expect, test } from '@rstest/core';
 
 import { usePositionFixed } from '../src/use-position-fixed';
 
-// Bug L: src/use-position-fixed.ts:5 — `previousBodyPosition` is a module-level singleton, so two
-// drawers stacked or remounted overlapping each other share state. The second instance to call
+// `previousBodyPosition` in usePositionFixed is a module-level singleton, so two drawers
+// stacked or remounted overlapping each other share state. The second instance to call
 // setPositionFixed sees `previousBodyPosition !== null` and skips the capture. When the first
 // instance restores+nulls the global, the second sees null and skips its restore. Body styles
 // leak.

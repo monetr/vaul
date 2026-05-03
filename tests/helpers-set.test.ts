@@ -11,13 +11,15 @@ function newEl() {
 }
 
 afterEach(() => {
-  for (const el of mounted) el.remove();
+  for (const el of mounted) {
+    el.remove();
+  }
   mounted = [];
 });
 
 describe('helpers.set / reset', () => {
-  // Bug D: each non-ignoreCache call to set() overwrites the cache snapshot, so reset() only
-  // restores the most recent call's "previous" values. Sequential set calls lose earlier originals.
+  // Each non-ignoreCache call to set() overwrites the cache snapshot, so reset() only restores
+  // the most recent call's "previous" values. Sequential set calls lose earlier originals.
   test('reset() restores originals from sequential set() calls', () => {
     const el = newEl();
     el.style.color = 'red';
@@ -33,8 +35,8 @@ describe('helpers.set / reset', () => {
 });
 
 describe('helpers.assignStyle interaction with set()', () => {
-  // Bug O: assignStyle snapshots full cssText on entry, then on cleanup writes prevStyle back,
-  // wiping any inline styles that set() applied in between.
+  // assignStyle snapshots full cssText on entry, then on cleanup writes prevStyle back, wiping
+  // any inline styles that set() applied in between.
   test('assignStyle cleanup does not wipe later set() writes', () => {
     const el = newEl();
     el.style.color = 'red';

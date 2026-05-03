@@ -4,45 +4,27 @@ import { afterEach, beforeEach, describe, expect, rstest, test } from '@rstest/c
 import { PreventScrollDrawer } from './fixtures/PreventScrollDrawer';
 import { usePreventScroll } from '../src/use-prevent-scroll';
 
-// Bug A: src/index.tsx wiring used to OR `!disablePreventScroll` into the isDisabled condition,
-// which inverted the prop's documented semantics. These tests cover the hook contract directly
-// and the wiring through Drawer.Root.
+// Root's wiring used to OR `!disablePreventScroll` into the isDisabled condition, which
+// inverted the prop's documented semantics. We probe vaul's engagement by spying on the
+// touchmove listener it registers with `{ passive: false, capture: true }` on document. That
+// option combo is unique to vaul's preventScrollMobileSafari and avoids dispatching synthetic
+// Touch events, which Firefox doesn't expose unless its touch events flag is on.
 
 const flushEffects = () => new Promise(r => setTimeout(r, 50));
 
-// Real touch event with a populated Touch list. react-remove-scroll's listeners read
-// touches[0].clientX, so an empty TouchEvent throws inside their handler.
-function dispatchTouch(
-  type: 'touchstart' | 'touchmove' | 'touchend',
-  target: EventTarget,
-  clientX = 10,
-  clientY = 10,
-) {
-  const touch = new Touch({
-    identifier: 0,
-    target: target as EventTarget,
-    clientX,
-    clientY,
-    pageX: clientX,
-    pageY: clientY,
-    screenX: clientX,
-    screenY: clientY,
-    radiusX: 1,
-    radiusY: 1,
-    rotationAngle: 0,
-    force: 1,
+function vaulTouchmoveRegistered(spy: ReturnType<typeof rstest.spyOn<Document, 'addEventListener'>>) {
+  return spy.mock.calls.some(call => {
+    if (call[0] !== 'touchmove') {
+      return false;
+    }
+    const opts = call[2];
+    return (
+      !!opts &&
+      typeof opts === 'object' &&
+      (opts as AddEventListenerOptions).passive === false &&
+      (opts as AddEventListenerOptions).capture === true
+    );
   });
-  const touches = type === 'touchend' ? [] : [touch];
-  const ev = new TouchEvent(type, {
-    bubbles: true,
-    cancelable: true,
-    composed: true,
-    touches,
-    targetTouches: touches,
-    changedTouches: [touch],
-  });
-  target.dispatchEvent(ev);
-  return ev;
 }
 
 let originalPlatformDescriptor: PropertyDescriptor | undefined;
@@ -63,15 +45,9 @@ afterEach(() => {
 });
 
 describe('usePreventScroll honors isDisabled flag', () => {
-  test('isDisabled=false engages prevent-scroll, isDisabled=true releases it', async () => {
-    // No Dialog rendered here, so only vaul's listeners are in play. A touchmove on body with
-    // no scrollable parent gets preventDefaulted by the iOS branch.
-    const probe = () => {
-      dispatchTouch('touchstart', document.body);
-      const ev = dispatchTouch('touchmove', document.body, 10, 30);
-      dispatchTouch('touchend', document.body);
-      return ev.defaultPrevented;
-    };
+  test('isDisabled=false registers vaul touchmove listener, isDisabled=true removes it', async () => {
+    const addSpy = rstest.spyOn(document, 'addEventListener');
+    const removeSpy = rstest.spyOn(document, 'removeEventListener');
 
     const { rerender, unmount } = await renderHook(
       (props?: { isDisabled: boolean }) => usePreventScroll({ isDisabled: props?.isDisabled ?? false }),
@@ -79,12 +55,27 @@ describe('usePreventScroll honors isDisabled flag', () => {
     );
     await flushEffects();
 
-    expect(probe()).toBe(true);
+    expect(vaulTouchmoveRegistered(addSpy)).toBe(true);
 
     await rerender({ isDisabled: true });
     await flushEffects();
 
-    expect(probe()).toBe(false);
+    // The cleanup of preventScrollMobileSafari removes the same listener it added. Asserting on
+    // the remove call (rather than re-checking the add list) confirms vaul actually disengaged.
+    expect(
+      removeSpy.mock.calls.some(call => {
+        if (call[0] !== 'touchmove') {
+          return false;
+        }
+        const opts = call[2];
+        return (
+          !!opts &&
+          typeof opts === 'object' &&
+          (opts as AddEventListenerOptions).passive === false &&
+          (opts as AddEventListenerOptions).capture === true
+        );
+      }),
+    ).toBe(true);
 
     unmount();
   });
@@ -96,34 +87,24 @@ describe('Drawer.Root disablePreventScroll prop', () => {
   // the prop, masking the wiring.
   async function openViaTrigger() {
     const trigger = document.querySelector<HTMLElement>('[data-testid="trigger"]');
-    if (!trigger) throw new Error('trigger not mounted');
+    if (!trigger) {
+      throw new Error('trigger not mounted');
+    }
     trigger.click();
     await flushEffects();
-  }
-
-  // vaul's preventScrollMobileSafari registers `touchmove` on document with the unusual
-  // { passive: false, capture: true } combo (use-prevent-scroll.ts:228). react-remove-scroll
-  // and Radix don't register a touchmove listener with both flags set, so this is a clean
-  // signal that vaul specifically engaged.
-  function vaulEngaged(spy: ReturnType<typeof rstest.spyOn<Document, 'addEventListener'>>) {
-    return spy.mock.calls.some(call => {
-      if (call[0] !== 'touchmove') return false;
-      const opts = call[2];
-      return !!opts && typeof opts === 'object' && (opts as AddEventListenerOptions).passive === false && (opts as AddEventListenerOptions).capture === true;
-    });
   }
 
   test('disablePreventScroll=true does NOT engage vaul scroll-prevention', async () => {
     const spy = rstest.spyOn(document, 'addEventListener');
     await render(<PreventScrollDrawer disablePreventScroll />);
     await openViaTrigger();
-    expect(vaulEngaged(spy)).toBe(false);
+    expect(vaulTouchmoveRegistered(spy)).toBe(false);
   });
 
   test('disablePreventScroll=false engages vaul scroll-prevention', async () => {
     const spy = rstest.spyOn(document, 'addEventListener');
     await render(<PreventScrollDrawer disablePreventScroll={false} />);
     await openViaTrigger();
-    expect(vaulEngaged(spy)).toBe(true);
+    expect(vaulTouchmoveRegistered(spy)).toBe(true);
   });
 });

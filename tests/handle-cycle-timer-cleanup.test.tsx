@@ -3,10 +3,9 @@ import { afterEach, expect, rstest, test } from '@rstest/core';
 
 import { HandleDrawer } from './fixtures/HandleDrawer';
 
-// Bug H: src/index.tsx Handle's `closeTimeoutIdRef` (line 1054) and the Root's
-// `nestedOpenChangeTimer` (line 212) have no useEffect cleanup. If the component unmounts while a
-// timer is pending, the timer is never cleared. This test focuses on the Handle's pointerdown
-// timer (LONG_HANDLE_PRESS_TIMEOUT = 250ms).
+// Handle's `closeTimeoutIdRef` and Root's `nestedOpenChangeTimer` have no useEffect cleanup.
+// If the component unmounts while a timer is pending, the timer is never cleared. This test
+// focuses on the Handle's pointerdown timer (LONG_HANDLE_PRESS_TIMEOUT = 250ms).
 
 afterEach(() => {
   rstest.restoreAllMocks();

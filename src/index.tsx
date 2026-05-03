@@ -80,7 +80,8 @@ export type DialogProps = {
    */
   scrollLockTimeout?: number;
   /**
-   * When `true`, don't move the drawer upwards if there's space, but rather only change it's height so it's fully scrollable when the keyboard is open
+   * When `true`, don't move the drawer upwards if there's space, but rather only change it's height so it's fully
+   * scrollable when the keyboard is open
    */
   fixed?: boolean;
   /**
@@ -134,7 +135,8 @@ export type DialogProps = {
   snapToSequentialPoint?: boolean;
   container?: HTMLElement | null;
   /**
-   * Gets triggered after the open or close animation ends, it receives an `open` argument with the `open` state of the drawer by the time the function was triggered.
+   * Gets triggered after the open or close animation ends, it receives an `open` argument with the `open` state of the
+   * drawer by the time the function was triggered.
    * Useful to revert any state changes for example.
    */
   onAnimationEnd?: (open: boolean) => void;
@@ -347,9 +349,8 @@ export function Root({
       return false;
     }
 
-    // Climb up the DOM. parentElement (not parentNode) keeps the type as HTMLElement and stops
-    // cleanly at Document or a ShadowRoot boundary so we don't dereference scrollHeight on a
-    // non-element node.
+    // Climb up the DOM. parentElement (not parentNode) keeps the type as HTMLElement and stops cleanly at Document or a
+    // ShadowRoot boundary so we don't dereference scrollHeight on a non-element node.
     let cursor: HTMLElement | null = element;
     while (cursor) {
       if (cursor.scrollHeight > cursor.clientHeight) {
@@ -377,7 +378,8 @@ export function Root({
       return;
     }
 
-    // We need to know how much of the drawer has been dragged in percentages so that we can transform background accordingly
+    // We need to know how much of the drawer has been dragged in percentages so that we can transform background
+    // accordingly
     if (isDragging) {
       const directionMultiplier = direction === 'bottom' || direction === 'right' ? 1 : -1;
       const draggedDistance =
@@ -415,7 +417,8 @@ export function Root({
         return;
       }
       drawerRef.current.classList.add(DRAG_CLASS);
-      // If shouldDrag gave true once after pressing down on the drawer, we set isAllowedToDrag to true and it will remain true until we let go, there's no reason to disable dragging mid way, ever, and that's the solution to it
+      // If shouldDrag gave true once after pressing down on the drawer, we set isAllowedToDrag to true and it will
+      // remain true until we let go, there's no reason to disable dragging mid way, ever, and that's the solution to it
       isAllowedToDrag.current = true;
       set(drawerRef.current, {
         transition: 'none',
@@ -516,7 +519,8 @@ export function Root({
         }
         const offsetFromTop = drawerRef.current.getBoundingClientRect().top;
 
-        // visualViewport height may change due to somq e subtle changes to the keyboard. Checking if the height changed by 60 or more will make sure that they keyboard really changed its open state.
+        // visualViewport height may change due to somq e subtle changes to the keyboard. Checking if the height changed
+        // by 60 or more will make sure that they keyboard really changed its open state.
         if (Math.abs(previousDiffFromInitial.current - diffFromInitial) > 60) {
           keyboardIsOpen.current = !keyboardIsOpen.current;
         }
@@ -526,7 +530,8 @@ export function Root({
           diffFromInitial += activeSnapPointHeight;
         }
         previousDiffFromInitial.current = diffFromInitial;
-        // We don't have to change the height if the input is in view, when we are here we are in the opened keyboard state so we can correctly check if the input is in view
+        // We don't have to change the height if the input is in view, when we are here we are in the opened keyboard
+        // state so we can correctly check if the input is in view
         if (drawerHeight > visualViewportHeight || keyboardIsOpen.current) {
           const height = drawerRef.current.getBoundingClientRect().height;
           let newDrawerHeight = height;
@@ -534,7 +539,8 @@ export function Root({
           if (height > visualViewportHeight) {
             newDrawerHeight = visualViewportHeight - (isTallEnough ? offsetFromTop : WINDOW_TOP_OFFSET);
           }
-          // When fixed, don't move the drawer upwards if there's space, but rather only change it's height so it's fully scrollable when the keyboard is open
+          // When fixed, don't move the drawer upwards if there's space, but rather only change it's height so it's
+          // fully scrollable when the keyboard is open
           if (fixed) {
             drawerRef.current.style.height = `${height - Math.max(diffFromInitial, 0)}px`;
           } else {
@@ -619,6 +625,12 @@ export function Root({
   }
 
   function cancelDrag() {
+    // Always wipe the overlay opacity that onDrag wrote, even if isDragging has already flipped back to false on the
+    // latest render. closeDrawer goes through cancelDrag without going through resetDrawer, so this is the only place
+    // that undoes the drag-time opacity write.
+    if (overlayRef.current) {
+      overlayRef.current.style.opacity = '';
+    }
     if (!isDragging || !drawerRef.current) {
       return;
     }
@@ -627,11 +639,6 @@ export function Root({
     isAllowedToDrag.current = false;
     setIsDragging(false);
     dragEndTime.current = new Date();
-    // onDrag writes a fractional opacity on the overlay during the drag. We don't go through
-    // resetDrawer here, so clear that inline opacity ourselves or it sticks until the next drag.
-    if (overlayRef.current) {
-      overlayRef.current.style.opacity = '';
-    }
   }
 
   function onRelease(event: React.PointerEvent<HTMLDivElement> | null) {
@@ -658,7 +665,8 @@ export function Root({
     const velocity = Math.abs(distMoved) / timeTaken;
 
     if (velocity > 0.05) {
-      // `justReleased` is needed to prevent the drawer from focusing on an input when the drag ends, as it's not the intent most of the time.
+      // `justReleased` is needed to prevent the drawer from focusing on an input when the drag ends, as it's not the
+      // intent most of the time.
       setJustReleased(true);
 
       setTimeout(() => {
@@ -720,9 +728,8 @@ export function Root({
     };
   }, [isOpen]);
 
-  // If the consumer changes the active snap point while a close-drawer reset is pending, drop
-  // the timer. Otherwise the stale reset would fire 500ms later and silently clobber the new
-  // value the user just picked.
+  // If the consumer changes the active snap point while a close-drawer reset is pending, drop the timer. Otherwise the
+  // stale reset would fire 500ms later and silently clobber the new value the user just picked.
   // biome-ignore lint/correctness/useExhaustiveDependencies: only react to prop changes
   React.useEffect(() => {
     if (closeDrawerSnapTimer.current) {
@@ -878,7 +885,8 @@ export const Overlay = React.forwardRef<HTMLDivElement, React.ComponentPropsWith
     const hasSnapPoints = snapPoints && snapPoints.length > 0;
     const onMouseUp = React.useCallback((event: React.PointerEvent<HTMLDivElement>) => onRelease(event), [onRelease]);
 
-    // Overlay is the component that is locking scroll, removing it will unlock the scroll without having to dig into Radix's Dialog library
+    // Overlay is the component that is locking scroll, removing it will unlock the scroll without having to dig into
+    // Radix's Dialog library
     if (!modal) {
       return null;
     }
@@ -1119,10 +1127,12 @@ export const Handle = React.forwardRef<HTMLDivElement, HandleProps>(
 
       const isLastSnapPoint = activeSnapPoint === snapPoints[snapPoints.length - 1];
 
-      // At the top snap point there's nowhere left to cycle. If we can dismiss, close. Otherwise
-      // bail out, since the previous behavior fell through and called setActiveSnapPoint(undefined).
+      // At the top snap point there's nowhere left to cycle. If we can dismiss, close. Otherwise bail out, since the
+      // previous behavior fell through and called setActiveSnapPoint(undefined).
       if (isLastSnapPoint) {
-        if (dismissible) closeDrawer();
+        if (dismissible) {
+          closeDrawer();
+        }
         return;
       }
 
@@ -1150,8 +1160,8 @@ export const Handle = React.forwardRef<HTMLDivElement, HandleProps>(
       shouldCancelInteractionRef.current = false;
     }
 
-    // Make sure the long-press timer can't outlive the component. Without this the timer would
-    // happily fire after unmount and flip a stale ref.
+    // Make sure the long-press timer can't outlive the component. Without this the timer would happily fire after
+    // unmount and flip a stale ref.
     React.useEffect(() => {
       return () => {
         if (closeTimeoutIdRef.current !== null) {
@@ -1162,6 +1172,7 @@ export const Handle = React.forwardRef<HTMLDivElement, HandleProps>(
     }, []);
 
     return (
+      // biome-ignore lint/a11y/noStaticElementInteractions: I do what I want
       <div
         aria-hidden='true'
         data-vaul-drawer-visible={isOpen ? 'true' : 'false'}

@@ -25,7 +25,9 @@
     "dev:demo": "rsbuild dev",
     "lint": "biome check",
     "lint:fix": "biome check --write",
-    "test": "rstest run"
+    "test": "rstest run",
+    "test:firefox": "rstest run --browser.name firefox",
+    "test:webkit": "rstest run --browser.name webkit"
   },
   "keywords": [
     "react",

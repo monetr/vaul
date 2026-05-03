@@ -5,8 +5,8 @@ export async function openDrawer() {
   await expect.element(page.getByTestId('content')).not.toBeVisible();
   await page.getByTestId('trigger').click();
   await expect.element(page.getByTestId('content')).toBeVisible();
-  // Vaul's shouldDrag() suppresses dragging for 500ms after open (src/index.tsx:315 `Allow scrolling when animating`).
-  // Wait it out so subsequent dragVertically() calls aren't no-ops.
+  // Vaul's shouldDrag() suppresses dragging for 500ms after open ("Allow scrolling when
+  // animating" branch). Wait it out so subsequent dragVertically() calls aren't no-ops.
   await wait(500);
 }
 
@@ -17,9 +17,10 @@ function getDrawer(): HTMLElement {
   if (!target) {
     throw new Error('No [data-vaul-drawer] in the DOM');
   }
-  // src/index.tsx:290 calls setPointerCapture(event.pointerId) inside onPress. Synthetic PointerEvents have a pointerId
-  // the browser never observed, so Chromium throws InvalidPointerId. Stub the capture APIs to no-ops on the drawer
-  // element and its descendants; local to tests, doesn't change library behavior.
+  // Root's onPress calls setPointerCapture(event.pointerId). Synthetic PointerEvents have a
+  // pointerId the browser never observed, so Chromium throws InvalidPointerId. Stub the capture
+  // APIs to no-ops on the drawer element and its descendants; local to tests, doesn't change
+  // library behavior.
   for (const el of [target, ...Array.from(target.querySelectorAll<HTMLElement>('*'))]) {
     el.setPointerCapture = () => {};
     el.releasePointerCapture = () => {};

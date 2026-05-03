@@ -4,8 +4,9 @@ import { afterEach, expect, test } from '@rstest/core';
 import { KeyboardSnapDrawer } from './fixtures/KeyboardSnapDrawer';
 import { wait } from './helpers';
 
-// Bug C: src/index.tsx:521 — `if (snapPoints && ... && activeSnapPointIndex)` truthy-checks
-// activeSnapPointIndex. When the active snap point is at index 0, the offset adjustment
+// In Root's onVisualViewportChange handler the guard
+// `if (snapPoints && ... && activeSnapPointIndex)` truthy-checks activeSnapPointIndex. When the
+// active snap point is at index 0, the offset adjustment
 // `diffFromInitial += snapPointsOffset[activeSnapPointIndex]` is skipped because 0 is falsy.
 // Expected behavior (the fix): the offset should be added at index 0 too, the same way it is at
 // every other index.
@@ -33,7 +34,8 @@ test('drawer.style.bottom at snap index 0 includes the snap point offset when ke
     throw new Error('drawer not mounted');
   }
 
-  // Read snapPointsOffset[0] from the inline CSS variable that Content writes (src/index.tsx:1019-1023).
+  // Read snapPointsOffset[0] from the --snap-point-height CSS variable that Drawer.Content
+  // writes inline based on the active snap-point offset.
   const snapPointHeightStr = drawer.style.getPropertyValue('--snap-point-height');
   const snapPointOffset = parseFloat(snapPointHeightStr);
   expect(snapPointOffset).toBeGreaterThan(0);
@@ -54,7 +56,7 @@ test('drawer.style.bottom at snap index 0 includes the snap point offset when ke
   window.visualViewport.dispatchEvent(new Event('resize'));
   await wait(60);
 
-  // The else branch at src/index.tsx:546-549 sets `bottom = max(diffFromInitial, 0)px` when the
+  // onVisualViewportChange's else branch sets `bottom = max(diffFromInitial, 0)px` when the
   // keyboard is open. With the fix, diffFromInitial = KEYBOARD_HEIGHT + snapPointOffset.
   // With the current bug, it equals KEYBOARD_HEIGHT only.
   const bottomPx = parseFloat(drawer.style.bottom);

@@ -22,7 +22,11 @@ export function NestedDrawers() {
               </Drawer.Trigger>
               <Drawer.Portal>
                 <Drawer.Overlay className='vaul-test-overlay' data-testid='nested-overlay' />
-                <Drawer.Content aria-describedby={undefined} className='vaul-test-content-bottom' data-testid='nested-content'>
+                <Drawer.Content
+                  aria-describedby={undefined}
+                  className='vaul-test-content-bottom'
+                  data-testid='nested-content'
+                >
                   <Drawer.Title>Nested drawer</Drawer.Title>
                   <Drawer.Close data-testid='nested-close'>Close</Drawer.Close>
                 </Drawer.Content>
