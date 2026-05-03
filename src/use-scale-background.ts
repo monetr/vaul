@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 
 import { BORDER_RADIUS, TRANSITIONS, WINDOW_TOP_OFFSET } from './constants';
 import { useDrawerContext } from './context';
@@ -11,9 +11,7 @@ export function useScaleBackground() {
   const timeoutIdRef = React.useRef<number | null>(null);
   const initialBackgroundColor = useMemo(() => document.body.style.backgroundColor, []);
 
-  function getScale() {
-    return (window.innerWidth - WINDOW_TOP_OFFSET) / window.innerWidth;
-  }
+  const getScale = useCallback(() => (window.innerWidth - WINDOW_TOP_OFFSET) / window.innerWidth, []);
 
   React.useEffect(() => {
     if (isOpen && shouldScaleBackground) {
@@ -67,7 +65,7 @@ export function useScaleBackground() {
     initialBackgroundColor,
     setBackgroundColorOnScale,
     noBodyStyles,
-    getScale,
     direction,
+    getScale,
   ]);
 }
