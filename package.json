@@ -20,6 +20,7 @@
   "scripts": {
     "type-check": "tsc --noEmit",
     "build": "pnpm type-check && rslib build",
+    "build:analyze": "RSDOCTOR=true pnpm build",
     "clean": "rm -rf node_modules dist",
     "dev": "rslib build --watch",
     "dev:demo": "rsbuild dev",
@@ -54,6 +55,7 @@
     "@radix-ui/react-dialog": "1.1.15",
     "@rsbuild/core": "2.0.4",
     "@rsbuild/plugin-react": "2.0.0",
+    "@rsdoctor/rspack-plugin": "1.5.9",
     "@rslib/core": "0.21.3",
     "@rstest/adapter-rslib": "0.2.2",
     "@rstest/browser": "0.9.10",
