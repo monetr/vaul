@@ -51,7 +51,7 @@
   "devDependencies": {
     "@biomejs/biome": "2.4.14",
     "@radix-ui/react-dialog": "1.1.15",
-    "@rsbuild/core": "2.0.3",
+    "@rsbuild/core": "2.0.4",
     "@rsbuild/plugin-react": "2.0.0",
     "@rslib/core": "0.21.3",
     "@rstest/adapter-rslib": "0.2.2",
