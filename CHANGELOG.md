@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.2.1](https://github.com/monetr/vaul/compare/vaul-v1.2.0...vaul-v1.2.1) (2026-05-06)
+
+
+### Dependencies
+
+* **renovate:** update actions/checkout action to v6.0.2 ([#31](https://github.com/monetr/vaul/issues/31)) ([cd76c8a](https://github.com/monetr/vaul/commit/cd76c8a954b173c0cf0bebeeff5403f55eda32b6))
+
+
+### Bug Fixes
+
+* **build:** Fixing how builds are done and fixing typescript issue ([72278a8](https://github.com/monetr/vaul/commit/72278a868a7a17143a429b75c36be8a38893a3da))
+
+
+### Miscellaneous
+
+* Updating readme ([454ab88](https://github.com/monetr/vaul/commit/454ab8866102071cf0cc94162075041932b37f36))
+
 ## [1.2.0](https://github.com/monetr/vaul/compare/vaul-v1.1.4...vaul-v1.2.0) (2026-05-06)
 
 
