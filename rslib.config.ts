@@ -18,9 +18,8 @@ export default defineConfig({
     cleanDistPath: true,
   },
   plugins: [pluginReact()],
-  // Only opt in when RSDOCTOR=true since the plugin meaningfully slows builds.
-  // In CI, narrow to brief + JSON for the rsdoctor-action; locally, fall through
-  // to the default mode so the interactive HTML report opens in the browser.
+  // Only opt in when RSDOCTOR=true since the plugin meaningfully slows builds. In CI, narrow to brief + JSON for the
+  // rsdoctor-action; locally, fall through to the default mode so the interactive HTML report opens in the browser.
   tools: {
     rspack: {
       plugins: [
