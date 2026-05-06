@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.2](https://github.com/monetr/vaul/compare/vaul-v1.2.1...vaul-v1.2.2) (2026-05-06)
+
+
+### Miscellaneous
+
+* **build:** Adding additional attestations for build ([a7e64cd](https://github.com/monetr/vaul/commit/a7e64cd5884aecdd3d9c41cf6b84f717967c0819))
+
 ## [1.2.1](https://github.com/monetr/vaul/compare/vaul-v1.2.0...vaul-v1.2.1) (2026-05-06)
 
 
