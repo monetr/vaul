@@ -4,7 +4,11 @@ interface Style {
   [key: string]: string;
 }
 
-const cache = new WeakMap();
+const cache = new WeakMap<HTMLElement, Style>();
+
+export function camelToKebab(key: string): string {
+  return key.startsWith('--') ? key : key.replace(/[A-Z]/g, m => `-${m.toLowerCase()}`);
+}
 
 export function isInView(el: HTMLElement): boolean {
   const rect = el.getBoundingClientRect();
@@ -36,10 +40,11 @@ export function set(el: Element | HTMLElement | null | undefined, styles: Style,
       return;
     }
 
+    const cssProperty = camelToKebab(key);
     if (!(key in originalStyles)) {
-      originalStyles[key] = (el.style as any)[key];
+      originalStyles[key] = el.style.getPropertyValue(cssProperty);
     }
-    (el.style as any)[key] = value;
+    el.style.setProperty(cssProperty, value);
   });
 
   if (ignoreCache) {
@@ -60,10 +65,10 @@ export function reset(el: Element | HTMLElement | null, prop?: string) {
   }
 
   if (prop) {
-    (el.style as any)[prop] = originalStyles[prop];
+    el.style.setProperty(camelToKebab(prop), originalStyles[prop]);
   } else {
-    Object.entries(originalStyles).forEach(([key, value]) => {
-      (el.style as any)[key] = value;
+    Object.entries(originalStyles).forEach(([key, value]: [string, string]) => {
+      el.style.setProperty(camelToKebab(key), value);
     });
   }
 }
@@ -110,15 +115,15 @@ export function assignStyle(element: HTMLElement | null | undefined, style: Part
 
   // Snapshot only the keys we're about to change. Restoring the full cssText would also wipe
   // any inline styles other helpers (like set()) wrote in the meantime.
-  const previousValues: Partial<CSSStyleDeclaration> = {};
-  for (const key of Object.keys(style) as (keyof CSSStyleDeclaration)[]) {
-    (previousValues as any)[key] = (element.style as any)[key];
+  const previousValues: Record<string, string> = {};
+  for (const key of Object.keys(style)) {
+    previousValues[key] = element.style.getPropertyValue(camelToKebab(key));
   }
   Object.assign(element.style, style);
 
   return () => {
-    for (const key of Object.keys(previousValues) as (keyof CSSStyleDeclaration)[]) {
-      (element.style as any)[key] = (previousValues as any)[key];
+    for (const key of Object.keys(previousValues)) {
+      element.style.setProperty(camelToKebab(key), previousValues[key]);
     }
   };
 }

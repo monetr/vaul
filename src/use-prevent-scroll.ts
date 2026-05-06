@@ -14,12 +14,10 @@ interface PreventScrollOptions {
   focusCallback?: () => void;
 }
 
-function chain(...callbacks: any[]): (...args: any[]) => void {
-  return (...args: any[]) => {
+function chain(...callbacks: Array<() => void>): () => void {
+  return () => {
     for (const callback of callbacks) {
-      if (typeof callback === 'function') {
-        callback(...args);
-      }
+      callback();
     }
   };
 }
@@ -257,7 +255,7 @@ function setStyle(element: HTMLElement, style: keyof React.CSSProperties, value:
 function addEvent<K extends keyof GlobalEventHandlersEventMap>(
   target: EventTarget,
   event: K,
-  handler: (this: Document, ev: GlobalEventHandlersEventMap[K]) => any,
+  handler: (this: Document, ev: GlobalEventHandlersEventMap[K]) => void,
   options?: boolean | AddEventListenerOptions,
 ) {
   // @ts-expect-error

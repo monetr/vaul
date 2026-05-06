@@ -10,7 +10,7 @@ type UseControllableStateParams<T> = {
 
 type SetStateFn<T> = (prevState?: T) => T;
 
-function useCallbackRef<T extends (...args: any[]) => any>(callback: T | undefined): T {
+function useCallbackRef<T extends (...args: never[]) => unknown>(callback: T | undefined): T {
   const callbackRef = React.useRef(callback);
 
   React.useEffect(() => {
