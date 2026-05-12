@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.2.3](https://github.com/monetr/vaul/compare/vaul-v1.2.2...vaul-v1.2.3) (2026-05-12)
+
+
+### Refactor
+
+* **build:** Adding rsdoctor to analyze bundle ([#34](https://github.com/monetr/vaul/issues/34)) ([553958d](https://github.com/monetr/vaul/commit/553958ddcce2af7235e84202ebe5b1fc45adb2bf))
+
+
+### Build Automation
+
+* Adding codeql ([8aa7923](https://github.com/monetr/vaul/commit/8aa7923080d302961b28b368966ca15616d588dc))
+
 ## [1.2.2](https://github.com/monetr/vaul/compare/vaul-v1.2.1...vaul-v1.2.2) (2026-05-06)
 
 
