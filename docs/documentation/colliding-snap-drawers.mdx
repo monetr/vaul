@@ -1,0 +1,48 @@
+# Colliding snap drawers
+
+import { CollidingSnapDrawersDemo } from '../components/CollidingSnapDrawersDemo';
+
+Two non-modal drawers with snap points on opposite edges can grow into each other if their combined snap fractions exceed `1`. This page shows a small "negotiator" you can drop in on top of the standard controlled snap-point API to keep them from overlapping: whichever drawer the user touched most recently wins, and the other shrinks to the largest snap point that still fits.
+
+<CollidingSnapDrawersDemo />
+
+## How it works
+
+The fixture uses one shared set of percent snap points and tracks which drawer was most recently interacted with (`open`, drag, or snap-point change all count):
+
+```tsx
+const SNAP_POINTS = [0.3, 0.5, 0.7, 0.9];
+
+const [topSnap, setTopSnap] = useState(SNAP_POINTS[0]);
+const [bottomSnap, setBottomSnap] = useState(SNAP_POINTS[0]);
+const [lastInteracted, setLastInteracted] = useState<'top' | 'bottom'>('top');
+```
+
+A `useEffect` runs whenever any of those change. If `top + bottom > 1` it walks the snap points from largest to smallest and picks the largest one that fits for the loser. When nothing fits (e.g. winner sits at `0.9`, so even `0.3` overflows) the loser pins to the smallest snap and we let `z-index` resolve the rest:
+
+```tsx
+useEffect(() => {
+  if (!topOpen || !bottomOpen) return;
+  const t = asFraction(topSnap);
+  const b = asFraction(bottomSnap);
+  if (t + b <= 1) return;
+
+  if (lastInteracted === 'top') {
+    const fit = largestFit(t);
+    if (fit !== b) setBottomSnap(fit);
+  } else {
+    const fit = largestFit(b);
+    if (fit !== t) setTopSnap(fit);
+  }
+}, [topOpen, bottomOpen, topSnap, bottomSnap, lastInteracted]);
+```
+
+The winner also gets a higher `z-index` so the visual stacking matches recency, which is what the user notices when both drawers are forced to overlap.
+
+## When to reach for this
+
+Most apps that show two non-modal snap drawers should just keep one of them small. Use this pattern when both drawers genuinely need to expand independently (split-screen tools, dual content panels) and the existing [Coexisting drawers](/documentation/coexisting-drawers) story isn't enough.
+
+## Why this is a fork addition
+
+Like the [Coexisting drawers](/documentation/coexisting-drawers) page, this is a fork-only scenario. Upstream `vaul` doesn't support two drawers at once, and the snap-collision behavior here is built entirely from the public controlled-snap API; the library itself stays unaware of siblings.

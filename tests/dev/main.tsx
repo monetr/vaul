@@ -2,6 +2,7 @@ import { StrictMode, useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 
 import { BaseDrawer } from '../fixtures/BaseDrawer';
+import { CollidingSnapDrawers } from '../fixtures/CollidingSnapDrawers';
 import { ControlledDrawer } from '../fixtures/ControlledDrawer';
 import { HandleDrawer } from '../fixtures/HandleDrawer';
 import { InitialSnapDrawer } from '../fixtures/InitialSnapDrawer';
@@ -26,6 +27,10 @@ const fixtures: Record<string, Fixture> = {
   'with-redirect': { label: 'With redirect', Component: () => <RedirectDrawer /> },
   'with-scaled-background': { label: 'Scaled background', Component: () => <ScaledBackground /> },
   'two-drawers': { label: 'Two drawers (top + bottom)', Component: () => <TwoDrawers /> },
+  'colliding-snap-drawers': {
+    label: 'Colliding snap drawers (top + bottom)',
+    Component: () => <CollidingSnapDrawers />,
+  },
 };
 
 function Index() {
