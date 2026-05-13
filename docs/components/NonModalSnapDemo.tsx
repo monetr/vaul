@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { Drawer } from '@monetr/vaul';
 
-import { Button, Demo, getSnapDrawerStyle } from './Demo';
+import { Button, Demo, getSnapDrawerClass, demoStyles as styles } from './Demo';
 
 const snapPoints: (number | string)[] = ['148px', '355px', 1];
 
@@ -12,18 +12,18 @@ export function NonModalSnapDemo() {
 
   return (
     <Demo minHeight={120}>
-      <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
+      <div className={styles.controls}>
         <Button onClick={() => setCount(c => c + 1)}>Background clicks: {count}</Button>
-        <span style={{ fontSize: '13px', opacity: 0.7 }}>The button keeps responding while the drawer is open.</span>
+        <span className={styles.status}>The button keeps responding while the drawer is open.</span>
       </div>
       <Drawer.Root activeSnapPoint={snap} modal={false} setActiveSnapPoint={setSnap} snapPoints={snapPoints}>
         <Drawer.Trigger asChild>
           <Button>Open non-modal snap drawer</Button>
         </Drawer.Trigger>
         <Drawer.Portal>
-          <Drawer.Content style={getSnapDrawerStyle()}>
-            <Drawer.Title style={{ margin: 0, fontSize: '18px' }}>Non-modal snap</Drawer.Title>
-            <Drawer.Description style={{ margin: 0, opacity: 0.7, fontSize: '14px' }}>
+          <Drawer.Content className={getSnapDrawerClass()}>
+            <Drawer.Title className={styles.title}>Non-modal snap</Drawer.Title>
+            <Drawer.Description className={styles.description}>
               No overlay. Click the background button to confirm it still works.
             </Drawer.Description>
             <Drawer.Close asChild>

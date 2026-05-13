@@ -1,6 +1,6 @@
 import { Drawer } from '@monetr/vaul';
 
-import { Button, Demo, getDrawerStyle, overlayStyle } from './Demo';
+import { Button, Demo, getDrawerClass, overlayClass, demoStyles as styles } from './Demo';
 
 export function SideDemo() {
   return (
@@ -10,10 +10,10 @@ export function SideDemo() {
           <Button>Open from right</Button>
         </Drawer.Trigger>
         <Drawer.Portal>
-          <Drawer.Overlay style={overlayStyle} />
-          <Drawer.Content style={getDrawerStyle('right')}>
-            <Drawer.Title style={{ margin: 0, fontSize: '18px' }}>Side drawer</Drawer.Title>
-            <Drawer.Description style={{ margin: 0, opacity: 0.7, fontSize: '14px' }}>
+          <Drawer.Overlay className={overlayClass} />
+          <Drawer.Content className={getDrawerClass('right')}>
+            <Drawer.Title className={styles.title}>Side drawer</Drawer.Title>
+            <Drawer.Description className={styles.description}>
               Swipe right or click outside to dismiss.
             </Drawer.Description>
             <Drawer.Close asChild>

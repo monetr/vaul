@@ -1,6 +1,6 @@
 import { Drawer } from '@monetr/vaul';
 
-import { Button, Demo, getDrawerStyle, overlayStyle, visuallyHidden } from './Demo';
+import { Button, Demo, getDrawerClass, overlayClass, demoStyles as styles } from './Demo';
 
 export function BasicDemo() {
   return (
@@ -10,13 +10,11 @@ export function BasicDemo() {
           <Button>Open drawer</Button>
         </Drawer.Trigger>
         <Drawer.Portal>
-          <Drawer.Overlay style={overlayStyle} />
-          <Drawer.Content style={getDrawerStyle('bottom')}>
-            <Drawer.Title style={{ margin: 0, fontSize: '18px' }}>Make changes</Drawer.Title>
-            <Drawer.Description style={{ margin: 0, opacity: 0.7, fontSize: '14px' }}>
-              Drag down or tap outside to dismiss.
-            </Drawer.Description>
-            <div style={{ display: 'flex', gap: '8px', marginTop: '8px' }}>
+          <Drawer.Overlay className={overlayClass} />
+          <Drawer.Content className={getDrawerClass('bottom')}>
+            <Drawer.Title className={styles.title}>Make changes</Drawer.Title>
+            <Drawer.Description className={styles.description}>Drag down or tap outside to dismiss.</Drawer.Description>
+            <div className={styles.buttonRowSpaced}>
               <Drawer.Close asChild>
                 <Button accent='var(--rp-c-brand)'>Save</Button>
               </Drawer.Close>
@@ -24,7 +22,7 @@ export function BasicDemo() {
                 <Button>Cancel</Button>
               </Drawer.Close>
             </div>
-            <span style={visuallyHidden}>Press Escape to close</span>
+            <span className={styles.visuallyHidden}>Press Escape to close</span>
           </Drawer.Content>
         </Drawer.Portal>
       </Drawer.Root>

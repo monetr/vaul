@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { Drawer } from '@monetr/vaul';
 
-import { Button, Demo, getSnapDrawerStyle } from './Demo';
+import { Button, Demo, getSnapDrawerClass, demoStyles as styles } from './Demo';
 
 const snapPoints: (number | string)[] = ['148px', '420px'];
 
@@ -13,9 +13,9 @@ export function PeekBarDemo() {
 
   return (
     <Demo minHeight={120}>
-      <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
+      <div className={styles.controls}>
         <Button onClick={() => setBgClicks(c => c + 1)}>Background clicks: {bgClicks}</Button>
-        <span style={{ fontSize: '13px', opacity: 0.7 }}>
+        <span className={styles.status}>
           The peek bar sits at the bottom of the viewport while you read this page. Drag the handle to expand it. Snap
           index: {activeIndex}.
         </span>
@@ -29,23 +29,14 @@ export function PeekBarDemo() {
         snapPoints={snapPoints}
       >
         <Drawer.Portal>
-          <Drawer.Content style={getSnapDrawerStyle()}>
-            <Drawer.Handle
-              style={{
-                alignSelf: 'center',
-                width: '48px',
-                height: '5px',
-                borderRadius: '999px',
-                background: 'var(--rp-c-divider-dark)',
-                margin: '-6px 0 4px',
-              }}
-            />
-            <Drawer.Title style={{ margin: 0, fontSize: '18px' }}>Now playing</Drawer.Title>
-            <Drawer.Description style={{ margin: 0, opacity: 0.7, fontSize: '14px' }}>
+          <Drawer.Content className={getSnapDrawerClass()}>
+            <Drawer.Handle className={styles.handle} />
+            <Drawer.Title className={styles.title}>Now playing</Drawer.Title>
+            <Drawer.Description className={styles.description}>
               A persistent peek bar. Drag the handle up to reveal more, drag it down to collapse, but the bar itself
               never closes.
             </Drawer.Description>
-            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+            <div className={styles.buttonRow}>
               {snapPoints.map(point => (
                 <Button key={String(point)} onClick={() => setSnap(point)}>
                   Snap to {String(point)}

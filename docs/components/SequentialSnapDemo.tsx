@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { Drawer } from '@monetr/vaul';
 
-import { Button, Demo, getSnapDrawerStyle, overlayStyle } from './Demo';
+import { Button, Demo, getSnapDrawerClass, overlayClass, demoStyles as styles } from './Demo';
 
 const snapPoints: (number | string)[] = ['148px', '355px', 1];
 
@@ -16,10 +16,10 @@ export function SequentialSnapDemo() {
           <Button>Open sequential drawer</Button>
         </Drawer.Trigger>
         <Drawer.Portal>
-          <Drawer.Overlay style={overlayStyle} />
-          <Drawer.Content style={getSnapDrawerStyle()}>
-            <Drawer.Title style={{ margin: 0, fontSize: '18px' }}>Sequential snap</Drawer.Title>
-            <Drawer.Description style={{ margin: 0, opacity: 0.7, fontSize: '14px' }}>
+          <Drawer.Overlay className={overlayClass} />
+          <Drawer.Content className={getSnapDrawerClass()}>
+            <Drawer.Title className={styles.title}>Sequential snap</Drawer.Title>
+            <Drawer.Description className={styles.description}>
               Fast flicks skip ahead by default. With <code>snapToSequentialPoint</code>, the drawer always advances
               exactly one snap point per gesture.
             </Drawer.Description>

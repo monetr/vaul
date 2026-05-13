@@ -1,0 +1,298 @@
+/* Wrapper */
+
+.demo {
+  position: relative;
+  padding: 24px;
+  margin: 16px 0;
+  border: 1px solid var(--rp-c-divider);
+  border-radius: 12px;
+  background: var(--rp-c-bg-soft);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  min-height: var(--demo-min-height, 80px);
+}
+
+/* Button. Accent (border + text color) can be overridden via --button-accent. */
+
+.button {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--button-accent, var(--rp-c-divider));
+  background: transparent;
+  color: var(--button-accent, var(--rp-c-text-1));
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  opacity: 1;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Drawer overlay. z-1000/1001 sit above rspress's z-999 hover menus. */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1000;
+}
+
+/* Drawer.Content base + per-direction anchoring.
+   Integer line-height keeps subpixel rendering off when the library applies
+   will-change: transform. */
+
+.drawer {
+  position: fixed;
+  background: var(--rp-c-bg);
+  border: 1px solid var(--rp-c-divider);
+  box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.18);
+  color: var(--rp-c-text-1);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+  box-sizing: border-box;
+  z-index: 1001;
+  outline: none;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.drawerBottom {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  max-height: 85vh;
+  border-radius: 12px 12px 0 0;
+}
+
+.drawerTop {
+  left: 0;
+  right: 0;
+  top: 0;
+  max-height: 85vh;
+  border-radius: 0 0 12px 12px;
+}
+
+.drawerRight {
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 85vw;
+  max-width: 400px;
+  border-radius: 12px 0 0 12px;
+}
+
+.drawerLeft {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 85vw;
+  max-width: 400px;
+  border-radius: 0 12px 12px 0;
+}
+
+/* Snap-point drawers need to fill the viewport when un-translated so the
+   library's `translate = innerHeight - snapPx` math leaves snapPx visible. */
+
+.drawerSnapVertical {
+  height: 100%;
+  max-height: none;
+}
+
+.drawerSnapHorizontal {
+  width: 100%;
+  max-width: none;
+}
+
+/* Drawer.Handle. */
+
+.handle {
+  align-self: center;
+  width: 48px;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--rp-c-divider-dark);
+  margin: -6px 0 4px;
+}
+
+/* Common text styles inside drawers. */
+
+.title {
+  margin: 0;
+  font-size: 18px;
+}
+
+.titleCapitalize {
+  text-transform: capitalize;
+}
+
+.description {
+  margin: 0;
+  opacity: 0.7;
+  font-size: 14px;
+}
+
+/* Status text used in controls rows. */
+
+.status {
+  font-size: 13px;
+  opacity: 0.7;
+}
+
+/* Flex helpers for arranging buttons and status inside demos. */
+
+.controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.buttonRow {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.buttonRowEnd {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.buttonRowSpaced {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+/* Inputs (Inputs demo and friends). */
+
+.input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid var(--rp-c-divider);
+  border-radius: 8px;
+  background: var(--rp-c-bg);
+  color: var(--rp-c-text-1);
+  font-size: 14px;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.textarea {
+  resize: vertical;
+}
+
+/* Scrollable list (ScrollableDemo). */
+
+.scrollList {
+  overflow-y: auto;
+  max-height: 50vh;
+  border: 1px solid var(--rp-c-divider);
+  border-radius: 8px;
+  padding: 8px;
+}
+
+.scrollListItem {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--rp-c-divider-light);
+}
+
+/* Option pills (DynamicContentDemo). */
+
+.optionList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.optionItem {
+  padding: 10px 14px;
+  border: 1px solid var(--rp-c-divider);
+  border-radius: 8px;
+  background: var(--rp-c-bg-soft);
+}
+
+/* Resizable scrollable area inside a drawer (DynamicContent or similar). */
+
+.drawerScroll {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow-y: auto;
+  max-height: 40vh;
+}
+
+.drawerScrollRow {
+  padding: 8px 12px;
+  border: 1px solid var(--rp-c-divider);
+  border-radius: 6px;
+}
+
+/* Scaled-background app card. */
+
+.appCard {
+  width: 100%;
+  min-height: 380px;
+  padding: 24px;
+  border-radius: 12px;
+  background: var(--rp-c-bg);
+  border: 1px solid var(--rp-c-divider);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transform-origin: center top;
+}
+
+.appCardTitle {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.appCardBody {
+  margin: 0;
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.chipRow {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.chip {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: var(--rp-c-bg-soft);
+  border: 1px solid var(--rp-c-divider);
+  font-size: 12px;
+}
+
+.spacer {
+  flex: 1;
+}
+
+/* Visually hidden helper for a11y-only labels. */
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

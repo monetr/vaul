@@ -1,0 +1,28 @@
+.homeInstall {
+  max-width: 800px;
+  margin: 0 auto 48px;
+  padding: 0 24px;
+}
+
+.homeTry {
+  max-width: 960px;
+  margin: 0 auto 80px;
+  padding: 0 24px;
+}
+
+.homeTryHeading {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.homeTryCode {
+  background: var(--rp-c-bg-soft);
+  border: 1px solid var(--rp-c-divider);
+  border-radius: 12px;
+  padding: 16px 20px;
+  overflow-x: auto;
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 0;
+}

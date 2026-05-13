@@ -1,6 +1,6 @@
 import { Drawer, type DrawerDirection } from '@monetr/vaul';
 
-import { Button, Demo, getDrawerStyle, overlayStyle } from './Demo';
+import { Button, cx, Demo, getDrawerClass, overlayClass, demoStyles as styles } from './Demo';
 
 const directions: DrawerDirection[] = ['top', 'right', 'bottom', 'left'];
 
@@ -13,12 +13,10 @@ export function DirectionsDemo() {
             <Button>Open {direction}</Button>
           </Drawer.Trigger>
           <Drawer.Portal>
-            <Drawer.Overlay style={overlayStyle} />
-            <Drawer.Content style={getDrawerStyle(direction)}>
-              <Drawer.Title style={{ margin: 0, fontSize: '18px', textTransform: 'capitalize' }}>
-                {direction} drawer
-              </Drawer.Title>
-              <Drawer.Description style={{ margin: 0, opacity: 0.7, fontSize: '14px' }}>
+            <Drawer.Overlay className={overlayClass} />
+            <Drawer.Content className={getDrawerClass(direction)}>
+              <Drawer.Title className={cx(styles.title, styles.titleCapitalize)}>{direction} drawer</Drawer.Title>
+              <Drawer.Description className={styles.description}>
                 Swipe back toward the {direction} edge to dismiss.
               </Drawer.Description>
               <Drawer.Close asChild>

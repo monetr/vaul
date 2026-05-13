@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { Drawer } from '@monetr/vaul';
 
-import { Button, Demo, getSnapDrawerStyle, overlayStyle } from './Demo';
+import { Button, Demo, getSnapDrawerClass, overlayClass, demoStyles as styles } from './Demo';
 
 const snapPoints: (number | string)[] = ['148px', '400px', 1];
 
@@ -16,13 +16,13 @@ export function FadeFromIndexDemo() {
           <Button>Open with fadeFromIndex</Button>
         </Drawer.Trigger>
         <Drawer.Portal>
-          <Drawer.Overlay style={overlayStyle} />
-          <Drawer.Content style={getSnapDrawerStyle()}>
-            <Drawer.Title style={{ margin: 0, fontSize: '18px' }}>fadeFromIndex</Drawer.Title>
-            <Drawer.Description style={{ margin: 0, opacity: 0.7, fontSize: '14px' }}>
+          <Drawer.Overlay className={overlayClass} />
+          <Drawer.Content className={getSnapDrawerClass()}>
+            <Drawer.Title className={styles.title}>fadeFromIndex</Drawer.Title>
+            <Drawer.Description className={styles.description}>
               The overlay stays transparent at the first snap and fades in as the drawer crosses the second snap point.
             </Drawer.Description>
-            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+            <div className={styles.buttonRow}>
               {snapPoints.map(point => (
                 <Button key={String(point)} onClick={() => setSnap(point)}>
                   {String(point)}

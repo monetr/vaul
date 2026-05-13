@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { Drawer } from '@monetr/vaul';
 
-import { Button, Demo, getDrawerStyle, overlayStyle } from './Demo';
+import { Button, Demo, getDrawerClass, overlayClass, demoStyles as styles } from './Demo';
 
 const steps = [
   {
@@ -40,28 +40,18 @@ export function DynamicContentDemo() {
           <Button>Start order</Button>
         </Drawer.Trigger>
         <Drawer.Portal>
-          <Drawer.Overlay style={overlayStyle} />
-          <Drawer.Content style={getDrawerStyle('bottom')}>
-            <Drawer.Title style={{ margin: 0, fontSize: '18px' }}>{current.title}</Drawer.Title>
-            <Drawer.Description style={{ margin: 0, opacity: 0.7, fontSize: '14px' }}>
-              {current.body}
-            </Drawer.Description>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          <Drawer.Overlay className={overlayClass} />
+          <Drawer.Content className={getDrawerClass('bottom')}>
+            <Drawer.Title className={styles.title}>{current.title}</Drawer.Title>
+            <Drawer.Description className={styles.description}>{current.body}</Drawer.Description>
+            <div className={styles.optionList}>
               {current.options.map(option => (
-                <div
-                  key={option}
-                  style={{
-                    padding: '10px 14px',
-                    border: '1px solid var(--rp-c-divider)',
-                    borderRadius: '8px',
-                    background: 'var(--rp-c-bg-soft)',
-                  }}
-                >
+                <div className={styles.optionItem} key={option}>
                   {option}
                 </div>
               ))}
             </div>
-            <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
+            <div className={styles.buttonRowEnd}>
               {step > 0 ? <Button onClick={() => setStep(s => s - 1)}>Back</Button> : null}
               {isLast ? (
                 <Drawer.Close asChild>

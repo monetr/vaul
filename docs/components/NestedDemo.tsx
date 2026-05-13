@@ -1,6 +1,6 @@
 import { Drawer } from '@monetr/vaul';
 
-import { Button, Demo, getDrawerStyle, overlayStyle } from './Demo';
+import { Button, Demo, getDrawerClass, overlayClass, demoStyles as styles } from './Demo';
 
 export function NestedDemo() {
   return (
@@ -10,10 +10,10 @@ export function NestedDemo() {
           <Button>Open outer</Button>
         </Drawer.Trigger>
         <Drawer.Portal>
-          <Drawer.Overlay style={overlayStyle} />
-          <Drawer.Content style={getDrawerStyle('bottom')}>
-            <Drawer.Title style={{ margin: 0, fontSize: '18px' }}>Outer drawer</Drawer.Title>
-            <Drawer.Description style={{ margin: 0, opacity: 0.7, fontSize: '14px' }}>
+          <Drawer.Overlay className={overlayClass} />
+          <Drawer.Content className={getDrawerClass('bottom')}>
+            <Drawer.Title className={styles.title}>Outer drawer</Drawer.Title>
+            <Drawer.Description className={styles.description}>
               Tap the nested trigger to push a child drawer.
             </Drawer.Description>
             <Drawer.NestedRoot>
@@ -21,10 +21,10 @@ export function NestedDemo() {
                 <Button accent='var(--rp-c-brand)'>Open nested</Button>
               </Drawer.Trigger>
               <Drawer.Portal>
-                <Drawer.Overlay style={overlayStyle} />
-                <Drawer.Content style={getDrawerStyle('bottom')}>
-                  <Drawer.Title style={{ margin: 0, fontSize: '18px' }}>Nested drawer</Drawer.Title>
-                  <Drawer.Description style={{ margin: 0, opacity: 0.7, fontSize: '14px' }}>
+                <Drawer.Overlay className={overlayClass} />
+                <Drawer.Content className={getDrawerClass('bottom')}>
+                  <Drawer.Title className={styles.title}>Nested drawer</Drawer.Title>
+                  <Drawer.Description className={styles.description}>
                     The parent recedes while this one is open.
                   </Drawer.Description>
                   <Drawer.Close asChild>

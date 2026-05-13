@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { Drawer } from '@monetr/vaul';
 
-import { Button, Demo, getSnapDrawerStyle, overlayStyle } from './Demo';
+import { Button, Demo, getSnapDrawerClass, overlayClass, demoStyles as styles } from './Demo';
 
 const snapPoints: (number | string)[] = ['200px', '440px', 1];
 
@@ -16,20 +16,11 @@ export function HandleOnlyDemo() {
           <Button>Open handle-only drawer</Button>
         </Drawer.Trigger>
         <Drawer.Portal>
-          <Drawer.Overlay style={overlayStyle} />
-          <Drawer.Content style={getSnapDrawerStyle()}>
-            <Drawer.Handle
-              style={{
-                alignSelf: 'center',
-                width: '48px',
-                height: '5px',
-                borderRadius: '999px',
-                background: 'var(--rp-c-divider-dark)',
-                margin: '-6px 0 4px',
-              }}
-            />
-            <Drawer.Title style={{ margin: 0, fontSize: '18px' }}>Handle-only</Drawer.Title>
-            <Drawer.Description style={{ margin: 0, opacity: 0.7, fontSize: '14px' }}>
+          <Drawer.Overlay className={overlayClass} />
+          <Drawer.Content className={getSnapDrawerClass()}>
+            <Drawer.Handle className={styles.handle} />
+            <Drawer.Title className={styles.title}>Handle-only</Drawer.Title>
+            <Drawer.Description className={styles.description}>
               The body of this drawer is not draggable. Use the handle above to drag between snap points or tap it to
               cycle.
             </Drawer.Description>

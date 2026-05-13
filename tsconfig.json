@@ -15,5 +15,5 @@
       "@monetr/vaul": ["./src/index.tsx"]
     }
   },
-  "include": ["src", "tests", "docs", "rstest.config.ts"]
+  "include": ["src", "tests", "docs", "theme", "rstest.config.ts"]
 }

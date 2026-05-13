@@ -1,10 +1,11 @@
+import styles from './index.module.css';
 import { BasicDemo } from '../docs/components/BasicDemo';
 
 import { Layout as BaseLayout, PackageManagerTabs } from '@rspress/core/theme-original';
 
 function HomeInstall() {
   return (
-    <div className='home-install' style={{ maxWidth: 800, margin: '0 auto 48px', padding: '0 24px' }}>
+    <div className={styles.homeInstall}>
       <PackageManagerTabs command='install @monetr/vaul' />
     </div>
   );
@@ -12,21 +13,10 @@ function HomeInstall() {
 
 function HomeTry() {
   return (
-    <div className='home-try' style={{ maxWidth: 960, margin: '0 auto 80px', padding: '0 24px' }}>
-      <h2 style={{ fontSize: '24px', fontWeight: 700, marginBottom: '16px' }}>Try it</h2>
+    <div className={styles.homeTry}>
+      <h2 className={styles.homeTryHeading}>Try it</h2>
       <BasicDemo />
-      <pre
-        style={{
-          background: 'var(--rp-c-bg-soft)',
-          border: '1px solid var(--rp-c-divider)',
-          borderRadius: '12px',
-          padding: '16px 20px',
-          overflowX: 'auto',
-          fontSize: '13px',
-          lineHeight: 1.6,
-          margin: 0,
-        }}
-      >
+      <pre className={styles.homeTryCode}>
         <code>{`import { Drawer } from '@monetr/vaul';
 
 export function MyDrawer() {
