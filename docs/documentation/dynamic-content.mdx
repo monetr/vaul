@@ -2,32 +2,28 @@
 
 import { DynamicContentDemo } from '../components/DynamicContentDemo';
 
-Drawers with snap points measure the height of `Drawer.Content` once and use that for snap calculations. If your content height changes after the drawer is open (an accordion expanding, an async list loading, a wizard stepping forward) you can re-snap by calling `setActiveSnapPoint`.
+A drawer without snap points sizes itself to its content. As the content changes (a wizard advancing, an async list loading, an accordion expanding) the drawer's intrinsic height follows. This is the "family-style" pattern popularized by the Family iOS app.
 
 <DynamicContentDemo />
 
 ```tsx
-const snapPoints = ['200px', '440px', 1];
+const steps = [
+  { title: 'Step 1', body: <Step1Body /> },
+  { title: 'Step 2', body: <Step2Body /> },
+  { title: 'Step 3', body: <Step3Body /> },
+];
 
-function MyDrawer() {
-  const [snap, setSnap] = useState(snapPoints[0]);
-  const [expanded, setExpanded] = useState(false);
-
+function Wizard() {
+  const [step, setStep] = useState(0);
   return (
-    <Drawer.Root activeSnapPoint={snap} setActiveSnapPoint={setSnap} snapPoints={snapPoints}>
+    <Drawer.Root onOpenChange={open => { if (!open) setStep(0); }}>
+      <Drawer.Trigger>Start</Drawer.Trigger>
       <Drawer.Portal>
         <Drawer.Overlay />
         <Drawer.Content>
-          <button
-            onClick={() => {
-              const next = !expanded;
-              setExpanded(next);
-              setSnap(next ? snapPoints[1] : snapPoints[0]);
-            }}
-          >
-            {expanded ? 'Collapse' : 'Expand'}
-          </button>
-          {expanded ? <LongList /> : <ShortList />}
+          <Drawer.Title>{steps[step].title}</Drawer.Title>
+          {steps[step].body}
+          <button onClick={() => setStep(s => s + 1)}>Next</button>
         </Drawer.Content>
       </Drawer.Portal>
     </Drawer.Root>
@@ -35,4 +31,17 @@ function MyDrawer() {
 }
 ```
 
-The drawer transitions smoothly between snap points because the transform animation is a CSS transition driven by the same machinery that responds to drag gestures.
+The drawer has no `snapPoints`, so vaul does not impose any height. The browser resizes the drawer instantly each time the content changes. If you want the resize to animate, add a CSS transition for `height` to your content - vaul will not transition height on your behalf.
+
+## Dynamic content with snap points
+
+Snap point offsets are calculated from `window.innerHeight`, not from the drawer's measured height (see [Snap points](/documentation/snap-points)). That means changing the content inside a snap-pointed drawer does not change the snap positions. If you want the drawer to settle differently after content changes, call `setActiveSnapPoint` yourself.
+
+```tsx
+const [snap, setSnap] = useState<number | string | null>('200px');
+
+function expandAndResnap() {
+  setExpanded(true);
+  setSnap('440px');
+}
+```
