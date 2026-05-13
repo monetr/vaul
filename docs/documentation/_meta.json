@@ -12,5 +12,7 @@
   "inputs",
   "dynamic-content",
   "nested",
+  "coexisting-drawers",
+  "peek-bar",
   "api"
 ]

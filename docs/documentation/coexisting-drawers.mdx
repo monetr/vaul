@@ -1,0 +1,38 @@
+# Coexisting drawers
+
+import { CoexistingDrawersDemo } from '../components/CoexistingDrawersDemo';
+
+Two `Drawer.Root`s can be mounted as siblings and stay independent. This is different from [Nested drawers](/documentation/nested): there is no parent / child relationship, no recede animation, and one drawer's state does not move the other.
+
+<CoexistingDrawersDemo />
+
+```tsx
+const [topOpen, setTopOpen] = useState(false);
+const [bottomOpen, setBottomOpen] = useState(false);
+
+return (
+  <>
+    <Drawer.Root direction='top' modal={false} onOpenChange={setTopOpen} open={topOpen}>
+      <Drawer.Portal>
+        <Drawer.Overlay />
+        <Drawer.Content>...</Drawer.Content>
+      </Drawer.Portal>
+    </Drawer.Root>
+
+    <Drawer.Root direction='bottom' modal={false} onOpenChange={setBottomOpen} open={bottomOpen}>
+      <Drawer.Portal>
+        <Drawer.Overlay />
+        <Drawer.Content>...</Drawer.Content>
+      </Drawer.Portal>
+    </Drawer.Root>
+  </>
+);
+```
+
+## Why `modal={false}`
+
+When one drawer is modal it locks the body and traps focus, which prevents the user from interacting with the second drawer's trigger. Setting both to `modal={false}` keeps the rest of the page (including the other drawer) clickable. If you do want a modal drawer alongside a non-modal one, render only the modal drawer's trigger while it is closed.
+
+## Why this is a fork addition
+
+Upstream `vaul` does not officially support two drawers on screen at the same time and has known issues where one drawer's drag handlers interfere with the other. This fork ships fixes and a dedicated test (`tests/two-drawers.test.tsx`) to keep the two trees isolated.

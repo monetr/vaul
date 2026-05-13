@@ -1,0 +1,52 @@
+# Persistent peek bar
+
+import { PeekBarDemo } from '../components/PeekBarDemo';
+
+Combine `defaultOpen`, `dismissible={false}`, `modal={false}`, `snapPoints`, and `Drawer.Handle` to build the "peek bar" pattern used by Apple Maps and Apple Music: a sheet that lives at the bottom of the screen, snaps between a peek view and a full view, and never closes.
+
+<PeekBarDemo />
+
+```tsx
+const snapPoints = ['148px', '420px'];
+
+function PeekBar() {
+  const [snap, setSnap] = useState<number | string | null>(snapPoints[0]);
+  return (
+    <Drawer.Root
+      activeSnapPoint={snap}
+      defaultOpen
+      dismissible={false}
+      modal={false}
+      setActiveSnapPoint={setSnap}
+      snapPoints={snapPoints}
+    >
+      <Drawer.Portal>
+        <Drawer.Content>
+          <Drawer.Handle />
+          <Drawer.Title>Now playing</Drawer.Title>
+          ...
+        </Drawer.Content>
+      </Drawer.Portal>
+    </Drawer.Root>
+  );
+}
+```
+
+## What each prop is doing
+
+- `defaultOpen` mounts the drawer in the open state on first render so the peek view is visible immediately.
+- `dismissible={false}` blocks Escape, the overlay tap, and drag-to-close. There is no way for the user to dismiss the bar.
+- `modal={false}` keeps the rest of the page interactive and scrollable so the bar truly behaves like a docked bottom bar instead of a sheet over a dimmed page.
+- `snapPoints` controls how far the bar expands. The first snap should match the peek height; later snaps reveal more of the content.
+- `Drawer.Handle` gives the user something to grab. Without it the bar is not visibly draggable.
+
+## Reserve space for the bar
+
+Because the bar overlays the bottom of the viewport, content at the bottom of the page can be hidden behind it. Add bottom padding equal to the peek height to your page wrapper:
+
+```tsx
+<div style={{ paddingBottom: 148 }}>
+  <YourContent />
+  <PeekBar />
+</div>
+```
