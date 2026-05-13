@@ -1,0 +1,52 @@
+# Default drawer
+
+import { BasicDemo } from '../components/BasicDemo';
+import { SideDemo } from '../components/SideDemo';
+import { ScrollableDemo } from '../components/ScrollableDemo';
+import { NestedDemo } from '../components/NestedDemo';
+
+A bottom drawer with no extra configuration. Trigger opens it, the overlay dismisses it, and pulling down past the close threshold (`0.25` by default) releases it.
+
+<BasicDemo />
+
+```tsx
+import { Drawer } from '@monetr/vaul';
+
+export function MyDrawer() {
+  return (
+    <Drawer.Root>
+      <Drawer.Trigger>Open</Drawer.Trigger>
+      <Drawer.Portal>
+        <Drawer.Overlay />
+        <Drawer.Content>
+          <Drawer.Title>Make changes</Drawer.Title>
+          <Drawer.Description>Drag down or tap outside to dismiss.</Drawer.Description>
+          <Drawer.Close>Save</Drawer.Close>
+        </Drawer.Content>
+      </Drawer.Portal>
+    </Drawer.Root>
+  );
+}
+```
+
+## Side drawer
+
+Set `direction='right'` (or `'left'`) for a side sheet. The drag gesture switches axes automatically.
+
+<SideDemo />
+
+```tsx
+<Drawer.Root direction='right'>...</Drawer.Root>
+```
+
+## Scrollable content
+
+`Drawer.Content` measures the drag intent. While you scroll an inner overflow container vaul yields drag handling and re-enables it after `scrollLockTimeout` ms (default `500`).
+
+<ScrollableDemo />
+
+## Nested
+
+Use `Drawer.NestedRoot` to push another drawer over the current one. The parent visually recedes by `NESTED_DISPLACEMENT` pixels.
+
+<NestedDemo />

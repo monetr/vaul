@@ -1,0 +1,34 @@
+# Controlled drawer
+
+import { ControlledDemo } from '../components/ControlledDemo';
+
+Wire both `open` and `onOpenChange` to drive the drawer from your own state. This is the common pattern when you also need to open or close the drawer from places that are not `Drawer.Trigger` or `Drawer.Close`.
+
+<ControlledDemo />
+
+```tsx
+const [open, setOpen] = useState(false);
+
+return (
+  <Drawer.Root onOpenChange={setOpen} open={open}>
+    <Drawer.Portal>
+      <Drawer.Overlay />
+      <Drawer.Content>...</Drawer.Content>
+    </Drawer.Portal>
+  </Drawer.Root>
+);
+```
+
+## Open-only controlled (gotcha)
+
+Passing `open` without `onOpenChange` is supported, but the drawer becomes a one-way door: vaul can render the drawer based on your state, but dismiss gestures, the overlay click, and `Drawer.Close` will not update your state because there is no setter to call. The drawer animates closed and immediately reopens.
+
+If you want this shape, you usually pair it with `dismissible={false}` so the user only closes the drawer via your own button:
+
+```tsx
+<Drawer.Root dismissible={false} open={open}>
+  ...
+</Drawer.Root>
+```
+
+See [Non-dismissible](/documentation/non-dismissible) for a worked example.

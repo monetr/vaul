@@ -18,7 +18,7 @@
     "lineEnding": "lf",
     "lineWidth": 120,
     "attributePosition": "auto",
-    "includes": ["src/**", "tests/**", "!**/*.html", "!**/*.svg", "!**/*.mdx"]
+    "includes": ["src/**", "tests/**", "docs/**", "!**/*.html", "!**/*.svg", "!**/*.mdx"]
   },
   "assist": {
     "actions": {
@@ -112,7 +112,7 @@
       },
       "nursery": {}
     },
-    "includes": ["src/**", "tests/**", "!**/*.html", "!**/*.svg", "!**/*.mdx", "!**/*.css"]
+    "includes": ["src/**", "tests/**", "docs/**", "!**/*.html", "!**/*.svg", "!**/*.mdx", "!**/*.css"]
   },
   "javascript": {
     "formatter": {

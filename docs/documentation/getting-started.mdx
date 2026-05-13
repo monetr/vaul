@@ -1,0 +1,64 @@
+# Getting started
+
+## Anatomy
+
+A drawer is composed of:
+
+```tsx
+<Drawer.Root>
+  <Drawer.Trigger />
+  <Drawer.Portal>
+    <Drawer.Overlay />
+    <Drawer.Content>
+      <Drawer.Handle />
+      <Drawer.Title />
+      <Drawer.Description />
+      <Drawer.Close />
+    </Drawer.Content>
+  </Drawer.Portal>
+</Drawer.Root>
+```
+
+For nested drawers, swap the inner `Drawer.Root` for `Drawer.NestedRoot`. Everything else is identical.
+
+## Required styles
+
+The library only ships animation and transform CSS. You are responsible for positioning `Drawer.Content` and `Drawer.Overlay`. The convention is fixed positioning anchored to whichever edge you chose with `direction`:
+
+```css
+[data-vaul-drawer] {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  max-height: 85vh;
+  background: white;
+  border-radius: 12px 12px 0 0;
+}
+
+[data-vaul-overlay] {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+}
+```
+
+If you change `direction` you also need to swap which edge is pinned. The library writes a `data-vaul-drawer-direction` attribute that you can target.
+
+## Scaled background
+
+If you want the iOS-style effect where the page recedes when the drawer opens, add `shouldScaleBackground` to `Drawer.Root` and put `data-vaul-drawer-wrapper=""` on the element you want scaled (typically the top-level layout element):
+
+```tsx
+<div data-vaul-drawer-wrapper=''>
+  <YourApp />
+</div>
+```
+
+See [Scaled background](/documentation/scaled-background) for the standalone demo.
+
+## Accessibility
+
+`Drawer.Title` and `Drawer.Description` are required by the underlying Radix Dialog for screen reader users. Use `Drawer.Handle` for any drag affordance to keep keyboard cycling and ARIA labels in one place.
+
+Next: try the [default drawer](/documentation/default), then explore [snap points](/documentation/snap-points) and [direction](/documentation/directions).

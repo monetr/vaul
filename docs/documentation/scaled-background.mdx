@@ -1,0 +1,30 @@
+# Scaled background
+
+import { ScaledBackgroundDemo } from '../components/ScaledBackgroundDemo';
+
+Opt into the iOS-style "card stack" effect by setting `shouldScaleBackground` on `Drawer.Root` and tagging an ancestor with `data-vaul-drawer-wrapper=""`.
+
+<ScaledBackgroundDemo />
+
+```tsx
+<div data-vaul-drawer-wrapper=''>
+  <YourApp />
+  <Drawer.Root shouldScaleBackground>...</Drawer.Root>
+</div>
+```
+
+Vaul finds the first element with `data-vaul-drawer-wrapper` and applies a `transform: scale(0.93)` plus `border-radius: 8px` to it while the drawer is open. When the drawer closes everything reverts.
+
+## Background color
+
+By default, vaul also temporarily sets the document body color to black so the rounded wrapper has dark margins. Pass `setBackgroundColorOnScale={false}` to keep your page color:
+
+```tsx
+<Drawer.Root setBackgroundColorOnScale={false} shouldScaleBackground>
+  ...
+</Drawer.Root>
+```
+
+## Multiple wrappers
+
+Only the first `data-vaul-drawer-wrapper` element found in the DOM gets scaled. If you embed the demo inside another wrapped section, the outer wrapper wins, which is usually what you want.

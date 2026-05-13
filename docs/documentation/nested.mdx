@@ -1,0 +1,30 @@
+# Nested drawers
+
+import { NestedDemo } from '../components/NestedDemo';
+
+A drawer rendered inside another `Drawer.Root` would compete for drag handling and focus. `Drawer.NestedRoot` is the variant designed for this: it inherits the parent's modal context and recedes the parent while it is open.
+
+<NestedDemo />
+
+```tsx
+<Drawer.Root>
+  <Drawer.Trigger>Open outer</Drawer.Trigger>
+  <Drawer.Portal>
+    <Drawer.Overlay />
+    <Drawer.Content>
+      <Drawer.NestedRoot>
+        <Drawer.Trigger>Open nested</Drawer.Trigger>
+        <Drawer.Portal>
+          <Drawer.Overlay />
+          <Drawer.Content>
+            <Drawer.Title>Nested</Drawer.Title>
+            <Drawer.Close>Close nested</Drawer.Close>
+          </Drawer.Content>
+        </Drawer.Portal>
+      </Drawer.NestedRoot>
+    </Drawer.Content>
+  </Drawer.Portal>
+</Drawer.Root>
+```
+
+The outer drawer scales down by `NESTED_DISPLACEMENT` pixels (defined in `src/constants.ts`) while the nested drawer is open. Closing the nested drawer animates the parent back to full size.

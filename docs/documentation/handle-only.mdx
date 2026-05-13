@@ -1,0 +1,27 @@
+# Handle only
+
+import { HandleOnlyDemo } from '../components/HandleOnlyDemo';
+
+By default any pointer drag on `Drawer.Content` is treated as a drawer gesture. That is great for short content but inconvenient when the content itself has draggable widgets (sliders, charts, maps). Set `handleOnly` and place a `Drawer.Handle` to confine drags to a dedicated affordance.
+
+<HandleOnlyDemo />
+
+```tsx
+<Drawer.Root handleOnly snapPoints={['200px', '440px', 1]}>
+  <Drawer.Portal>
+    <Drawer.Overlay />
+    <Drawer.Content>
+      <Drawer.Handle />
+      <YourScrollableBody />
+    </Drawer.Content>
+  </Drawer.Portal>
+</Drawer.Root>
+```
+
+## Drawer.Handle behaviour
+
+`Drawer.Handle` is a small `<div>` that participates in the drag system. It also handles keyboard cycling through snap points: pressing the handle when it is focused snaps to the next stop. Pass `preventCycle` to disable that and `aria-label` to customize the announcement.
+
+```tsx
+<Drawer.Handle aria-label='Resize sheet' preventCycle />
+```

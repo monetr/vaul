@@ -1,0 +1,28 @@
+# Direction
+
+import { DirectionsDemo } from '../components/DirectionsDemo';
+
+`Drawer.Root` accepts `direction='top' | 'right' | 'bottom' | 'left'`. The default is `'bottom'`.
+
+<DirectionsDemo />
+
+The library updates the `data-vaul-drawer-direction` attribute on `Drawer.Content` and switches its drag axis automatically. Your stylesheet still owns positioning, so the typical setup is direction-specific CSS:
+
+```css
+[data-vaul-drawer][data-vaul-drawer-direction='bottom'] {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 12px 12px 0 0;
+}
+
+[data-vaul-drawer][data-vaul-drawer-direction='right'] {
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: min(85vw, 400px);
+  border-radius: 12px 0 0 12px;
+}
+```
+
+The other animations (`slideFromTop`, `slideFromLeft`, etc.) live in the library's `style.css` and key off the same attribute, so once you pick the direction the slide-in works out of the box.

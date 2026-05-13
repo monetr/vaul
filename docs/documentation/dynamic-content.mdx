@@ -1,0 +1,38 @@
+# Dynamic content
+
+import { DynamicContentDemo } from '../components/DynamicContentDemo';
+
+Drawers with snap points measure the height of `Drawer.Content` once and use that for snap calculations. If your content height changes after the drawer is open (an accordion expanding, an async list loading, a wizard stepping forward) you can re-snap by calling `setActiveSnapPoint`.
+
+<DynamicContentDemo />
+
+```tsx
+const snapPoints = ['200px', '440px', 1];
+
+function MyDrawer() {
+  const [snap, setSnap] = useState(snapPoints[0]);
+  const [expanded, setExpanded] = useState(false);
+
+  return (
+    <Drawer.Root activeSnapPoint={snap} setActiveSnapPoint={setSnap} snapPoints={snapPoints}>
+      <Drawer.Portal>
+        <Drawer.Overlay />
+        <Drawer.Content>
+          <button
+            onClick={() => {
+              const next = !expanded;
+              setExpanded(next);
+              setSnap(next ? snapPoints[1] : snapPoints[0]);
+            }}
+          >
+            {expanded ? 'Collapse' : 'Expand'}
+          </button>
+          {expanded ? <LongList /> : <ShortList />}
+        </Drawer.Content>
+      </Drawer.Portal>
+    </Drawer.Root>
+  );
+}
+```
+
+The drawer transitions smoothly between snap points because the transform animation is a CSS transition driven by the same machinery that responds to drag gestures.

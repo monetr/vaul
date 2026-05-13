@@ -1,0 +1,130 @@
+# API reference
+
+```tsx
+import { Drawer } from '@monetr/vaul';
+```
+
+The `Drawer` export is an object that groups every subcomponent.
+
+```tsx
+<Drawer.Root>
+  <Drawer.Trigger />
+  <Drawer.Portal>
+    <Drawer.Overlay />
+    <Drawer.Content>
+      <Drawer.Handle />
+      <Drawer.Title />
+      <Drawer.Description />
+      <Drawer.Close />
+    </Drawer.Content>
+  </Drawer.Portal>
+</Drawer.Root>
+```
+
+## Drawer.Root
+
+The state container. Every other subcomponent must be rendered inside one (or inside `Drawer.NestedRoot`).
+
+| Prop                          | Type                                                      | Default     |
+| ----------------------------- | --------------------------------------------------------- | ----------- |
+| `open`                        | `boolean`                                                 | -           |
+| `defaultOpen`                 | `boolean`                                                 | `false`     |
+| `onOpenChange`                | `(open: boolean) => void`                                 | -           |
+| `modal`                       | `boolean`                                                 | `true`      |
+| `direction`                   | `'top' \| 'right' \| 'bottom' \| 'left'`                  | `'bottom'`  |
+| `dismissible`                 | `boolean`                                                 | `true`      |
+| `handleOnly`                  | `boolean`                                                 | `false`     |
+| `shouldScaleBackground`       | `boolean`                                                 | -           |
+| `setBackgroundColorOnScale`   | `boolean`                                                 | `true`      |
+| `closeThreshold`              | `number` (0-1)                                            | `0.25`      |
+| `scrollLockTimeout`           | `number` (ms)                                             | `500`       |
+| `fixed`                       | `boolean`                                                 | `false`     |
+| `noBodyStyles`                | `boolean`                                                 | `false`     |
+| `disablePreventScroll`        | `boolean`                                                 | `false`     |
+| `repositionInputs`            | `boolean`                                                 | `true` when `snapPoints` set |
+| `preventScrollRestoration`    | `boolean`                                                 | `false`     |
+| `autoFocus`                   | `boolean`                                                 | -           |
+| `container`                   | `HTMLElement \| null`                                     | `document.body` |
+| `snapPoints`                  | `(number \| string)[]`                                    | -           |
+| `activeSnapPoint`             | `number \| string \| null`                                | -           |
+| `setActiveSnapPoint`          | `(value) => void`                                         | -           |
+| `fadeFromIndex`               | `number`                                                  | last snap   |
+| `snapToSequentialPoint`       | `boolean`                                                 | `false`     |
+| `onDrag`                      | `(event, percentageDragged: number) => void`              | -           |
+| `onRelease`                   | `(event, open: boolean) => void`                          | -           |
+| `onClose`                     | `() => void`                                              | -           |
+| `onAnimationEnd`              | `(open: boolean) => void`                                 | -           |
+
+## Drawer.NestedRoot
+
+Same props as `Drawer.Root`. Use when nesting a drawer inside another drawer's content.
+
+## Drawer.Trigger
+
+Aliased to `DialogPrimitive.Trigger`. Accepts `asChild` to slot into a custom element.
+
+| Prop      | Type      | Default |
+| --------- | --------- | ------- |
+| `asChild` | `boolean` | `false` |
+
+## Drawer.Portal
+
+Aliased to `DialogPrimitive.Portal`. Renders children into a portal so the drawer escapes ancestor stacking contexts.
+
+| Prop        | Type                  | Default         |
+| ----------- | --------------------- | --------------- |
+| `container` | `HTMLElement \| null` | `document.body` |
+
+## Drawer.Overlay
+
+The dimmed scrim behind the drawer. Click-through closes the drawer when `dismissible` is `true`.
+
+| Prop      | Type      | Default |
+| --------- | --------- | ------- |
+| `asChild` | `boolean` | `false` |
+
+## Drawer.Content
+
+The draggable surface. Accepts every standard `div` prop.
+
+| Prop      | Type      | Default |
+| --------- | --------- | ------- |
+| `asChild` | `boolean` | `false` |
+
+## Drawer.Handle
+
+A small grab affordance. Cycles through snap points on click when focused.
+
+| Prop           | Type      | Default |
+| -------------- | --------- | ------- |
+| `preventCycle` | `boolean` | `false` |
+| `aria-label`   | `string`  | -       |
+
+## Drawer.Close
+
+Aliased to `DialogPrimitive.Close`.
+
+| Prop      | Type      | Default |
+| --------- | --------- | ------- |
+| `asChild` | `boolean` | `false` |
+
+## Drawer.Title
+
+Aliased to `DialogPrimitive.Title`. Required for accessibility. Use a visually hidden style if you do not want it shown.
+
+## Drawer.Description
+
+Aliased to `DialogPrimitive.Description`. Pair with `Drawer.Title` for a complete a11y description, or pass `aria-describedby={undefined}` on `Drawer.Content` to opt out.
+
+## DOM attributes
+
+The library writes a handful of attributes you can target from CSS.
+
+| Attribute                       | Where           | Notes                                       |
+| ------------------------------- | --------------- | ------------------------------------------- |
+| `data-vaul-drawer`              | `Drawer.Content`| Always present, the main hook for styling.  |
+| `data-vaul-drawer-direction`    | `Drawer.Content`| One of `top`, `right`, `bottom`, `left`.    |
+| `data-vaul-snap-points`         | `Drawer.Content`| `true` when `snapPoints` is set.            |
+| `data-state`                    | `Drawer.Content`/`Overlay` | `open` or `closed`.              |
+| `data-vaul-drawer-wrapper`      | Consumer-set    | Marks the element to scale during `shouldScaleBackground`. |
+| `data-vaul-no-drag`             | Consumer-set    | Add to any descendant to exclude it from drag handling.    |

@@ -1,0 +1,19 @@
+# Non-modal
+
+import { NonModalDemo } from '../components/NonModalDemo';
+
+Set `modal={false}` to let the rest of the page stay interactive while the drawer is open. The overlay is not rendered at all, so you can see and click whatever is behind the drawer.
+
+<NonModalDemo />
+
+```tsx
+<Drawer.Root modal={false}>
+  <Drawer.Portal>
+    <Drawer.Content>...</Drawer.Content>
+  </Drawer.Portal>
+</Drawer.Root>
+```
+
+This pairs well with snap points for persistent peek bars: see [Snap points · Non-modal snap drawer](/documentation/snap-points#non-modal-snap-drawer).
+
+Because there is no overlay you can omit `Drawer.Overlay` from the tree. If you do render one it stays mounted but transparent.

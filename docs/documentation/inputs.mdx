@@ -1,0 +1,34 @@
+# Inputs
+
+import { InputsDemo } from '../components/InputsDemo';
+import { DisabledInputsDemo } from '../components/DisabledInputsDemo';
+
+On mobile, the on-screen keyboard can cover the focused field. Vaul ships a small repositioning heuristic that shifts the drawer up just enough to keep the focused input visible. The behaviour is on by default whenever `snapPoints` is set (`repositionInputs` defaults to `true`).
+
+<InputsDemo />
+
+```tsx
+<Drawer.Root snapPoints={['355px', 1]}>
+  <Drawer.Portal>
+    <Drawer.Overlay />
+    <Drawer.Content>
+      <input type='text' />
+      <textarea />
+    </Drawer.Content>
+  </Drawer.Portal>
+</Drawer.Root>
+```
+
+## Opting out
+
+Some hosts (in-app webviews, embedded browsers, virtual keyboards on desktop) prefer to manage scroll themselves. Disable both repositioning and the scroll lock to hand control back to the platform:
+
+<DisabledInputsDemo />
+
+```tsx
+<Drawer.Root disablePreventScroll repositionInputs={false}>
+  ...
+</Drawer.Root>
+```
+
+`repositionInputs={false}` stops the drawer from translating. `disablePreventScroll` keeps the page underneath scrollable. Either prop is independent of the other.

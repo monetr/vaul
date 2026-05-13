@@ -1,0 +1,59 @@
+# Snap points
+
+import { SnapPointsDemo } from '../components/SnapPointsDemo';
+import { NonModalSnapDemo } from '../components/NonModalSnapDemo';
+import { SequentialSnapDemo } from '../components/SequentialSnapDemo';
+import { FadeFromIndexDemo } from '../components/FadeFromIndexDemo';
+
+Snap points turn a drawer into a multi-stop sheet. Pass an array of percentages (`0`-`1`), pixel strings (`'355px'`), or a mix, ordered from least visible to most visible.
+
+<SnapPointsDemo />
+
+```tsx
+const snapPoints = ['148px', '355px', 1];
+
+function MyDrawer() {
+  const [snap, setSnap] = useState<number | string | null>(snapPoints[0]);
+  return (
+    <Drawer.Root activeSnapPoint={snap} setActiveSnapPoint={setSnap} snapPoints={snapPoints}>
+      ...
+    </Drawer.Root>
+  );
+}
+```
+
+The `activeSnapPoint` and `setActiveSnapPoint` props let you read and write the current snap. Setting `activeSnapPoint` to `null` closes the drawer.
+
+## Non-modal snap drawer
+
+Combine snap points with `modal={false}` to keep the background interactive (think persistent peek bars in maps and music apps).
+
+<NonModalSnapDemo />
+
+```tsx
+<Drawer.Root modal={false} snapPoints={snapPoints} ...>
+  ...
+</Drawer.Root>
+```
+
+## Sequential snapping
+
+Fast flicks normally jump multiple snap points by velocity. Set `snapToSequentialPoint` to force one step per gesture.
+
+<SequentialSnapDemo />
+
+```tsx
+<Drawer.Root snapPoints={snapPoints} snapToSequentialPoint>...</Drawer.Root>
+```
+
+## Fade from index
+
+By default the overlay fades in continuously as the drawer rises. Pass `fadeFromIndex` to delay the fade until a specific snap point.
+
+<FadeFromIndexDemo />
+
+```tsx
+<Drawer.Root fadeFromIndex={1} snapPoints={['148px', '400px', 1]}>...</Drawer.Root>
+```
+
+The overlay stays transparent below the index and fades in as the drawer crosses it.

@@ -1,0 +1,43 @@
+import { PackageManagerTabs } from '@rspress/core/theme';
+
+# Installation
+
+Install the package and its peer dependencies.
+
+<PackageManagerTabs command='install @monetr/vaul' />
+
+## Peer dependencies
+
+`@monetr/vaul` expects the following peers to be installed by the host application:
+
+- `react` `^18.0 || ^19.0.0`
+- `react-dom` `^18.0 || ^19.0.0`
+- `@radix-ui/react-dialog` `^1.0.0`
+
+The library re-uses Radix Dialog primitives, so `Drawer.Trigger`, `Drawer.Close`, `Drawer.Title`, and `Drawer.Description` behave exactly like their Radix counterparts including `asChild` slotting.
+
+## First drawer
+
+```tsx
+import { Drawer } from '@monetr/vaul';
+
+export function MyDrawer() {
+  return (
+    <Drawer.Root>
+      <Drawer.Trigger>Open drawer</Drawer.Trigger>
+      <Drawer.Portal>
+        <Drawer.Overlay />
+        <Drawer.Content>
+          <Drawer.Title>Hello</Drawer.Title>
+          <Drawer.Description>This is your drawer.</Drawer.Description>
+          <Drawer.Close>Close</Drawer.Close>
+        </Drawer.Content>
+      </Drawer.Portal>
+    </Drawer.Root>
+  );
+}
+```
+
+The library ships its own animation CSS via `src/style.css` (it loads automatically through the package's `sideEffects` declaration). You still need to position `Drawer.Content` and `Drawer.Overlay` in your own stylesheet. See [Getting started](/documentation/getting-started) for the recommended layout.
+
+Next: head to the [API reference](/documentation/api) for the full list of props, or jump to [Snap points](/documentation/snap-points) for a multi-stop bottom sheet.

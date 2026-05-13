@@ -1,0 +1,24 @@
+# Non-dismissible
+
+import { NonDismissibleDemo } from '../components/NonDismissibleDemo';
+
+Set `dismissible={false}` to block the user from closing the drawer with the overlay, Escape key, or drag-to-close. The drawer can still be closed from your own code by toggling the controlled `open` state.
+
+<NonDismissibleDemo />
+
+```tsx
+const [open, setOpen] = useState(false);
+
+return (
+  <Drawer.Root dismissible={false} onOpenChange={setOpen} open={open}>
+    <Drawer.Portal>
+      <Drawer.Overlay />
+      <Drawer.Content>
+        <button onClick={() => setOpen(false)}>Done</button>
+      </Drawer.Content>
+    </Drawer.Portal>
+  </Drawer.Root>
+);
+```
+
+Use this for confirmation flows where you must keep the user in the drawer until they complete a step. Always supply an explicit close path - either a button inside the drawer or external state - or the drawer becomes trapped.
