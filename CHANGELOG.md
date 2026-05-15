@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.2.4](https://github.com/monetr/vaul/compare/vaul-v1.2.3...vaul-v1.2.4) (2026-05-15)
+
+
+### Dependencies
+
+* **renovate:** update dependency @rslib/core to v0.21.4 ([#39](https://github.com/monetr/vaul/issues/39)) ([688e849](https://github.com/monetr/vaul/commit/688e8495abfea66748c989aeed99617f5cba2e1c))
+* **renovate:** update dependency @types/node to v24.12.3 ([#41](https://github.com/monetr/vaul/issues/41)) ([eb11a70](https://github.com/monetr/vaul/commit/eb11a70cdd4207ca2f89ef9b07a83515bf085114))
+* **renovate:** update github/codeql-action action to v4.35.4 ([#40](https://github.com/monetr/vaul/issues/40)) ([5667895](https://github.com/monetr/vaul/commit/5667895470ec647215d032f2ee3b8904ac983759))
+* **renovate:** update rsbuild ([#38](https://github.com/monetr/vaul/issues/38)) ([52e1d1b](https://github.com/monetr/vaul/commit/52e1d1b14df995909002568c2deab209c8d5bc85))
+
+
+### Documentation
+
+* Adding documentation site ([b148264](https://github.com/monetr/vaul/commit/b1482643ce29e4a12c064fa963907fbc68bc0809))
+* Adding more demos ([7abee8e](https://github.com/monetr/vaul/commit/7abee8e33937ab8c805d4a6306c665c70745304a))
+* Adding more demos, colliding drawers ([00f1f9f](https://github.com/monetr/vaul/commit/00f1f9f41ac2cb4afccce3f5b681a321dcadbccb))
+* Improve dynamic content demo ([c0e67c4](https://github.com/monetr/vaul/commit/c0e67c4094f8d578c675b1c234350578aae3f6b3))
+* Migrating to css modules ([babf9ab](https://github.com/monetr/vaul/commit/babf9abd6e7f2c05eddb4d1a040c0c2d29446a57))
+
 ## [1.2.3](https://github.com/monetr/vaul/compare/vaul-v1.2.2...vaul-v1.2.3) (2026-05-12)
 
 
