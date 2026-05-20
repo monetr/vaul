@@ -1,6 +1,6 @@
 {
   "name": "@monetr/vaul",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "Drawer component for React.",
   "type": "module",
   "main": "./dist/index.js",
