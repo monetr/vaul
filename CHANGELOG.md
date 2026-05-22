@@ -1,5 +1,27 @@
 # Changelog
 
+## [1.2.5](https://github.com/monetr/vaul/compare/vaul-v1.2.4...vaul-v1.2.5) (2026-05-20)
+
+
+### Dependencies
+
+* **renovate:** update dependency @biomejs/biome to v2.4.15 ([#42](https://github.com/monetr/vaul/issues/42)) ([c0710d8](https://github.com/monetr/vaul/commit/c0710d8b9f07795ee906b2179c332e6201f830d4))
+* **renovate:** update dependency @rslib/core to v0.21.5 ([#48](https://github.com/monetr/vaul/issues/48)) ([b9897e1](https://github.com/monetr/vaul/commit/b9897e1adfe40590ba3e52cd015d7a2f2b8d8732))
+* **renovate:** update dependency @rspress/core to v2.0.11 ([#44](https://github.com/monetr/vaul/issues/44)) ([75c9f1b](https://github.com/monetr/vaul/commit/75c9f1bead96bca320a993b28a537a4b1ecad47d))
+* **renovate:** update dependency @types/node to v24.12.4 ([#47](https://github.com/monetr/vaul/issues/47)) ([32dc0e4](https://github.com/monetr/vaul/commit/32dc0e4a7401fb4b8d291eebaeff3ece72770ce8))
+* **renovate:** update dependency playwright to v1.60.0 ([#46](https://github.com/monetr/vaul/issues/46)) ([e533017](https://github.com/monetr/vaul/commit/e5330174b8ba1575aa77fee7fceee6f8e89aac80))
+* **renovate:** update rsbuild ([#43](https://github.com/monetr/vaul/issues/43)) ([623a59f](https://github.com/monetr/vaul/commit/623a59feed9e5e16fa3c8207cba17d2f0d69e4c7))
+
+
+### Bug Fixes
+
+* Fixing pnpm settings ([43fc30f](https://github.com/monetr/vaul/commit/43fc30f8d4b0020d8adc8308109e9a72f40b2119))
+
+
+### Miscellaneous
+
+* Add pnpm-workspace ([32ed012](https://github.com/monetr/vaul/commit/32ed012ce43fe3ad2223f50b07aa410042bb1c3b))
+
 ## [1.2.4](https://github.com/monetr/vaul/compare/vaul-v1.2.3...vaul-v1.2.4) (2026-05-15)
 
 
