@@ -30,17 +30,17 @@ importers:
         specifier: 2.0.12
         version: 2.0.12(@rspack/core@2.0.3(@swc/helpers@0.5.21))(@types/mdast@4.0.4)(@types/react@18.3.28)(micromark-util-types@2.0.2)(micromark@4.0.2)
       '@rstest/adapter-rslib':
-        specifier: 0.2.2
-        version: 0.2.2(@rslib/core@0.21.5(typescript@6.0.3))(@rstest/core@0.9.10)(typescript@6.0.3)
+        specifier: 0.10.2
+        version: 0.10.2(@rslib/core@0.21.5(typescript@6.0.3))(@rstest/core@0.10.2)(typescript@6.0.3)
       '@rstest/browser':
-        specifier: 0.9.10
-        version: 0.9.10(@rstest/core@0.9.10)(playwright@1.60.0)
+        specifier: 0.10.2
+        version: 0.10.2(@rstest/core@0.10.2)(playwright@1.60.0)
       '@rstest/browser-react':
-        specifier: 0.9.10
-        version: 0.9.10(@rstest/core@0.9.10)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: 0.10.2
+        version: 0.10.2(@rstest/core@0.10.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@rstest/core':
-        specifier: 0.9.10
-        version: 0.9.10
+        specifier: 0.10.2
+        version: 0.10.2
       '@types/node':
         specifier: 24.12.4
         version: 24.12.4
@@ -615,36 +615,36 @@ packages:
   '@rspress/shared@2.0.12':
     resolution: {integrity: sha512-YTzaeMvxQRiMwCt5pk7CwkSBenp8HS+t1E82jFDhLwXPMChk7LHYazPGIuaNAoDMN1axW5EHtMUdZm7wVI8EdQ==}
 
-  '@rstest/adapter-rslib@0.2.2':
-    resolution: {integrity: sha512-pDfROoS8EY5mzxEmy9KVcd+Xila3QYeovlygCVmoc5p95qJ+3h+adr+elHFy/OZWUn/GMDHwYfhAR7BHQyQUKA==}
+  '@rstest/adapter-rslib@0.10.2':
+    resolution: {integrity: sha512-lAF+f/nUdZGcP3UB7vOS9PFWgzoVO0C08/8wUzs8o64q1ZeEFaY0lWyhuiRrXNdjLnH/Kf3igv4dLEBufEtH4A==}
     peerDependencies:
       '@rslib/core': '>=0.18.6'
-      '@rstest/core': '>=0.7.7'
+      '@rstest/core': ^0.10.2
       typescript: ^5 || ^6
     peerDependenciesMeta:
       typescript:
         optional: true
 
-  '@rstest/browser-react@0.9.10':
-    resolution: {integrity: sha512-0EQc7/wu/3PMYEffiYiiTcJz8kcOPj5A5Rzu74t7e59DXkUd6k1T7kcSXVaH2plV5kdP9GMXHEZcSz3DCfAWYg==}
+  '@rstest/browser-react@0.10.2':
+    resolution: {integrity: sha512-QWehbvLmhIfW6xH13yZ5CEHNjuCYdcpZ9qAIVl6LoG1wyjk+ckGIyebiTLYuRXNktNH8mvw8XGftRo3UJwyJEg==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
-      '@rstest/core': ^0.9.10
-      react: ^17.0.0 || ^18.0.0 || ^19.0.0
-      react-dom: ^17.0.0 || ^18.0.0 || ^19.0.0
+      '@rstest/core': ^0.10.2
+      react: ^18.0.0 || ^19.0.0
+      react-dom: ^18.0.0 || ^19.0.0
 
-  '@rstest/browser@0.9.10':
-    resolution: {integrity: sha512-vBcftRcGSv+LqG3oeP0mWvU2TNh8ihi7fPO7xXxENj5awW9cMBu0zGYM6H7cByN5pjKv5YItVcH10MDaFtaU3w==}
+  '@rstest/browser@0.10.2':
+    resolution: {integrity: sha512-Dtm5t2+SwuSXG+xqzuBI2/E+EZsfdsa/k/ruPFFV6ZjlLVI5dpK/4fId9PGXwzgOECl5rN/rCkKU9G1YpshZng==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
-      '@rstest/core': ^0.9.10
+      '@rstest/core': ^0.10.2
       playwright: ^1.49.1
     peerDependenciesMeta:
       playwright:
         optional: true
 
-  '@rstest/core@0.9.10':
-    resolution: {integrity: sha512-JUSUYYXWIHEBUn193u2RglZujvGPv46Blxpl17QFwc0y9vEXe2y/IfGwGrVsJfZz7PaWZ5NnbFf0J55YIIns+g==}
+  '@rstest/core@0.10.2':
+    resolution: {integrity: sha512-2nadZIrCBJL8AicSLcU0O0G2wo98QXmlsy3yX4ShiLFDlfQAzPgZJYzR6ssqQhVCMx/dIIFifyNiYsGWWWsrXg==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
@@ -1743,10 +1743,6 @@ packages:
     resolution: {integrity: sha512-uxc/zpqFg6x7C8vOE7lh6Lbda8eEL9zmVm/PLeTPBRhh1xCgdWaQ+J1CUieGpIfm2HdtsUpRv+HshiasBMcc6A==}
     engines: {node: '>=6'}
 
-  tinypool@2.1.0:
-    resolution: {integrity: sha512-Pugqs6M0m7Lv1I7FtxN4aoyToKg1C4tu+/381vH35y8oENM/Ai7f7C4StcoK4/+BSw9ebcS8jRiVrORFKCALLw==}
-    engines: {node: ^20.0.0 || >=22.0.0}
-
   toggle-selection@1.0.6:
     resolution: {integrity: sha512-BiZS+C1OS8g/q2RRbJmy59xpyghNBqrr6k5L/uKBGRsTfxmu3ffiRnd8mlGPUVayg8pvfi5urfnu8TU7DVOkLQ==}
 
@@ -1876,8 +1872,8 @@ packages:
       utf-8-validate:
         optional: true
 
-  ws@8.20.0:
-    resolution: {integrity: sha512-sAt8BhgNbzCtgGbt2OxmpuryO63ZoDk/sqaB/znQm94T4fCEsy/yV+7CdC1kJhOU9lboAEU7R3kquuycDoibVA==}
+  ws@8.21.0:
+    resolution: {integrity: sha512-Vsp28b7DRcimFQvrqu2Wek3z1iYxDCWqHYB8Qsnk/S4RfaCQzPGPyBNuVjJV3cd6UiKtUtp6sNM77gWvzcCH+g==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       bufferutil: ^4.0.1
@@ -2504,39 +2500,38 @@ snapshots:
       - '@module-federation/runtime-tools'
       - core-js
 
-  '@rstest/adapter-rslib@0.2.2(@rslib/core@0.21.5(typescript@6.0.3))(@rstest/core@0.9.10)(typescript@6.0.3)':
+  '@rstest/adapter-rslib@0.10.2(@rslib/core@0.21.5(typescript@6.0.3))(@rstest/core@0.10.2)(typescript@6.0.3)':
     dependencies:
       '@rslib/core': 0.21.5(typescript@6.0.3)
-      '@rstest/core': 0.9.10
+      '@rstest/core': 0.10.2
     optionalDependencies:
       typescript: 6.0.3
 
-  '@rstest/browser-react@0.9.10(@rstest/core@0.9.10)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@rstest/browser-react@0.10.2(@rstest/core@0.10.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@rstest/core': 0.9.10
+      '@rstest/core': 0.10.2
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  '@rstest/browser@0.9.10(@rstest/core@0.9.10)(playwright@1.60.0)':
+  '@rstest/browser@0.10.2(@rstest/core@0.10.2)(playwright@1.60.0)':
     dependencies:
       '@jridgewell/trace-mapping': 0.3.31
-      '@rstest/core': 0.9.10
+      '@rstest/core': 0.10.2
       convert-source-map: 2.0.0
       open-editor: 6.0.0
       pathe: 2.0.3
       sirv: 3.0.2
-      ws: 8.20.0
+      ws: 8.21.0
     optionalDependencies:
       playwright: 1.60.0
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
 
-  '@rstest/core@0.9.10':
+  '@rstest/core@0.10.2':
     dependencies:
       '@rsbuild/core': 2.0.6
       '@types/chai': 5.2.3
-      tinypool: 2.1.0
     transitivePeerDependencies:
       - '@module-federation/runtime-tools'
       - core-js
@@ -4007,8 +4002,6 @@ snapshots:
 
   tapable@2.3.3: {}
 
-  tinypool@2.1.0: {}
-
   toggle-selection@1.0.6: {}
 
   totalist@3.0.1: {}
@@ -4128,7 +4121,7 @@ snapshots:
 
   ws@8.18.3: {}
 
-  ws@8.20.0: {}
+  ws@8.21.0: {}
 
   wsl-utils@0.3.1:
     dependencies:
