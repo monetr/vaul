@@ -78,5 +78,5 @@
     "react": "^18.0 || ^19.0.0 || ^19.0.0-rc",
     "react-dom": "^18.0 || ^19.0.0 || ^19.0.0-rc"
   },
-  "packageManager": "pnpm@10.33.4"
+  "packageManager": "pnpm@10.34.1"
 }
