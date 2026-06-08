@@ -15,14 +15,14 @@ importers:
         specifier: 1.1.15
         version: 1.1.15(@types/react-dom@19.2.3(@types/react@19.2.15))(@types/react@19.2.15)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
       '@rsbuild/core':
-        specifier: 2.0.8
-        version: 2.0.8
+        specifier: 2.0.9
+        version: 2.0.9
       '@rsbuild/plugin-react':
-        specifier: 2.0.0
-        version: 2.0.0(@rsbuild/core@2.0.8)(@rspack/core@2.0.5(@swc/helpers@0.5.23))
+        specifier: 2.0.1
+        version: 2.0.1(@rsbuild/core@2.0.9)(@rspack/core@2.0.5(@swc/helpers@0.5.23))
       '@rsdoctor/rspack-plugin':
         specifier: 1.5.12
-        version: 1.5.12(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@rsbuild/core@2.0.8)(@rspack/core@2.0.5(@swc/helpers@0.5.23))
+        version: 1.5.12(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@rsbuild/core@2.0.9)(@rspack/core@2.0.5(@swc/helpers@0.5.23))
       '@rslib/core':
         specifier: 0.22.0
         version: 0.22.0(typescript@6.0.3)
@@ -400,8 +400,8 @@ packages:
       '@types/react':
         optional: true
 
-  '@rsbuild/core@2.0.8':
-    resolution: {integrity: sha512-V5Bhn3zqljsaB5grw9oMkSk6XZFvMkr6UpIYPZnDmOWsRAT1fNQ6XF6cn8fVUKv/KILblBrKLUZf0DpvDt3exw==}
+  '@rsbuild/core@2.0.9':
+    resolution: {integrity: sha512-lK2bMNuwh3TuLXLskS7nG3fnQk+6eaLeeZiquJWcna4JZx9iaI59JSd+iLcg5TeZLjEVygkwn/HcE+yuYDQRAw==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
@@ -418,8 +418,8 @@ packages:
       '@rsbuild/core':
         optional: true
 
-  '@rsbuild/plugin-react@2.0.0':
-    resolution: {integrity: sha512-/1gzt39EGUSFEqB83g46QoOwsgv172HI18i6au1b6lgIaX4sv9stuX4ijdHbHCp8PqYEq+MyQ99jIQMO6I+etg==}
+  '@rsbuild/plugin-react@2.0.1':
+    resolution: {integrity: sha512-n5m3VxEm6m3Dv1VkI0WnxsildySJ6M+QjGIzkZDy5UebRCIJ1Q/hlQVyhofBL6C+AcsF9fGjlHQkeiteXJSr3Q==}
     peerDependencies:
       '@rsbuild/core': ^2.0.0-0
     peerDependenciesMeta:
@@ -2174,14 +2174,14 @@ snapshots:
     optionalDependencies:
       '@types/react': 19.2.15
 
-  '@rsbuild/core@2.0.8':
+  '@rsbuild/core@2.0.9':
     dependencies:
       '@rspack/core': 2.0.5(@swc/helpers@0.5.23)
       '@swc/helpers': 0.5.23
     transitivePeerDependencies:
       - '@module-federation/runtime-tools'
 
-  '@rsbuild/plugin-check-syntax@1.6.1(@rsbuild/core@2.0.8)':
+  '@rsbuild/plugin-check-syntax@1.6.1(@rsbuild/core@2.0.9)':
     dependencies:
       acorn: 8.16.0
       browserslist-to-es-version: 1.4.1
@@ -2189,22 +2189,22 @@ snapshots:
       picocolors: 1.1.1
       source-map: 0.7.6
     optionalDependencies:
-      '@rsbuild/core': 2.0.8
+      '@rsbuild/core': 2.0.9
 
-  '@rsbuild/plugin-react@2.0.0(@rsbuild/core@2.0.8)(@rspack/core@2.0.5(@swc/helpers@0.5.23))':
+  '@rsbuild/plugin-react@2.0.1(@rsbuild/core@2.0.9)(@rspack/core@2.0.5(@swc/helpers@0.5.23))':
     dependencies:
       '@rspack/plugin-react-refresh': 2.0.0(@rspack/core@2.0.5(@swc/helpers@0.5.23))(react-refresh@0.18.0)
       react-refresh: 0.18.0
     optionalDependencies:
-      '@rsbuild/core': 2.0.8
+      '@rsbuild/core': 2.0.9
     transitivePeerDependencies:
       - '@rspack/core'
 
   '@rsdoctor/client@1.5.12': {}
 
-  '@rsdoctor/core@1.5.12(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@rsbuild/core@2.0.8)(@rspack/core@2.0.5(@swc/helpers@0.5.23))':
+  '@rsdoctor/core@1.5.12(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@rsbuild/core@2.0.9)(@rspack/core@2.0.5(@swc/helpers@0.5.23))':
     dependencies:
-      '@rsbuild/plugin-check-syntax': 1.6.1(@rsbuild/core@2.0.8)
+      '@rsbuild/plugin-check-syntax': 1.6.1(@rsbuild/core@2.0.9)
       '@rsdoctor/graph': 1.5.12(@rspack/core@2.0.5(@swc/helpers@0.5.23))
       '@rsdoctor/sdk': 1.5.12(@rspack/core@2.0.5(@swc/helpers@0.5.23))
       '@rsdoctor/types': 1.5.12(@rspack/core@2.0.5(@swc/helpers@0.5.23))
@@ -2237,9 +2237,9 @@ snapshots:
       - '@rspack/core'
       - webpack
 
-  '@rsdoctor/rspack-plugin@1.5.12(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@rsbuild/core@2.0.8)(@rspack/core@2.0.5(@swc/helpers@0.5.23))':
+  '@rsdoctor/rspack-plugin@1.5.12(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@rsbuild/core@2.0.9)(@rspack/core@2.0.5(@swc/helpers@0.5.23))':
     dependencies:
-      '@rsdoctor/core': 1.5.12(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@rsbuild/core@2.0.8)(@rspack/core@2.0.5(@swc/helpers@0.5.23))
+      '@rsdoctor/core': 1.5.12(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@rsbuild/core@2.0.9)(@rspack/core@2.0.5(@swc/helpers@0.5.23))
       '@rsdoctor/graph': 1.5.12(@rspack/core@2.0.5(@swc/helpers@0.5.23))
       '@rsdoctor/sdk': 1.5.12(@rspack/core@2.0.5(@swc/helpers@0.5.23))
       '@rsdoctor/types': 1.5.12(@rspack/core@2.0.5(@swc/helpers@0.5.23))
@@ -2304,8 +2304,8 @@ snapshots:
 
   '@rslib/core@0.22.0(typescript@6.0.3)':
     dependencies:
-      '@rsbuild/core': 2.0.8
-      rsbuild-plugin-dts: 0.22.0(@rsbuild/core@2.0.8)(typescript@6.0.3)
+      '@rsbuild/core': 2.0.9
+      rsbuild-plugin-dts: 0.22.0(@rsbuild/core@2.0.9)(typescript@6.0.3)
     optionalDependencies:
       typescript: 6.0.3
     transitivePeerDependencies:
@@ -2427,8 +2427,8 @@ snapshots:
     dependencies:
       '@mdx-js/mdx': 3.1.1
       '@mdx-js/react': 3.1.1(@types/react@19.2.15)(react@19.2.6)
-      '@rsbuild/core': 2.0.8
-      '@rsbuild/plugin-react': 2.0.0(@rsbuild/core@2.0.8)(@rspack/core@2.0.5(@swc/helpers@0.5.23))
+      '@rsbuild/core': 2.0.9
+      '@rsbuild/plugin-react': 2.0.1(@rsbuild/core@2.0.9)(@rspack/core@2.0.5(@swc/helpers@0.5.23))
       '@rspress/shared': 2.0.13
       '@shikijs/rehype': 4.0.2
       '@types/unist': 3.0.3
@@ -2475,7 +2475,7 @@ snapshots:
 
   '@rspress/shared@2.0.13':
     dependencies:
-      '@rsbuild/core': 2.0.8
+      '@rsbuild/core': 2.0.9
       '@shikijs/rehype': 4.0.2
       unified: 11.0.5
     transitivePeerDependencies:
@@ -2512,7 +2512,7 @@ snapshots:
 
   '@rstest/core@0.10.3':
     dependencies:
-      '@rsbuild/core': 2.0.8
+      '@rsbuild/core': 2.0.9
       '@types/chai': 5.2.3
     transitivePeerDependencies:
       - '@module-federation/runtime-tools'
@@ -3858,10 +3858,10 @@ snapshots:
       mdast-util-to-markdown: 2.1.2
       unified: 11.0.5
 
-  rsbuild-plugin-dts@0.22.0(@rsbuild/core@2.0.8)(typescript@6.0.3):
+  rsbuild-plugin-dts@0.22.0(@rsbuild/core@2.0.9)(typescript@6.0.3):
     dependencies:
       '@ast-grep/napi': 0.37.0
-      '@rsbuild/core': 2.0.8
+      '@rsbuild/core': 2.0.9
     optionalDependencies:
       typescript: 6.0.3
 
