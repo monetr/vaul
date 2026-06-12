@@ -1,5 +1,35 @@
 # Changelog
 
+## [1.2.6](https://github.com/monetr/vaul/compare/vaul-v1.2.5...vaul-v1.2.6) (2026-06-12)
+
+
+### Dependencies
+
+* **renovate:** update actions/checkout action to v6.0.3 ([#64](https://github.com/monetr/vaul/issues/64)) ([73def4c](https://github.com/monetr/vaul/commit/73def4cb94ce1a7d13df90d4b67d4495eaa53d1b))
+* **renovate:** update dependency @biomejs/biome to v2.4.16 ([#57](https://github.com/monetr/vaul/issues/57)) ([965da75](https://github.com/monetr/vaul/commit/965da75cd09935720d953501f6bcdedd62bb1155))
+* **renovate:** update dependency @rslib/core to v0.22.0 ([#60](https://github.com/monetr/vaul/issues/60)) ([c393d18](https://github.com/monetr/vaul/commit/c393d189c13d03a34505f39c9ce45f2a17515a64))
+* **renovate:** update dependency @rspress/core to v2.0.12 ([#52](https://github.com/monetr/vaul/issues/52)) ([699a5ae](https://github.com/monetr/vaul/commit/699a5ae9667e257a0503b8f7102a6846d65e264a))
+* **renovate:** update dependency @rspress/core to v2.0.13 ([#56](https://github.com/monetr/vaul/issues/56)) ([2e73e77](https://github.com/monetr/vaul/commit/2e73e77fee21a50e903838abdc3d15bd915ba404))
+* **renovate:** update dependency @types/node to v24.13.0 ([#67](https://github.com/monetr/vaul/issues/67)) ([3928a23](https://github.com/monetr/vaul/commit/3928a233c0f1f5871cacf9e3c4bc86eefd71a518))
+* **renovate:** update dependency @types/react to v18.3.29 ([#53](https://github.com/monetr/vaul/issues/53)) ([49a5696](https://github.com/monetr/vaul/commit/49a5696103cd4754d1e394c0bb6a6e84ad6b5b40))
+* **renovate:** update github/codeql-action action to v4.35.5 ([#49](https://github.com/monetr/vaul/issues/49)) ([0977e3b](https://github.com/monetr/vaul/commit/0977e3b1c1dea7f790f6b6c947c0e73cd7b62258))
+* **renovate:** update github/codeql-action action to v4.36.0 ([#55](https://github.com/monetr/vaul/issues/55)) ([68c8da2](https://github.com/monetr/vaul/commit/68c8da2161e9552267030220937e4835dd214b04))
+* **renovate:** update github/codeql-action action to v4.36.1 ([#63](https://github.com/monetr/vaul/issues/63)) ([6bbd958](https://github.com/monetr/vaul/commit/6bbd9587845cf44606010ac2f935236562ce64b6))
+* **renovate:** update github/codeql-action action to v4.36.2 ([#68](https://github.com/monetr/vaul/issues/68)) ([24aad0c](https://github.com/monetr/vaul/commit/24aad0c7952a32a8d669dd33fa372a280d09a35a))
+* **renovate:** update pnpm to v10.34.1 ([#58](https://github.com/monetr/vaul/issues/58)) ([95535a0](https://github.com/monetr/vaul/commit/95535a0ea593df8c0394a634edd9acabe2756978))
+* **renovate:** update react monorepo ([#62](https://github.com/monetr/vaul/issues/62)) ([2530b8c](https://github.com/monetr/vaul/commit/2530b8ccf7033d2974409ff7d9357c94311dc90d))
+* **renovate:** update rsbuild ([#54](https://github.com/monetr/vaul/issues/54)) ([1656f7a](https://github.com/monetr/vaul/commit/1656f7a4819c7b3729279f44f29588c0980d581c))
+* **renovate:** update rsbuild ([#61](https://github.com/monetr/vaul/issues/61)) ([68a2b22](https://github.com/monetr/vaul/commit/68a2b22c0ad72ff4c55ad5534b45510e18b65f19))
+* **renovate:** update rsbuild to v2.0.10 ([#65](https://github.com/monetr/vaul/issues/65)) ([d0b1add](https://github.com/monetr/vaul/commit/d0b1add235dd1002ba88dfd69cadf1e706312fee))
+* **renovate:** update rsbuild to v2.0.11 ([#66](https://github.com/monetr/vaul/issues/66)) ([5f0b15b](https://github.com/monetr/vaul/commit/5f0b15b25db02700a226bbbb93b877959078ab81))
+* **renovate:** update rstest to v0.10.2 ([#50](https://github.com/monetr/vaul/issues/50)) ([7cbd145](https://github.com/monetr/vaul/commit/7cbd1456ae8688b359e32625c76230ec8c6489cd))
+* **renovate:** update rstest to v0.10.3 ([#59](https://github.com/monetr/vaul/issues/59)) ([8b2831b](https://github.com/monetr/vaul/commit/8b2831bb559d95ad97c585c012d50d86a90d443e))
+
+
+### Refactor
+
+* Migrate entirely to react 19 ([871631f](https://github.com/monetr/vaul/commit/871631f07f936816f44f1201625db2606d7f48ef))
+
 ## [1.2.5](https://github.com/monetr/vaul/compare/vaul-v1.2.4...vaul-v1.2.5) (2026-05-20)
 
 
