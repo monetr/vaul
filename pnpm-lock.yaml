@@ -34,7 +34,7 @@ importers:
         version: 0.10.6(@rslib/core@0.23.2(typescript@6.0.3))(@rstest/core@0.10.6)(typescript@6.0.3)
       '@rstest/browser':
         specifier: 0.10.6
-        version: 0.10.6(@rstest/core@0.10.6)(playwright@1.61.0)
+        version: 0.10.6(@rstest/core@0.10.6)(playwright@1.62.0)
       '@rstest/browser-react':
         specifier: 0.10.6
         version: 0.10.6(@rstest/core@0.10.6)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
@@ -51,8 +51,8 @@ importers:
         specifier: 19.2.3
         version: 19.2.3(@types/react@19.2.17)
       playwright:
-        specifier: 1.61.0
-        version: 1.61.0
+        specifier: 1.62.0
+        version: 1.62.0
       react:
         specifier: 19.2.7
         version: 19.2.7
@@ -1558,14 +1558,14 @@ packages:
   picocolors@1.1.1:
     resolution: {integrity: sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==}
 
-  playwright-core@1.61.0:
-    resolution: {integrity: sha512-caX7TrY3Ml6egyDX0WUcTHDxodl/b51y5wJOdCEA36QviK/s2g081hvmGs8eaE3DWb6NYZQ6BjO/QkNRPenoPA==}
-    engines: {node: '>=18'}
+  playwright-core@1.62.0:
+    resolution: {integrity: sha512-nsNRyq0r2zsG8AcRHWknc9QRA5XCueC7gWMrs+Gx2tlZn9hcl8zudfh00lhJPY1DE7NmZ6bDsT9g2yey8mXljA==}
+    engines: {node: '>=20'}
     hasBin: true
 
-  playwright@1.61.0:
-    resolution: {integrity: sha512-Z+7BeeqQPRRzklHsVFP4KTGIyMxKUmfeRA4WisM6G3/XW6nwGeX6fX9qYaDa+CiUqpOkb2f6X3nar05R3kSuJQ==}
-    engines: {node: '>=18'}
+  playwright@1.62.0:
+    resolution: {integrity: sha512-Z14dG305dgaLu6foB1TXQagFiW8JfSUIUaUuPaKQ6NtBPKF1P/qXcqfh6c6K/icPqdy37JmjbiBXf6JNg6Sylw==}
+    engines: {node: '>=20'}
     hasBin: true
 
   powershell-utils@0.1.0:
@@ -2684,7 +2684,7 @@ snapshots:
       react: 19.2.7
       react-dom: 19.2.7(react@19.2.7)
 
-  '@rstest/browser@0.10.6(@rstest/core@0.10.6)(playwright@1.61.0)':
+  '@rstest/browser@0.10.6(@rstest/core@0.10.6)(playwright@1.62.0)':
     dependencies:
       '@jridgewell/trace-mapping': 0.3.31
       '@rstest/core': 0.10.6
@@ -2694,7 +2694,7 @@ snapshots:
       sirv: 3.0.2
       ws: 8.21.0
     optionalDependencies:
-      playwright: 1.61.0
+      playwright: 1.62.0
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -3851,11 +3851,11 @@ snapshots:
 
   picocolors@1.1.1: {}
 
-  playwright-core@1.61.0: {}
+  playwright-core@1.62.0: {}
 
-  playwright@1.61.0:
+  playwright@1.62.0:
     dependencies:
-      playwright-core: 1.61.0
+      playwright-core: 1.62.0
     optionalDependencies:
       fsevents: 2.3.2
 
