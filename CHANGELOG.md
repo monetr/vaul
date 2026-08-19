@@ -1,5 +1,44 @@
 # Changelog
 
+## [1.2.7](https://github.com/monetr/vaul/compare/vaul-v1.2.6...vaul-v1.2.7) (2026-08-19)
+
+
+### Dependencies
+
+* **renovate:** update actions/attest-build-provenance action to v4.1.1 ([#88](https://github.com/monetr/vaul/issues/88)) ([0076705](https://github.com/monetr/vaul/commit/0076705a9648910942df7385a289dc21f55129dc))
+* **renovate:** update actions/setup-node action to v6.5.0 ([#97](https://github.com/monetr/vaul/issues/97)) ([c5b2a13](https://github.com/monetr/vaul/commit/c5b2a13f442bfc64bf44c5ced6b80fe331a2f5c1))
+* **renovate:** update dependency @biomejs/biome to v2.5.0 ([#80](https://github.com/monetr/vaul/issues/80)) ([e751883](https://github.com/monetr/vaul/commit/e751883558a461bdb93584690ec613d69c85fcab))
+* **renovate:** update dependency @biomejs/biome to v2.5.4 ([#89](https://github.com/monetr/vaul/issues/89)) ([ae566ee](https://github.com/monetr/vaul/commit/ae566eed42b83979eeba3a082ab625a4c9d49841))
+* **renovate:** update dependency @biomejs/biome to v2.5.6 ([#98](https://github.com/monetr/vaul/issues/98)) ([c62dcd2](https://github.com/monetr/vaul/commit/c62dcd246965fdecd60ba9b18874965d381e711a))
+* **renovate:** update dependency @radix-ui/react-dialog to v1.1.19 ([#90](https://github.com/monetr/vaul/issues/90)) ([45a64f9](https://github.com/monetr/vaul/commit/45a64f97127b782bfb62f5fe025711a9e81d5837))
+* **renovate:** update dependency @radix-ui/react-dialog to v1.1.23 ([#94](https://github.com/monetr/vaul/issues/94)) ([9be3f70](https://github.com/monetr/vaul/commit/9be3f70e5ef6a66a344dce7a7e968df157a67d49))
+* **renovate:** update dependency @rslib/core to v0.22.1 ([#78](https://github.com/monetr/vaul/issues/78)) ([e66a49e](https://github.com/monetr/vaul/commit/e66a49e30ce4f50bb59aefbf693c23beee66ad08))
+* **renovate:** update dependency @rslib/core to v0.23.0 ([#84](https://github.com/monetr/vaul/issues/84)) ([b54f727](https://github.com/monetr/vaul/commit/b54f727308f07990bb0812634591e273defcfc72))
+* **renovate:** update dependency @rslib/core to v0.23.2 ([#91](https://github.com/monetr/vaul/issues/91)) ([559978c](https://github.com/monetr/vaul/commit/559978cf79e5527062f7c8c840b2f74c5d8c5d37))
+* **renovate:** update dependency @rspress/core to v2.0.14 ([#73](https://github.com/monetr/vaul/issues/73)) ([401ae41](https://github.com/monetr/vaul/commit/401ae4126c0938760b74432e8302c1ea33f6a698))
+* **renovate:** update dependency @rspress/core to v2.0.19 ([#92](https://github.com/monetr/vaul/issues/92)) ([ef8e23e](https://github.com/monetr/vaul/commit/ef8e23e3d69fbac7af56b7e3c9544616b1c5a171))
+* **renovate:** update dependency @types/node to v24.13.1 ([#70](https://github.com/monetr/vaul/issues/70)) ([db45604](https://github.com/monetr/vaul/commit/db45604025ed84d5b5ff06a59db864a4e522748a))
+* **renovate:** update dependency @types/node to v24.13.2 ([#75](https://github.com/monetr/vaul/issues/75)) ([ff869ba](https://github.com/monetr/vaul/commit/ff869bac51474dfec5e66858682c393f9555c3de))
+* **renovate:** update dependency playwright to v1.62.0 ([#95](https://github.com/monetr/vaul/issues/95)) ([91bc67e](https://github.com/monetr/vaul/commit/91bc67e59cf9d382944c1182c464d390d95b2191))
+* **renovate:** update playwright monorepo ([#82](https://github.com/monetr/vaul/issues/82)) ([a850ada](https://github.com/monetr/vaul/commit/a850ada004e0ffc5b2c4811ac7d296fb7181aa93))
+* **renovate:** update pnpm to v10.34.2 ([#74](https://github.com/monetr/vaul/issues/74)) ([8151ff6](https://github.com/monetr/vaul/commit/8151ff60587740f49d3423ee34a8603bfe4c5369))
+* **renovate:** update pnpm to v10.34.3 ([#77](https://github.com/monetr/vaul/issues/77)) ([1a3fde8](https://github.com/monetr/vaul/commit/1a3fde81f5345f0b09cdede260c0e36978a63dc1))
+* **renovate:** update pnpm to v10.34.4 ([#86](https://github.com/monetr/vaul/issues/86)) ([ed16de4](https://github.com/monetr/vaul/commit/ed16de4d2907f2c91f9635c1f34521d0ee112632))
+* **renovate:** update pnpm to v10.34.5 ([#96](https://github.com/monetr/vaul/issues/96)) ([b8ec617](https://github.com/monetr/vaul/commit/b8ec617d898608b0220ca4e138dea73e5317af0b))
+* **renovate:** update radix-ui-primitives monorepo ([#83](https://github.com/monetr/vaul/issues/83)) ([6fcc640](https://github.com/monetr/vaul/commit/6fcc6404ab0e5306d4fd219be13f86e2572b1b6f))
+* **renovate:** update radix-ui-primitives monorepo to v1.1.16 ([#72](https://github.com/monetr/vaul/issues/72)) ([6a1a5ae](https://github.com/monetr/vaul/commit/6a1a5ae163f8efd4e2f97622e903f8b37eaf10d7))
+* **renovate:** update react monorepo ([#100](https://github.com/monetr/vaul/issues/100)) ([234dbfd](https://github.com/monetr/vaul/commit/234dbfdf8020259f6395a9637d91361d5d6fb9d1))
+* **renovate:** update react monorepo to v19.2.17 ([#69](https://github.com/monetr/vaul/issues/69)) ([44e0eb7](https://github.com/monetr/vaul/commit/44e0eb7161eaffd852a0dd7b49b7c06408e0c436))
+* **renovate:** update rsbuild ([#76](https://github.com/monetr/vaul/issues/76)) ([4835b5c](https://github.com/monetr/vaul/commit/4835b5cbd8bcee43dec4f9ccd4872dd1d1105286))
+* **renovate:** update rsbuild ([#81](https://github.com/monetr/vaul/issues/81)) ([d7725bb](https://github.com/monetr/vaul/commit/d7725bbbb5dfda9c442d5de6a117e4e09e235837))
+* **renovate:** update rstest to v0.10.5 ([#79](https://github.com/monetr/vaul/issues/79)) ([276140c](https://github.com/monetr/vaul/commit/276140cc550297dba84da9adec579c694142cfaa))
+* **renovate:** update rstest to v0.10.6 ([#87](https://github.com/monetr/vaul/issues/87)) ([4a3a23f](https://github.com/monetr/vaul/commit/4a3a23fbbba6dbcc2971ac9b56345433e8335865))
+
+
+### Miscellaneous
+
+* Tweaking renovate config ([a49eddb](https://github.com/monetr/vaul/commit/a49eddb059b9bc4bdd386b078bd4242be05b8bb5))
+
 ## [1.2.6](https://github.com/monetr/vaul/compare/vaul-v1.2.5...vaul-v1.2.6) (2026-06-12)
 
 
