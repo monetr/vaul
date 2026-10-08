@@ -11,3 +11,6 @@ trustPolicyExclude:
   - 'react-render-to-markdown@19.0.1'
 minimumReleaseAge: 10080 # 7 days
 minimumReleaseAgeStrict: true
+minimumReleaseAgeExclude:
+  # Renovate security update: @rsdoctor/rspack-plugin@1.5.16
+  - "@rsdoctor/rspack-plugin@1.5.16"
